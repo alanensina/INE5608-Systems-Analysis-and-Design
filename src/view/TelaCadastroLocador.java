@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,9 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
+import static controller.AppController.inicializa;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaCadastroLocador extends JFrame {
 
@@ -33,7 +40,7 @@ public class TelaCadastroLocador extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCadastroLocador frame = new TelaCadastroLocador();
+					TelaCadastroLocador frame = new TelaCadastroLocador(args);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,11 +49,17 @@ public class TelaCadastroLocador extends JFrame {
 		});
 	}
 
-	public TelaCadastroLocador() {
+	public TelaCadastroLocador(String[] args) {
 		setTitle("Cadastro de Locador");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 961, 488);
+		
+//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//		int x = (int) (screenSize.getWidth() - 363) / 2;
+//		int y = (int) (screenSize.getHeight() - 308) / 2;
+//		setLocation(x, y);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -175,6 +188,12 @@ public class TelaCadastroLocador extends JFrame {
 		contentPane.add(btnLimpar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				inicializa(args);	
+			}
+		});
 		btnCancelar.setBounds(520, 411, 104, 23);
 		contentPane.add(btnCancelar);
 	}

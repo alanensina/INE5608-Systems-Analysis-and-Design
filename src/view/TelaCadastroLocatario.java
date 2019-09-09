@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,9 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import static controller.AppController.inicializa;
 
 public class TelaCadastroLocatario extends JFrame {
 
@@ -33,7 +40,7 @@ public class TelaCadastroLocatario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCadastroLocatario frame = new TelaCadastroLocatario();
+					TelaCadastroLocatario frame = new TelaCadastroLocatario(args);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,11 +49,17 @@ public class TelaCadastroLocatario extends JFrame {
 		});
 	}
 
-	public TelaCadastroLocatario() {
+	public TelaCadastroLocatario(String[] args) {
 		setTitle("Cadastro de Locatário");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 961, 488);
+		
+//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//		int x = (int) (screenSize.getWidth() - 363) / 2;
+//		int y = (int) (screenSize.getHeight() - 308) / 2;
+//		setLocation(x, y);		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -63,7 +76,7 @@ public class TelaCadastroLocatario extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setBounds(20, 45, 27, 14);
+		lblNome.setBounds(20, 45, 69, 14);
 		panel.add(lblNome);
 		
 		textField = new JTextField();
@@ -72,7 +85,7 @@ public class TelaCadastroLocatario extends JFrame {
 		textField.setColumns(10);
 		
 		JLabel lblCpf = new JLabel("CPF");
-		lblCpf.setBounds(20, 82, 46, 14);
+		lblCpf.setBounds(20, 82, 69, 14);
 		panel.add(lblCpf);
 		
 		textField_1 = new JTextField();
@@ -81,7 +94,7 @@ public class TelaCadastroLocatario extends JFrame {
 		panel.add(textField_1);
 		
 		JLabel lblTelefone = new JLabel("Telefone");
-		lblTelefone.setBounds(20, 121, 46, 14);
+		lblTelefone.setBounds(20, 121, 69, 14);
 		panel.add(lblTelefone);
 		
 		textField_2 = new JTextField();
@@ -90,7 +103,7 @@ public class TelaCadastroLocatario extends JFrame {
 		panel.add(textField_2);
 		
 		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setBounds(20, 164, 46, 14);
+		lblLogin.setBounds(20, 164, 69, 14);
 		panel.add(lblLogin);
 		
 		textField_3 = new JTextField();
@@ -99,7 +112,7 @@ public class TelaCadastroLocatario extends JFrame {
 		panel.add(textField_3);
 		
 		JLabel lblSenha = new JLabel("Senha");
-		lblSenha.setBounds(20, 206, 46, 14);
+		lblSenha.setBounds(20, 206, 69, 14);
 		panel.add(lblSenha);
 		
 		passwordField = new JPasswordField();
@@ -113,69 +126,75 @@ public class TelaCadastroLocatario extends JFrame {
 		panel_1.setLayout(null);
 		
 		JLabel lblLogradouro = new JLabel("Logradouro");
-		lblLogradouro.setBounds(10, 47, 69, 14);
+		lblLogradouro.setBounds(10, 47, 79, 14);
 		panel_1.add(lblLogradouro);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(89, 44, 310, 20);
+		textField_4.setBounds(99, 44, 300, 20);
 		panel_1.add(textField_4);
 		
 		JLabel lblNmero = new JLabel("N\u00FAmero");
-		lblNmero.setBounds(10, 84, 46, 14);
+		lblNmero.setBounds(10, 84, 79, 14);
 		panel_1.add(lblNmero);
 		
 		textField_5 = new JTextField();
 		textField_5.setColumns(10);
-		textField_5.setBounds(89, 81, 310, 20);
+		textField_5.setBounds(99, 81, 300, 20);
 		panel_1.add(textField_5);
 		
 		JLabel lblComplemento = new JLabel("Complemento");
-		lblComplemento.setBounds(10, 123, 69, 14);
+		lblComplemento.setBounds(10, 123, 79, 14);
 		panel_1.add(lblComplemento);
 		
 		textField_6 = new JTextField();
 		textField_6.setColumns(10);
-		textField_6.setBounds(89, 120, 310, 20);
+		textField_6.setBounds(99, 120, 300, 20);
 		panel_1.add(textField_6);
 		
 		JLabel lblBairro = new JLabel("Bairro");
-		lblBairro.setBounds(10, 166, 46, 14);
+		lblBairro.setBounds(10, 166, 69, 14);
 		panel_1.add(lblBairro);
 		
 		textField_7 = new JTextField();
 		textField_7.setColumns(10);
-		textField_7.setBounds(89, 163, 310, 20);
+		textField_7.setBounds(99, 163, 300, 20);
 		panel_1.add(textField_7);
 		
 		JLabel lblCidade = new JLabel("Cidade");
-		lblCidade.setBounds(10, 208, 46, 14);
+		lblCidade.setBounds(10, 208, 69, 14);
 		panel_1.add(lblCidade);
 		
 		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setBounds(10, 246, 46, 14);
+		lblEstado.setBounds(10, 246, 69, 14);
 		panel_1.add(lblEstado);
 		
 		textField_8 = new JTextField();
 		textField_8.setColumns(10);
-		textField_8.setBounds(89, 205, 310, 20);
+		textField_8.setBounds(99, 205, 300, 20);
 		panel_1.add(textField_8);
 		
 		textField_9 = new JTextField();
 		textField_9.setColumns(10);
-		textField_9.setBounds(89, 243, 310, 20);
+		textField_9.setBounds(99, 243, 300, 20);
 		panel_1.add(textField_9);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setBounds(800, 411, 89, 23);
+		btnCadastrar.setBounds(780, 411, 109, 23);
 		contentPane.add(btnCadastrar);
 		
 		JButton btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(685, 411, 89, 23);
+		btnLimpar.setBounds(662, 411, 89, 23);
 		contentPane.add(btnLimpar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(573, 411, 89, 23);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				inicializa(args);				
+			}
+		});
+		btnCancelar.setBounds(543, 411, 89, 23);
 		contentPane.add(btnCancelar);
 	}
 }
