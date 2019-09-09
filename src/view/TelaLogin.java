@@ -1,14 +1,15 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class TelaLogin extends JFrame {
 
@@ -16,31 +17,18 @@ public class TelaLogin extends JFrame {
 	private JTextField txtLogin;
 	private JTextField txtSenha;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaLogin frame = new TelaLogin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public TelaLogin() {
+	public TelaLogin(String[] args) {
 		setResizable(false);
 		setTitle("V\u00E1 de Bike!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 467, 344);
+		setBounds(100, 100, 444, 344);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("LogoV\u00E1DeBike");
-		lblLogo.setBounds(200, 71, 145, 14);
+		lblLogo.setBounds(179, 65, 145, 14);
 		contentPane.add(lblLogo);
 		
 		JLabel lbLogin = new JLabel("Login");
@@ -62,15 +50,30 @@ public class TelaLogin extends JFrame {
 		contentPane.add(txtSenha);
 		
 		JButton btnLogar = new JButton("Logar");
-		btnLogar.setBounds(180, 219, 89, 23);
+		btnLogar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "LOGOU!");
+			}
+		});
+		btnLogar.setBounds(163, 209, 129, 23);
 		contentPane.add(btnLogar);
 		
-		JButton btnCadastroLocador = new JButton("Cadastrar como Locador");
-		btnCadastroLocador.setBounds(49, 265, 167, 23);
-		contentPane.add(btnCadastroLocador);
+		JButton btnCadastrarLocador = new JButton("Novo locador?");
+		btnCadastrarLocador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastroLocador.main(args);
+			}
+		});
+		btnCadastrarLocador.setBounds(34, 251, 129, 23);
+		contentPane.add(btnCadastrarLocador);
 		
-		JButton btnCadastroLocatario = new JButton("Cadastrar como Locat\u00E1rio");
-		btnCadastroLocatario.setBounds(240, 265, 167, 23);
-		contentPane.add(btnCadastroLocatario);
+		JButton btnNovoLocatrio = new JButton("Novo locat\u00E1rio?");
+		btnNovoLocatrio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastroLocatario.main(args);
+			}
+		});
+		btnNovoLocatrio.setBounds(278, 251, 129, 23);
+		contentPane.add(btnNovoLocatrio);
 	}
 }
