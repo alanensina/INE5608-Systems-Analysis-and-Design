@@ -62,7 +62,7 @@ public class TelaCadastroLocador extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/locador.png"));
+		//lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/locador.png"));
 		lblLogo.setBounds(426, 0, 216, 168);
 		contentPane.add(lblLogo);
 		

@@ -133,4 +133,32 @@ public class EnderecoDAO {
 		return enderecos;
 	}
 	
+	public int retornaIdEndereco(Endereco end) {
+		
+		Connection con = ConnectionFactory.getConnection();
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "select id from endereco where logradouro = ? and numero = ?";
+
+		Endereco endereco = new Endereco();
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, end.getLogradouro());
+			stmt.setString(2, end.getNumero());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				endereco.setId(rs.getInt(1));
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, "Houve um erro ao recuperar o id do endereço. (EnderecoDAO.retornaIdEndereco)" + ex);
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+		return endereco.getId();
+		
+	}	
 }
