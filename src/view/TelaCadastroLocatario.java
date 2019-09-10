@@ -1,40 +1,41 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import static controller.AppController.inicializa;
 
-public class TelaCadastroLocatario extends JFrame {
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
+@SuppressWarnings("serial")
+public class TelaCadastroLocatario extends JFrame {
+	
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JPasswordField passwordField;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
+	private JTextField txtNome;
+	private JFormattedTextField txtCPF;
+	private JFormattedTextField txtCelular;
+	private JTextField txtLogin;
+	private JPasswordField txtSenha;
+	private JTextField txtLogradouro;
+	private JTextField txtNumero;
+	private JTextField txtComplemento;
+	private JTextField txtBairro;
+	private JTextField txtCidade;
+	private JTextField txtEstado;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,151 +51,179 @@ public class TelaCadastroLocatario extends JFrame {
 	}
 
 	public TelaCadastroLocatario(String[] args) {
-		setTitle("Cadastro de Locat�rio");
+		setTitle("Cadastro de Locatário");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 961, 488);
-		
-//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//		int x = (int) (screenSize.getWidth() - 363) / 2;
-//		int y = (int) (screenSize.getHeight() - 308) / 2;
-//		setLocation(x, y);		
+		setBounds(100, 100, 1027, 602);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblLogovdebike = new JLabel("LogoV\u00E1DeBike");
-		lblLogovdebike.setBounds(424, 48, 79, 14);
-		contentPane.add(lblLogovdebike);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/locatario.png"));
+		lblLogo.setBounds(426, 0, 216, 168);
+		contentPane.add(lblLogo);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Dados da pessoais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(28, 111, 419, 289);
+		panel.setBorder(new TitledBorder(null, "Dados pessoais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(40, 180, 468, 297);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNome = new JLabel("Nome");
-		lblNome.setBounds(20, 45, 69, 14);
+		JLabel lblNome = new JLabel("Nome *");
+		lblNome.setBounds(12, 38, 66, 15);
 		panel.add(lblNome);
 		
-		textField = new JTextField();
-		textField.setBounds(99, 42, 310, 20);
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblCpf = new JLabel("CPF");
-		lblCpf.setBounds(20, 82, 69, 14);
+		JLabel lblCpf = new JLabel("CPF *");
+		lblCpf.setBounds(12, 79, 66, 15);
 		panel.add(lblCpf);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(99, 79, 310, 20);
-		panel.add(textField_1);
+		JLabel lblCelular = new JLabel("Celular *");
+		lblCelular.setBounds(12, 120, 66, 15);
+		panel.add(lblCelular);
 		
-		JLabel lblTelefone = new JLabel("Telefone");
-		lblTelefone.setBounds(20, 121, 69, 14);
-		panel.add(lblTelefone);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(99, 118, 310, 20);
-		panel.add(textField_2);
-		
-		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setBounds(20, 164, 69, 14);
+		JLabel lblLogin = new JLabel("Login *");
+		lblLogin.setBounds(12, 161, 66, 15);
 		panel.add(lblLogin);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(99, 161, 310, 20);
-		panel.add(textField_3);
-		
-		JLabel lblSenha = new JLabel("Senha");
-		lblSenha.setBounds(20, 206, 69, 14);
+		JLabel lblSenha = new JLabel("Senha  *");
+		lblSenha.setBounds(12, 202, 66, 15);
 		panel.add(lblSenha);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(99, 206, 310, 20);
-		panel.add(passwordField);
+		txtNome = new JTextField();
+		txtNome.setBounds(83, 36, 373, 19);
+		panel.add(txtNome);
+		txtNome.setColumns(10);
+		
+		javax.swing.text.MaskFormatter maskCPF = null;
+		try {
+			maskCPF = new javax.swing.text.MaskFormatter("###.###.###-##");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		txtCPF = new JFormattedTextField(maskCPF);
+		txtCPF.setBounds(83, 77, 373, 19);
+		panel.add(txtCPF);
+		txtCPF.setColumns(10);
+		
+		javax.swing.text.MaskFormatter maskPhone = null;
+		try {
+			maskPhone = new javax.swing.text.MaskFormatter("(##) #####-####");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		txtCelular = new JFormattedTextField(maskPhone);
+		txtCelular.setColumns(10);
+		txtCelular.setBounds(83, 118, 373, 19);
+		panel.add(txtCelular);
+		
+		txtLogin = new JTextField();
+		txtLogin.setColumns(10);
+		txtLogin.setBounds(83, 159, 373, 19);
+		panel.add(txtLogin);
+		
+		txtSenha = new JPasswordField();
+		txtSenha.setBounds(83, 200, 373, 19);
+		panel.add(txtSenha);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Endere\u00E7o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(470, 111, 419, 289);
-		contentPane.add(panel_1);
 		panel_1.setLayout(null);
+		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Endere\u00E7o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		panel_1.setBounds(520, 180, 468, 297);
+		contentPane.add(panel_1);
 		
-		JLabel lblLogradouro = new JLabel("Logradouro");
-		lblLogradouro.setBounds(10, 47, 79, 14);
+		JLabel lblLogradouro = new JLabel("Logradouro *");
+		lblLogradouro.setBounds(12, 38, 117, 15);
 		panel_1.add(lblLogradouro);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(99, 44, 300, 20);
-		panel_1.add(textField_4);
-		
-		JLabel lblNmero = new JLabel("N\u00FAmero");
-		lblNmero.setBounds(10, 84, 79, 14);
+		JLabel lblNmero = new JLabel("Número *");
+		lblNmero.setBounds(12, 79, 66, 15);
 		panel_1.add(lblNmero);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(99, 81, 300, 20);
-		panel_1.add(textField_5);
-		
-		JLabel lblComplemento = new JLabel("Complemento");
-		lblComplemento.setBounds(10, 123, 79, 14);
-		panel_1.add(lblComplemento);
-		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(99, 120, 300, 20);
-		panel_1.add(textField_6);
-		
-		JLabel lblBairro = new JLabel("Bairro");
-		lblBairro.setBounds(10, 166, 69, 14);
+		JLabel lblBairro = new JLabel("Complemento");
+		lblBairro.setBounds(12, 120, 117, 15);
 		panel_1.add(lblBairro);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(99, 163, 300, 20);
-		panel_1.add(textField_7);
+		JLabel lblBairro_1 = new JLabel("Bairro *");
+		lblBairro_1.setBounds(12, 161, 66, 15);
+		panel_1.add(lblBairro_1);
 		
-		JLabel lblCidade = new JLabel("Cidade");
-		lblCidade.setBounds(10, 208, 69, 14);
+		JLabel lblCidade = new JLabel("Cidade *");
+		lblCidade.setBounds(12, 202, 66, 15);
 		panel_1.add(lblCidade);
 		
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setBounds(10, 246, 69, 14);
+		txtLogradouro = new JTextField();
+		txtLogradouro.setColumns(10);
+		txtLogradouro.setBounds(134, 36, 322, 19);
+		panel_1.add(txtLogradouro);
+		
+		txtNumero = new JTextField();
+		txtNumero.setColumns(10);
+		txtNumero.setBounds(134, 77, 322, 19);
+		panel_1.add(txtNumero);
+		
+		txtComplemento = new JTextField();
+		txtComplemento.setColumns(10);
+		txtComplemento.setBounds(134, 118, 322, 19);
+		panel_1.add(txtComplemento);
+		
+		txtBairro = new JTextField();
+		txtBairro.setColumns(10);
+		txtBairro.setBounds(134, 159, 322, 19);
+		panel_1.add(txtBairro);
+		
+		txtCidade = new JTextField();
+		txtCidade.setBounds(134, 200, 322, 19);
+		panel_1.add(txtCidade);
+		
+		JLabel lblEstado = new JLabel("Estado *");
+		lblEstado.setBounds(12, 243, 66, 15);
 		panel_1.add(lblEstado);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(99, 205, 300, 20);
-		panel_1.add(textField_8);
-		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(99, 243, 300, 20);
-		panel_1.add(textField_9);
+		txtEstado = new JTextField();
+		txtEstado.setBounds(134, 241, 322, 19);
+		panel_1.add(txtEstado);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setBounds(780, 411, 109, 23);
+		btnCadastrar.setBounds(874, 508, 114, 25);
 		contentPane.add(btnCadastrar);
 		
 		JButton btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(662, 411, 89, 23);
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtNome.setText("");
+				txtCPF.setText("");
+				txtCelular.setText("");
+				txtLogin.setText("");
+				txtSenha.setText("");
+				txtLogradouro.setText("");
+				txtNumero.setText("");
+				txtComplemento.setText("");
+				txtBairro.setText("");
+				txtCidade.setText("");
+				txtEstado.setText("");
+			}
+		});
+		btnLimpar.setBounds(752, 508, 114, 25);
 		contentPane.add(btnLimpar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				inicializa(args);				
+				inicializa(args);
 			}
 		});
-		btnCancelar.setBounds(543, 411, 89, 23);
+		btnCancelar.setBounds(633, 508, 114, 25);
 		contentPane.add(btnCancelar);
+		
+		JLabel lblCamposObrigatrios = new JLabel("* Campos obrigatórios");
+		lblCamposObrigatrios.setFont(new Font("Dialog", Font.ITALIC, 10));
+		lblCamposObrigatrios.setBounds(40, 483, 216, 15);
+		contentPane.add(lblCamposObrigatrios);
 	}
 }

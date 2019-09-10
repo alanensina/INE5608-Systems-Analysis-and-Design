@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class TelaLogin extends JFrame {
 
 	private JPanel contentPane;
@@ -34,11 +36,12 @@ public class TelaLogin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JLabel lblLogo = new JLabel("LogoVaDeBike");
-		lblLogo.setBounds(179, 65, 145, 14);
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/logobike.png"));
+		lblLogo.setBounds(141, 23, 175, 92);
 		contentPane.add(lblLogo);
-
+		
 		JLabel lbLogin = new JLabel("Login");
 		lbLogin.setBounds(34, 139, 52, 14);
 		contentPane.add(lbLogin);
@@ -73,7 +76,7 @@ public class TelaLogin extends JFrame {
 				dispose();
 			}
 		});
-		btnCadastrarLocador.setBounds(34, 251, 129, 23);
+		btnCadastrarLocador.setBounds(34, 251, 156, 23);
 		contentPane.add(btnCadastrarLocador);
 
 		JButton btnNovoLocatrio = new JButton("Novo locatário?");
@@ -83,7 +86,7 @@ public class TelaLogin extends JFrame {
 				dispose();
 			}
 		});
-		btnNovoLocatrio.setBounds(278, 251, 129, 23);
+		btnNovoLocatrio.setBounds(251, 251, 156, 23);
 		contentPane.add(btnNovoLocatrio);
 	}
 }
