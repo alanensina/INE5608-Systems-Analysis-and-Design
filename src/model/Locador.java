@@ -14,18 +14,18 @@ public class Locador extends Usuario{
 	public Locador() {}
 
 	// Construtor sem id
-	public Locador(String nome, String cpf, Endereco endereco, String telefone, String login, String senha,
+	public Locador(String nome, String cpf, Endereco endereco, String celular, String login, String senha,
 			LocalDate dataCadastro, List<Bicicleta> bicicletas) {
-		super(nome, cpf, endereco, telefone);
+		super(nome, cpf, endereco, celular);
 		this.login = login;
 		this.senha = senha;
 		this.dataCadastro = dataCadastro;
 		this.bicicletas = bicicletas;
 	}
 	
-	public Locador(int id, String nome, String cpf, Endereco endereco, String telefone, String login, String senha,
+	public Locador(int id, String nome, String cpf, Endereco endereco, String celular, String login, String senha,
 			LocalDate dataCadastro, List<Bicicleta> bicicletas) {
-		super(nome, cpf, endereco, telefone);
+		super(nome, cpf, endereco, celular);
 		this.id = id;
 		this.login = login;
 		this.senha = senha;

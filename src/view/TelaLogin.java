@@ -21,7 +21,7 @@ public class TelaLogin extends JFrame {
 
 	public TelaLogin(String[] args) {
 		setResizable(false);
-		setTitle("V\u00E1 de Bike!");
+		setTitle("Vá de Bike!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 444, 344);
 
@@ -35,7 +35,7 @@ public class TelaLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblLogo = new JLabel("LogoV\u00E1DeBike");
+		JLabel lblLogo = new JLabel("LogoVaDeBike");
 		lblLogo.setBounds(179, 65, 145, 14);
 		contentPane.add(lblLogo);
 
@@ -76,7 +76,7 @@ public class TelaLogin extends JFrame {
 		btnCadastrarLocador.setBounds(34, 251, 129, 23);
 		contentPane.add(btnCadastrarLocador);
 
-		JButton btnNovoLocatrio = new JButton("Novo locat\u00E1rio?");
+		JButton btnNovoLocatrio = new JButton("Novo locatário?");
 		btnNovoLocatrio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCadastroLocatario.main(args);

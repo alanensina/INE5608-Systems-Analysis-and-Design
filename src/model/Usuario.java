@@ -5,15 +5,15 @@ public abstract class Usuario {
 	private String nome;
 	private String cpf;
 	private Endereco endereco;
-	private String telefone;
+	private String celular;
 	
 	public Usuario() {}
 	
-	public Usuario(String nome, String cpf, Endereco endereco, String telefone) {
+	public Usuario(String nome, String cpf, Endereco endereco, String celular) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.endereco = endereco;
-		this.telefone = telefone;
+		this.celular = celular;
 	}
 
 	public String getNome() {
@@ -41,10 +41,10 @@ public abstract class Usuario {
 	}
 
 	public String getTelefone() {
-		return telefone;
+		return celular;
 	}
 
 	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+		this.celular = telefone;
 	}
 }
