@@ -12,15 +12,15 @@ public class Locatario extends Usuario{
 	public Locatario() {}
 
 	// Contrutor sem id
-	public Locatario(String nome, String cpf, Endereco endereco, String telefone, String login, String senha, LocalDate dataCadastro) {
-		super(nome, cpf, endereco, telefone);
+	public Locatario(String nome, String cpf, Endereco endereco, String celular, String login, String senha, LocalDate dataCadastro) {
+		super(nome, cpf, endereco, celular);
 		this.login = login;
 		this.senha = senha;
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Locatario(String nome, String cpf, Endereco endereco, String telefone, int id, String login, String senha, LocalDate dataCadastro) {
-		super(nome, cpf, endereco, telefone);
+	public Locatario(String nome, String cpf, Endereco endereco, String celular, int id, String login, String senha, LocalDate dataCadastro) {
+		super(nome, cpf, endereco, celular);
 		this.id = id;
 		this.login = login;
 		this.senha = senha;

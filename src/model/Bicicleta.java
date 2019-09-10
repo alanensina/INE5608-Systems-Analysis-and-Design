@@ -3,31 +3,45 @@ package model;
 public class Bicicleta {
 	
 	private int id;
+	private Locador locador;
 	private String modelo;
 	private String ano;
 	private double valorDeAluguel;
 	private String acessorios;
+	private boolean disponivel;
 	
 	public Bicicleta() {}
 
 	// Construtor sem id
-	public Bicicleta(String modelo, String ano, double valorDeAluguel, String acessorios) {
+	public Bicicleta(Locador locador, String modelo, String ano, double valorDeAluguel, String acessorios, boolean disponivel) {
+		this.locador = locador;
 		this.modelo = modelo;
 		this.ano = ano;
 		this.valorDeAluguel = valorDeAluguel;
 		this.acessorios = acessorios;
+		this.disponivel = disponivel;
 	}
 	
-	public Bicicleta(int id, String modelo, String ano, double valorDeAluguel, String acessorios) {
+	public Bicicleta(int id, Locador locador, String modelo, String ano, double valorDeAluguel, String acessorios, boolean disponivel) {
 		this.id = id;
+		this.locador = locador;
 		this.modelo = modelo;
 		this.ano = ano;
 		this.valorDeAluguel = valorDeAluguel;
 		this.acessorios = acessorios;
+		this.disponivel = disponivel;
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public Locador getLocador() {
+		return locador;
+	}
+
+	public void setLocador(Locador locador) {
+		this.locador = locador;
 	}
 
 	public void setId(int id) {
@@ -64,6 +78,14 @@ public class Bicicleta {
 
 	public void setAcessorios(String acessorios) {
 		this.acessorios = acessorios;
+	}	
+
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 
 	@Override

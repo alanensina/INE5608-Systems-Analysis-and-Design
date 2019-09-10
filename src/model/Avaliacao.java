@@ -1,28 +1,26 @@
 package model;
 
-import java.time.LocalDate;
-
 public class Avaliacao {
 	
 	private int id;
 	private Aluguel aluguel;
-	private double nota;
-	private LocalDate dataAvaliacao;
-	
+	private double notaLocadorParaLocatario;
+	private double notaLocatarioParaLocador;
+
 	public Avaliacao() {}
 
-	public Avaliacao(int id, Aluguel aluguel, double nota, LocalDate dataAvaliacao) {
+	// Construtor sem id
+	public Avaliacao(Aluguel aluguel, double notaLocadorParaLocatario, double notaLocatarioParaLocador) {
+		this.aluguel = aluguel;
+		this.notaLocadorParaLocatario = notaLocadorParaLocatario;
+		this.notaLocatarioParaLocador = notaLocatarioParaLocador;
+	}
+
+	public Avaliacao(int id, Aluguel aluguel, double notaLocadorParaLocatario, double notaLocatarioParaLocador) {
 		this.id = id;
 		this.aluguel = aluguel;
-		this.nota = nota;
-		this.dataAvaliacao = dataAvaliacao;
-	}
-	
-	// Construtor sem id
-	public Avaliacao( Aluguel aluguel, double nota, LocalDate dataAvaliacao) {
-		this.aluguel = aluguel;
-		this.nota = nota;
-		this.dataAvaliacao = dataAvaliacao;
+		this.notaLocadorParaLocatario = notaLocadorParaLocatario;
+		this.notaLocatarioParaLocador = notaLocatarioParaLocador;
 	}
 
 	public int getId() {
@@ -41,19 +39,19 @@ public class Avaliacao {
 		this.aluguel = aluguel;
 	}
 
-	public double getNota() {
-		return nota;
+	public double getNotaLocadorParaLocatario() {
+		return notaLocadorParaLocatario;
 	}
 
-	public void setNota(double nota) {
-		this.nota = nota;
+	public void setNotaLocadorParaLocatario(double notaLocadorParaLocatario) {
+		this.notaLocadorParaLocatario = notaLocadorParaLocatario;
 	}
 
-	public LocalDate getDataAvaliacao() {
-		return dataAvaliacao;
+	public double getNotaLocatarioParaLocador() {
+		return notaLocatarioParaLocador;
 	}
 
-	public void setDataAvaliacao(LocalDate dataAvaliacao) {
-		this.dataAvaliacao = dataAvaliacao;
+	public void setNotaLocatarioParaLocador(double notaLocatarioParaLocador) {
+		this.notaLocatarioParaLocador = notaLocatarioParaLocador;
 	}
 }
