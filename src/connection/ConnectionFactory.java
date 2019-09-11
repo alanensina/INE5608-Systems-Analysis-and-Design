@@ -10,21 +10,23 @@ import java.util.logging.Logger;
 
 public class ConnectionFactory {
 	
+	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	private static final String URL = "jdbc:mysql://localhost:3306/vadebike?autoReconnect=true&useSSL=false";
+	private static final String USER = "alan";
+	private static final String PASS = "123456789";
+
 	public static Connection getConnection() {
-		
+
 		try {
+			Class.forName(DRIVER);
+			System.out.println("Connected to the database.");
+			return DriverManager.getConnection(URL, USER, PASS);
 
-            String url = "jdbc:sqlite:database/vadebike.db";
-            Connection con = DriverManager.getConnection(url);
-            System.out.println("Connected to the database.");
-
-            return con;
-
-        } catch (SQLException e) {
-        	throw new RuntimeException("Unable to connect to database: ", e);
-        }
+		} catch (ClassNotFoundException | SQLException ex) {
+			throw new RuntimeException("Unable to connect to database: ", ex);
+		}
 	}
-	
+
 	public static void closeConnection(Connection con) {
 		try {
 			if (con != null) {
@@ -35,7 +37,7 @@ public class ConnectionFactory {
 			Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	
+
 	public static void closeConnection(Connection con, PreparedStatement stmt) {
 		closeConnection(con);
 		try {

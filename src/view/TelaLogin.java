@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,15 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import controller.LoginController;
 
 @SuppressWarnings("serial")
 public class TelaLogin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtLogin;
-	private JTextField txtSenha;
+	private JPasswordField txtSenha;
 
 	public TelaLogin(String[] args) {
 		setResizable(false);
@@ -55,15 +59,36 @@ public class TelaLogin extends JFrame {
 		contentPane.add(txtLogin);
 		txtLogin.setColumns(10);
 
-		txtSenha = new JTextField();
+		txtSenha = new JPasswordField();
 		txtSenha.setColumns(10);
 		txtSenha.setBounds(90, 178, 317, 20);
 		contentPane.add(txtSenha);
 
 		JButton btnLogar = new JButton("Logar");
 		btnLogar.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "LOGOU!");
+				
+				LoginController controller = new LoginController();
+				
+				String login = txtLogin.getText();
+				String senha = txtSenha.getText();
+				
+				try {
+					if(controller.enviaParaService(login, senha)) {
+						dispose();
+						JOptionPane.showMessageDialog(null, "Login efetuado com sucesso.");
+						TelaMenu.main(args);
+					}else {
+						txtLogin.setText("");
+						txtSenha.setText("");
+						JOptionPane.showMessageDialog(null, "Usuário ou senha não conferem.");
+					}
+				} catch (HeadlessException e1) {
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}				
 			}
 		});
 		btnLogar.setBounds(163, 209, 129, 23);

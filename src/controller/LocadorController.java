@@ -13,5 +13,13 @@ public class LocadorController {
 	public boolean enviaParaService(Locador loc, Endereco end) throws Exception {
 		return service.validaLocador(loc,end);
 	}
+	
+	public boolean enviaParaServiceAtualizar(Locador loc, Endereco end) throws Exception {
+		return service.validaAtualizacaoLocador(loc,end);
+	}
+
+	public void enviarParaServiceDeletar(Locador loc, Endereco end) {
+		service.deletar(loc,end);
+	}
 
 }

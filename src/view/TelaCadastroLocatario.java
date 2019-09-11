@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import controller.LocatarioController;
 import model.Endereco;
@@ -31,17 +32,17 @@ import model.Locatario;
 public class TelaCadastroLocatario extends JFrame {
 	
 	private JPanel contentPane;
-	private JTextField txtNome;
+	private JFormattedTextField txtNome;
 	private JFormattedTextField txtCPF;
 	private JFormattedTextField txtCelular;
-	private JTextField txtLogin;
+	private JFormattedTextField txtLogin;
 	private JPasswordField txtSenha;
-	private JTextField txtLogradouro;
+	private JFormattedTextField txtLogradouro;
 	private JTextField txtNumero;
 	private JTextField txtComplemento;
-	private JTextField txtBairro;
-	private JTextField txtCidade;
-	private JTextField txtEstado;
+	private JFormattedTextField txtBairro;
+	private JFormattedTextField txtCidade;
+	private JFormattedTextField txtEstado;
 	private JFormattedTextField txtCEP;
 
 	public static void main(String[] args) {
@@ -57,7 +58,7 @@ public class TelaCadastroLocatario extends JFrame {
 		});
 	}
 
-	public TelaCadastroLocatario(String[] args) {
+	public TelaCadastroLocatario(String[] args) throws Exception {
 		setTitle("Cadastro de Locatário");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,6 +80,9 @@ public class TelaCadastroLocatario extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		MaskFormatter mascaraTexto = new MaskFormatter("******************************");
+		mascaraTexto.setValidCharacters(" aáàäbcçdeéèëfghiíìïjklmnoóòöpqrstuúùüvwxyzAÁÀÄBCÇDEÉÈËFGHIÍÌÏJKLMNOÒÓÖPQRSTUÚÙÜVWXYZ");
+		
 		JLabel lblNome = new JLabel("Nome *");
 		lblNome.setBounds(12, 38, 66, 15);
 		panel.add(lblNome);
@@ -99,7 +103,7 @@ public class TelaCadastroLocatario extends JFrame {
 		lblSenha.setBounds(12, 202, 66, 15);
 		panel.add(lblSenha);
 		
-		txtNome = new JTextField();
+		txtNome = new JFormattedTextField(mascaraTexto);
 		txtNome.setBounds(83, 36, 373, 19);
 		panel.add(txtNome);
 		txtNome.setColumns(10);
@@ -128,7 +132,7 @@ public class TelaCadastroLocatario extends JFrame {
 		txtCelular.setBounds(83, 118, 373, 19);
 		panel.add(txtCelular);
 		
-		txtLogin = new JTextField();
+		txtLogin = new JFormattedTextField(mascaraTexto);
 		txtLogin.setColumns(10);
 		txtLogin.setBounds(83, 159, 373, 19);
 		panel.add(txtLogin);
@@ -140,7 +144,7 @@ public class TelaCadastroLocatario extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Endere\u00E7o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-		panel_1.setBounds(520, 180, 468, 318);
+		panel_1.setBounds(520, 180, 468, 316);
 		contentPane.add(panel_1);
 		
 		JLabel lblLogradouro = new JLabel("Logradouro *");
@@ -163,7 +167,7 @@ public class TelaCadastroLocatario extends JFrame {
 		lblCidade.setBounds(12, 202, 66, 15);
 		panel_1.add(lblCidade);
 		
-		txtLogradouro = new JTextField();
+		txtLogradouro = new JFormattedTextField(mascaraTexto);
 		txtLogradouro.setColumns(10);
 		txtLogradouro.setBounds(134, 36, 322, 19);
 		panel_1.add(txtLogradouro);
@@ -178,12 +182,12 @@ public class TelaCadastroLocatario extends JFrame {
 		txtComplemento.setBounds(134, 118, 322, 19);
 		panel_1.add(txtComplemento);
 		
-		txtBairro = new JTextField();
+		txtBairro = new JFormattedTextField(mascaraTexto);
 		txtBairro.setColumns(10);
 		txtBairro.setBounds(134, 159, 322, 19);
 		panel_1.add(txtBairro);
 		
-		txtCidade = new JTextField();
+		txtCidade = new JFormattedTextField(mascaraTexto);
 		txtCidade.setBounds(134, 200, 322, 19);
 		panel_1.add(txtCidade);
 		
@@ -191,9 +195,13 @@ public class TelaCadastroLocatario extends JFrame {
 		lblEstado.setBounds(12, 243, 66, 15);
 		panel_1.add(lblEstado);
 		
-		txtEstado = new JTextField();
+		txtEstado = new JFormattedTextField(mascaraTexto);
 		txtEstado.setBounds(134, 241, 322, 19);
 		panel_1.add(txtEstado);
+		
+		JLabel lblCep = new JLabel("CEP *");
+		lblCep.setBounds(12, 284, 66, 15);
+		panel_1.add(lblCep);
 		
 		javax.swing.text.MaskFormatter maskCep = null;
 		try {
@@ -201,10 +209,6 @@ public class TelaCadastroLocatario extends JFrame {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-		
-		JLabel lblCep = new JLabel("CEP *");
-		lblCep.setBounds(12, 284, 66, 15);
-		panel_1.add(lblCep);
 		
 		txtCEP = new JFormattedTextField(maskCep);
 		txtCEP.setBounds(134, 284, 322, 19);
@@ -236,6 +240,7 @@ public class TelaCadastroLocatario extends JFrame {
 				try {
 					if(controller.enviaParaService(loc,end)) {
 						dispose();
+						inicializa(args);
 					} else {
 						JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o locatário.");
 					}
