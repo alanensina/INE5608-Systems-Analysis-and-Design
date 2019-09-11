@@ -1,10 +1,12 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,10 +28,10 @@ public class LocadorDAO {
 
 		edao.salvar(end);
 		int idEndereco = edao.retornaIdEndereco(end);
+		loc.setDataCadastro(LocalDate.now());
 
 		con = ConnectionFactory.getConnection();
-		//String sql = "insert into locador (nome, cpf, idEndereco, celular, login, senha, dataCadastro) values (?, ?, ?, ?, ?, ?, ?)";
-		String sql = "insert into locador (nome, cpf, idEndereco, celular, login, senha) values (?, ?, ?, ?, ?, ?)";
+		String sql = "insert into locador (nome, cpf, idEndereco, celular, login, senha, dataCadastro) values (?, ?, ?, ?, ?, ?, ?)";
 
 		PreparedStatement stmt = null;
 
@@ -41,7 +43,7 @@ public class LocadorDAO {
 			stmt.setString(4, loc.getCelular());
 			stmt.setString(5, loc.getLogin());
 			stmt.setString(6, loc.getSenha());
-			//stmt.setDate(7, Date.loc.getDataCadastro());
+			stmt.setDate(7, Date.valueOf(loc.getDataCadastro()));
 			stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null, "Locador registrado com sucesso!");
 		} catch (SQLException ex) {
@@ -67,8 +69,9 @@ public class LocadorDAO {
 			stmt.setString(2, loc.getCpf());
 			stmt.setString(3, loc.getCelular());
 			stmt.setString(4, loc.getSenha());
+			stmt.setInt(5, loc.getId());
 			stmt.executeUpdate();
-			System.out.println("Locador atualizado com sucesso!");
+			
 
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(null,
@@ -79,7 +82,7 @@ public class LocadorDAO {
 		}
 		
 		edao.atualizar(end);
-		
+		JOptionPane.showMessageDialog(null,"Locador atualizado com sucesso!");
 		return true;
 
 	}
@@ -92,11 +95,13 @@ public class LocadorDAO {
 		PreparedStatement stmt = null;
 		
 		try {
-			edao.deletar(end);
+			
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, loc.getId());
 			stmt.executeUpdate();
-			System.out.println("Locador deletado com sucesso!");
+			
+			edao.deletar(end);
+			JOptionPane.showMessageDialog(null,"Locador deletado com sucesso!");
 
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(null, "Houve um erro ao deletar o locador no banco de dados. (LocadorDAO.deletarLocador)" + ex);
@@ -104,6 +109,7 @@ public class LocadorDAO {
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
+		
 		
 		return true;	
 	}
@@ -131,7 +137,7 @@ public class LocadorDAO {
 				loc.setCelular(rs.getString("celular"));
 				loc.setLogin(rs.getString("login"));
 				loc.setSenha(rs.getString("senha"));
-				//loc.setDataCadastro(rs.getDate("dataCadastro"));				
+				loc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());				
 				
 				locadores.add(loc);
 			}
@@ -191,8 +197,8 @@ public class LocadorDAO {
 				loc.setCelular(rs.getString("celular"));
 				loc.setLogin(rs.getString("login"));
 				loc.setSenha(rs.getString("senha"));
-				//loc.setDataCadastro(rs.getDate("dataCadastro").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());	
-
+				loc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());
+				
 			}
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(null, "Houve um erro ao buscar o locador pelo ID no banco de dados. (LocadorDAO.buscarPorId)" + ex);
@@ -224,7 +230,7 @@ public class LocadorDAO {
 				loc.setCelular(rs.getString("celular"));
 				loc.setLogin(rs.getString("login"));
 				loc.setSenha(rs.getString("senha"));
-				//loc.setDataCadastro(rs.getDate("dataCadastro").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());	
+				loc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());	
 
 			}
 		} catch (SQLException ex) {

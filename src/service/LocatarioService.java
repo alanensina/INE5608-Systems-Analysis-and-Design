@@ -44,4 +44,14 @@ public class LocatarioService {
 			
 			return false;
 		}
+
+		public boolean validaAtualizacaoLocatario(Locatario loc, Endereco end) throws Exception {
+			converterSenha(loc);
+			
+			return locatarioDAO.editarLocatario(loc, end);
+		}
+
+		public void deletar(Locatario loc, Endereco end) {
+			locatarioDAO.deletarLocatario(loc, end);
+		}
 }

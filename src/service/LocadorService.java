@@ -28,6 +28,12 @@ public class LocadorService {
 		return locadorDAO.salvar(loc, end);
 	}
 	
+	public boolean validaAtualizacaoLocador(Locador loc, Endereco end) throws Exception {
+		converterSenha(loc);
+		
+		return locadorDAO.editarLocador(loc, end);
+	}
+	
 	public void converterSenha(Locador loc) throws NoSuchAlgorithmException {
 		loc.setSenha(utils.converterMD5(loc.getSenha()));
 	}	
@@ -43,6 +49,10 @@ public class LocadorService {
 		}		
 		
 		return false;
+	}
+
+	public void deletar(Locador loc, Endereco end) {
+		locadorDAO.deletarLocador(loc, end);	
 	}
 	
 	

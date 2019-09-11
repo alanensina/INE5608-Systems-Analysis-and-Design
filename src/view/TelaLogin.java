@@ -78,6 +78,7 @@ public class TelaLogin extends JFrame {
 					if(controller.enviaParaService(login, senha)) {
 						dispose();
 						JOptionPane.showMessageDialog(null, "Login efetuado com sucesso.");
+						TelaMenu.main(args);
 					}else {
 						txtLogin.setText("");
 						txtSenha.setText("");
