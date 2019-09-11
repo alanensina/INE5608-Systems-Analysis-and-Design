@@ -202,4 +202,37 @@ public class LocadorDAO {
 		}
 		return loc;
 	}
+	
+	public Locador buscarPorLogin(String login) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select * from locador where login = ?";
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Locador loc = new Locador();
+		
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, login);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+
+				loc.setId(rs.getInt(1));
+				loc.setNome(rs.getString("nome"));
+				loc.setCpf(rs.getString("cpf"));
+				loc.setEndereco(edao.buscarPorId(rs.getInt("idEndereco")));
+				loc.setCelular(rs.getString("celular"));
+				loc.setLogin(rs.getString("login"));
+				loc.setSenha(rs.getString("senha"));
+				//loc.setDataCadastro(rs.getDate("dataCadastro").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());	
+
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, "Houve um erro ao buscar o locador pelo ID no banco de dados. (LocadorDAO.buscarPorId)" + ex);
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+		return loc;
+	}
 }
