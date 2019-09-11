@@ -40,11 +40,11 @@ public abstract class Usuario {
 		this.endereco = endereco;
 	}
 
-	public String getTelefone() {
+	public String getCelular() {
 		return celular;
 	}
 
-	public void setTelefone(String telefone) {
-		this.celular = telefone;
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
 }
