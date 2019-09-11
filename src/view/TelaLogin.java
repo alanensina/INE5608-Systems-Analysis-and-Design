@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +38,7 @@ public class TelaLogin extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("");
-		//lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/logobike.png"));
+		lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/logobike.png"));
 		lblLogo.setBounds(141, 23, 175, 92);
 		contentPane.add(lblLogo);
 		

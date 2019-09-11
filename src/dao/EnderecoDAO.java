@@ -20,8 +20,8 @@ public class EnderecoDAO {
 	public boolean salvar(Endereco end) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "insert into endereco "
-				+ "(logradouro, numero, complemento, bairro, cidade, estado) "
-				+ "values (?,?,?,?,?,?)";
+				+ "(logradouro, numero, complemento, cep, bairro, cidade, estado) "
+				+ "values (?,?,?,?,?,?,?)";
 
 		PreparedStatement stmt = null;
 
@@ -30,9 +30,10 @@ public class EnderecoDAO {
 			stmt.setString(1, end.getLogradouro());
 			stmt.setString(2, end.getNumero());
 			stmt.setString(3, end.getComplemento());
-			stmt.setString(4, end.getBairro());
-			stmt.setString(5, end.getCidade());
-			stmt.setString(6, end.getEstado());
+			stmt.setString(4, end.getCep());
+			stmt.setString(5, end.getBairro());
+			stmt.setString(6, end.getCidade());
+			stmt.setString(7, end.getEstado());
 		
 			stmt.executeUpdate();
 			
@@ -73,7 +74,7 @@ public class EnderecoDAO {
 	
 	public boolean atualizar(Endereco end) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "update endereco set logradouro = ?," + " numero = ?, complemento = ?, bairro = ?, "
+		String sql = "update endereco set logradouro = ?," + " numero = ?, complemento = ?, cep = ?, bairro = ?, "
 				+ "cidade = ?, estado = ? where id = ?";
 
 		PreparedStatement stmt = null;
@@ -83,10 +84,11 @@ public class EnderecoDAO {
 			stmt.setString(1, end.getLogradouro());
 			stmt.setString(2, end.getNumero());
 			stmt.setString(3, end.getComplemento());
-			stmt.setString(4, end.getBairro());
-			stmt.setString(5, end.getCidade());
-			stmt.setString(6, end.getEstado());
-			stmt.setInt(7, end.getId());
+			stmt.setString(4, end.getCep());
+			stmt.setString(5, end.getBairro());
+			stmt.setString(6, end.getCidade());
+			stmt.setString(7, end.getEstado());
+			stmt.setInt(8, end.getId());
 			stmt.executeUpdate();
 			System.out.println("Endereço atualizado com sucesso!");
 
@@ -119,6 +121,7 @@ public class EnderecoDAO {
 				end.setLogradouro(rs.getString("logradouro"));
 				end.setNumero(rs.getString("numero"));
 				end.setComplemento(rs.getString("complemento"));
+				end.setCep(rs.getString("cep"));
 				end.setBairro(rs.getString("bairro"));
 				end.setCidade(rs.getString("cidade"));
 				end.setEstado(rs.getString("estado"));
@@ -139,7 +142,7 @@ public class EnderecoDAO {
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select id from endereco where logradouro = ? and numero = ?";
+		String sql = "select id from endereco where logradouro = ? and numero = ? and cep = ?";
 
 		Endereco endereco = new Endereco();
 
@@ -147,13 +150,14 @@ public class EnderecoDAO {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, end.getLogradouro());
 			stmt.setString(2, end.getNumero());
+			stmt.setString(3, end.getCep());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				endereco.setId(rs.getInt(1));
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao recuperar o id do endere�o. (EnderecoDAO.retornaIdEndereco)" + ex);
+			JOptionPane.showMessageDialog(null, "Houve um erro ao recuperar o id do endere�o. (EnderecoDAO.retornaIdEndereco)" + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
@@ -161,4 +165,41 @@ public class EnderecoDAO {
 		return endereco.getId();
 		
 	}	
+
+	public Endereco buscarPorId(int id) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "select * from endereco where id = ?";
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Endereco end = new Endereco();
+		
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+
+				end.setId(id);
+				end.setLogradouro(rs.getString("logradouro"));
+				end.setNumero(rs.getString("numero"));
+				end.setBairro(rs.getString("bairro"));
+				end.setComplemento(rs.getString("complemento"));
+				end.setCep(rs.getString("cep"));
+				end.setCidade(rs.getString("cidade"));
+				end.setEstado(rs.getString("estado"));
+
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, "Houve um erro ao buscar o endereço pelo ID no banco de dados. (EnderecoDAO.buscarPorId)" + ex);
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+		return end;
+	}
+
+
+
+
 }

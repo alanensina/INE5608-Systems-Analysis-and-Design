@@ -1,25 +1,31 @@
 package view;
 
+import static controller.AppController.inicializa;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.awt.event.ActionEvent;
 
-import static controller.AppController.inicializa;
+import controller.LocadorController;
+import model.Endereco;
+import model.Locador;
 
 @SuppressWarnings("serial")
 public class TelaCadastroLocador extends JFrame {
@@ -36,6 +42,7 @@ public class TelaCadastroLocador extends JFrame {
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtEstado;
+	private JFormattedTextField txtCEP;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,13 +69,13 @@ public class TelaCadastroLocador extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("");
-		//lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/locador.png"));
+		lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/locador.png"));
 		lblLogo.setBounds(426, 0, 216, 168);
 		contentPane.add(lblLogo);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Dados pessoais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(40, 180, 468, 297);
+		panel.setBounds(40, 180, 468, 316);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -133,7 +140,7 @@ public class TelaCadastroLocador extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Endere\u00E7o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-		panel_1.setBounds(520, 180, 468, 297);
+		panel_1.setBounds(520, 180, 468, 316);
 		contentPane.add(panel_1);
 		
 		JLabel lblLogradouro = new JLabel("Logradouro *");
@@ -188,7 +195,57 @@ public class TelaCadastroLocador extends JFrame {
 		txtEstado.setBounds(134, 241, 322, 19);
 		panel_1.add(txtEstado);
 		
+		JLabel lblCep = new JLabel("CEP *");
+		lblCep.setBounds(12, 284, 66, 15);
+		panel_1.add(lblCep);
+		
+		javax.swing.text.MaskFormatter maskCep = null;
+		try {
+			maskCep = new javax.swing.text.MaskFormatter("##.###-###");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		txtCEP = new JFormattedTextField(maskCep);
+		txtCEP.setBounds(134, 284, 322, 19);
+		panel_1.add(txtCEP);
+		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Endereco end = new Endereco();
+				Locador loc = new Locador();
+				LocadorController controller = new LocadorController();
+				
+				end.setLogradouro(txtLogradouro.getText());
+				end.setBairro(txtBairro.getText());
+				end.setNumero(txtNumero.getText());
+				end.setCep(txtCEP.getText());
+				end.setComplemento(txtComplemento.getText());
+				end.setCidade(txtCidade.getText());
+				end.setEstado(txtEstado.getText());
+				
+				loc.setNome(txtNome.getText());
+				loc.setCpf(txtCPF.getText());
+				loc.setCelular(txtCelular.getText());
+				loc.setLogin(txtLogin.getText());
+				loc.setSenha(txtSenha.getText());
+				
+				try {
+					if(controller.enviaParaService(loc,end)) {
+						dispose();
+					} else {
+						JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o locador.");
+					}
+				} catch (HeadlessException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnCadastrar.setBounds(874, 508, 114, 25);
 		contentPane.add(btnCadastrar);
 		
@@ -223,7 +280,7 @@ public class TelaCadastroLocador extends JFrame {
 		
 		JLabel lblCamposObrigatrios = new JLabel("* Campos obrigatórios");
 		lblCamposObrigatrios.setFont(new Font("Dialog", Font.ITALIC, 10));
-		lblCamposObrigatrios.setBounds(40, 483, 216, 15);
+		lblCamposObrigatrios.setBounds(40, 514, 216, 15);
 		contentPane.add(lblCamposObrigatrios);
 	}
 }
