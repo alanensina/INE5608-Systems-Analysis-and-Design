@@ -9,11 +9,11 @@ public class Main {
 		
 		//inicializa(args);
 		
-		TelaMenuPrincipalLocador tela = new TelaMenuPrincipalLocador(args);
-		tela.inicializaTela();
+		TelaMenuPrincipalLocador telaLocador = new TelaMenuPrincipalLocador(args);
+		telaLocador.inicializaTela();
 		
-//		TelaMenuPrincipalLocatario tela = new TelaMenuPrincipalLocatario();
-//		tela.inicializaTela();
+//		TelaMenuPrincipalLocatario telaLocatario = new TelaMenuPrincipalLocatario();
+//		telaLocatario.inicializaTela();
 		
 	}
 }

@@ -122,8 +122,6 @@ public class TelaEditarUsuario extends JFrame {
 		cbLocatario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Locatario loc = (Locatario)cbLocatario.getSelectedItem();
-				
-				System.out.println(loc.getNome());
 			}
 		});
 		cbLocatario.setBounds(96, 33, 283, 24);

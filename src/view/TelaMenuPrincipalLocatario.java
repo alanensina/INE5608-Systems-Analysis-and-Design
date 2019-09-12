@@ -1,5 +1,7 @@
 package view;
 
+import static controller.AppController.inicializa;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -17,13 +19,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import model.Locatario;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaMenuPrincipalLocatario extends JFrame {
 
 	private JPanel contentPane;
 	private Locatario loc = new Locatario();
 	private JDesktopPane desktopPane;
-	private JFrame frmMenuLocatario;
+	private static JFrame frmMenuLocatario;
 	private String[] args;
 
 	/**
@@ -53,7 +57,7 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 	}
 	
 	public void inicializaTela( ) {
-		frmMenuLocatario = new JFrame();
+		frmMenuLocatario = getInstancia();
 		frmMenuLocatario.getContentPane().setBackground(Color.DARK_GRAY);
 		frmMenuLocatario.setTitle("Vá de Bike!");
 		frmMenuLocatario.setResizable(false);
@@ -80,16 +84,33 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 		menuBar.setBounds(0, 0, 128, 21);
 		frmMenuLocatario.setJMenuBar(menuBar);
 		
-		JMenu mnTeste = new JMenu("Cadastro");
+		JMenu mnTeste = new JMenu("Meus dados");
 		menuBar.add(mnTeste);
 		
-		JMenuItem mntmCadastrarBicicleta = new JMenuItem("Cadastrar bicicleta");
+		JMenuItem mntmCadastrarBicicleta = new JMenuItem("Editar");
 		mntmCadastrarBicicleta.setHorizontalAlignment(SwingConstants.LEFT);
 		mnTeste.add(mntmCadastrarBicicleta);
+		
+		JMenuItem mntmSair = new JMenuItem("Sair");
+		mntmSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmMenuLocatario.setVisible(false);
+				inicializa(args);
+			}
+		});
+		mnTeste.add(mntmSair);
 		
 		
 		frmMenuLocatario.setVisible(true);
 		
+	}
+	
+	// Singleton
+	public static JFrame getInstancia() {
+		if (frmMenuLocatario == null) {
+			frmMenuLocatario = new JFrame();
+		}
+		return frmMenuLocatario;
 	}
 
 }
