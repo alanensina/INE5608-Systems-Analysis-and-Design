@@ -77,7 +77,7 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		
 		
 		JLabel labelBackground = new JLabel();
-		ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/backgroundLocador.jpg"));
+		ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/backgrounds/backgroundLocador.jpg"));
 		Image image = icon.getImage();
 		labelBackground.setIcon(icon);
 		

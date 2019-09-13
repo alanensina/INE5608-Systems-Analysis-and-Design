@@ -67,7 +67,7 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 		frmMenuLocatario.getContentPane().setLayout(new BorderLayout());
 
 		JLabel labelBackground = new JLabel();
-		ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/backgroundLocatario.jpg"));
+		ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/backgrounds/backgroundLocatario.jpg"));
 		Image image = icon.getImage();
 		labelBackground.setIcon(icon);
 		desktopPane = new JDesktopPane() {
