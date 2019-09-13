@@ -5,8 +5,10 @@ import static controller.AppController.inicializa;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -15,17 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import model.Bicicleta;
 import model.Endereco;
 import model.Locador;
-import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.util.List;
-import java.awt.event.ActionEvent;
 
 public class TelaMenuPrincipalLocador extends JFrame {
 
@@ -128,7 +124,44 @@ public class TelaMenuPrincipalLocador extends JFrame {
 			}
 
 		});
+		
+		JMenuItem mntmAvaliaes = new JMenuItem("Avalia\u00E7\u00F5es");
+		mnDados.add(mntmAvaliaes);
 		mnDados.add(mntmLogout);
+		
+		JMenu mnBicicleta = new JMenu("Bicicleta");
+		menuBar.add(mnBicicleta);
+		
+		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+
+				TelaCadastroBicicleta tela = new TelaCadastroBicicleta();
+				desktopPane.add(tela);
+				tela.setVisible(true);			
+			}
+		});
+		
+		mnBicicleta.add(mntmCadastrar);
+		
+		JMenuItem mntmEditar = new JMenuItem("Editar");
+		mnBicicleta.add(mntmEditar);
+		
+		JMenuItem mntmExcluir = new JMenuItem("Excluir");
+		mnBicicleta.add(mntmExcluir);
+		
+		JMenuItem mntmListar = new JMenuItem("Listar");
+		mnBicicleta.add(mntmListar);
+		
+		JMenu mnAluguel = new JMenu("Aluguel");
+		menuBar.add(mnAluguel);
+		
+		JMenuItem mntmSolicitaes = new JMenuItem("Solicita\u00E7\u00F5es pendentes");
+		mnAluguel.add(mntmSolicitaes);
+		
+		JMenuItem mntmT = new JMenuItem("Hist\u00F3rico");
+		mnAluguel.add(mntmT);
 
 		frmMenuLocador.setVisible(true);
 	}
@@ -140,5 +173,4 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		}
 		return frmMenuLocador;
 	}
-
 }

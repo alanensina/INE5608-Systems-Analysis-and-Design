@@ -1,6 +1,7 @@
 package app;
 
 import controller.AppController;
+import view.TelaCadastroBicicleta;
 import view.TelaMenuPrincipalLocador;
 import view.TelaMenuPrincipalLocatario;
 
@@ -16,5 +17,7 @@ public class Main {
 //		TelaMenuPrincipalLocatario telaLocatario = new TelaMenuPrincipalLocatario();
 //		telaLocatario.inicializaTela();
 		
+//		TelaCadastroBicicleta tela = new TelaCadastroBicicleta();
+//		tela.setVisible(true);
 	}
 }
