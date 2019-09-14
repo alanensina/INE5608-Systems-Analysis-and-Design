@@ -3,6 +3,7 @@ package view;
 import static controller.AppController.inicializa;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -288,4 +289,5 @@ public class TelaCadastroLocador extends JFrame {
 		lblCamposObrigatrios.setBounds(40, 514, 216, 15);
 		contentPane.add(lblCamposObrigatrios);
 	}
+	
 }

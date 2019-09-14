@@ -3,6 +3,7 @@ package view;
 import static controller.AppController.inicializa;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -316,6 +317,11 @@ public class TelaEdicaoLocador extends JInternalFrame {
 		btnDeletarUsurio.setForeground(Color.WHITE);
 		btnDeletarUsurio.setBounds(167, 508, 159, 25);
 		getContentPane().add(btnDeletarUsurio);
+	}
+	
+	public void setPosition() {
+		Dimension d = this.getDesktopPane().getSize();
+		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
 	}
 
 }

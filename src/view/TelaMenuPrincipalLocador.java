@@ -5,6 +5,7 @@ import static controller.AppController.inicializa;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,7 +65,7 @@ public class TelaMenuPrincipalLocador extends JFrame {
 	public void inicializaTela() {
 		frmMenuLocador = getInstancia();
 		frmMenuLocador.getContentPane().setBackground(Color.DARK_GRAY);
-		frmMenuLocador.setTitle("Vá de Bike!");
+		frmMenuLocador.setTitle("Vï¿½ de Bike!");
 		frmMenuLocador.setResizable(false);
 		frmMenuLocador.setExtendedState(JFrame.MAXIMIZED_BOTH); // Open the frame maximized
 		frmMenuLocador.setBounds(100, 100, 1280, 720);
@@ -72,12 +73,12 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		frmMenuLocador.getContentPane().setLayout(new BorderLayout());
 		
 		
-		JLabel labelBackground = new JLabel();
-		ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/backgrounds/backgroundLocador.jpg"));
-		Image image = icon.getImage();
-		labelBackground.setIcon(icon);
-		
-		
+//		JLabel labelBackground = new JLabel();
+//		ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/backgrounds/backgroundLocador.jpg"));
+//		Image image = icon.getImage();
+//		labelBackground.setIcon(icon);
+//		
+//		
 //		desktopPane = new JDesktopPane() {
 //
 //			public void paintComponent(Graphics g) {
@@ -105,6 +106,7 @@ public class TelaMenuPrincipalLocador extends JFrame {
 				try {
 					TelaEdicaoLocador tela = new TelaEdicaoLocador(args, loc);
 					desktopPane.add(tela);
+					tela.setPosition();
 					tela.setVisible(true);
 				} catch (Exception e2) {
 					e2.printStackTrace();
@@ -139,6 +141,7 @@ public class TelaMenuPrincipalLocador extends JFrame {
 
 				TelaCadastroBicicleta tela = new TelaCadastroBicicleta();
 				desktopPane.add(tela);
+				tela.setPosition();
 				tela.setVisible(true);			
 			}
 		});

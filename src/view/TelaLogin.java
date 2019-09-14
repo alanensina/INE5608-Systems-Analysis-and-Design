@@ -42,7 +42,8 @@ public class TelaLogin extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(TelaLogin.class.getResource("/images/icons/logobike.png")));
+		lblLogo.setIcon(new ImageIcon(
+				TelaLogin.class.getResource("/images/icons/logobike.png")));
 		lblLogo.setBounds(141, 23, 175, 92);
 		contentPane.add(lblLogo);
 		
