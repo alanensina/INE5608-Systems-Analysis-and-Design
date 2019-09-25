@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
@@ -72,25 +73,13 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		frmMenuLocador.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuLocador.getContentPane().setLayout(new BorderLayout());
 		
+		URL resource = this.getClass().getResource("/images/backgrounds/backgroundLocador.jpg");
+		ImageIcon icon = new ImageIcon(resource);
 		
-//		JLabel labelBackground = new JLabel();
-//		ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/backgrounds/backgroundLocador.jpg"));
-//		Image image = icon.getImage();
-//		labelBackground.setIcon(icon);
-//		
-//		
-//		desktopPane = new JDesktopPane() {
-//
-//			public void paintComponent(Graphics g) {
-//				super.paintComponent(g);
-//				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-//				repaint();
-//			}
-//		};
-//		desktopPane.add(labelBackground, BorderLayout.CENTER);
-	
-		
+		desktopPane = new JDesktopPane();
 		desktopPane.setBounds(131, 57, 1, 1);
+		desktopPane.add(new BackgroundPanel(icon.getImage()));
+		
 		frmMenuLocador.getContentPane().add(desktopPane, BorderLayout.CENTER);
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 128, 21);
@@ -105,9 +94,12 @@ public class TelaMenuPrincipalLocador extends JFrame {
 				
 				try {
 					TelaEdicaoLocador tela = new TelaEdicaoLocador(args, loc);
+					tela.setVisible(true);
 					desktopPane.add(tela);
 					tela.setPosition();
-					tela.setVisible(true);
+					tela.moveToFront();
+					tela.setSelected(true);
+					
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}

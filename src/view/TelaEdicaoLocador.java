@@ -9,10 +9,12 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -64,13 +66,13 @@ public class TelaEdicaoLocador extends JInternalFrame {
 		setBounds(100, 100, 1027, 602);
 		getContentPane().setLayout(null);
 		
+		ImageIcon icon = new ImageIcon(TelaEdicaoLocador.class.getResource("/images/icons/locador.png"));
 		
 		
 		
-		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(TelaEdicaoLocador.class.getResource("/images/icons/locador.png")));
-		lblLogo.setBounds(426, 0, 216, 168);
-		getContentPane().add(lblLogo);
+		BackgroundPanel backgroundPanel = new BackgroundPanel(icon.getImage());
+		backgroundPanel.setBounds(426, 0, 216, 168);
+		getContentPane().add(backgroundPanel);
 		
 		JPanel panelDadosPessoais = new JPanel();
 		panelDadosPessoais.setBorder(new TitledBorder(null, "Dados pessoais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
