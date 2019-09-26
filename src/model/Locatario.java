@@ -19,7 +19,7 @@ public class Locatario extends Usuario{
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Locatario(String nome, String cpf, Endereco endereco, String celular, int id, String login, String senha, LocalDate dataCadastro) {
+	public Locatario(int id, String nome, String cpf, Endereco endereco, String celular, String login, String senha, LocalDate dataCadastro) {
 		super(nome, cpf, endereco, celular);
 		this.id = id;
 		this.login = login;

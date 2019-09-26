@@ -5,8 +5,6 @@ import static controller.AppController.inicializa;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -15,11 +13,9 @@ import java.time.LocalDate;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import model.Endereco;
@@ -27,22 +23,19 @@ import model.Locador;
 
 public class TelaMenuPrincipalLocador extends JFrame {
 
-	private JPanel contentPane;
+	private static final long serialVersionUID = 1L;
 	private Endereco end = new Endereco(0, "logradouro", "numero", "complemento", "cep", "bairro", "cidade", "estado");
 	private Locador loc = new Locador(0, "nome", "cpf", this.end, "celular", "login", "senha", LocalDate.now(), null);
 	private JDesktopPane desktopPane = new JDesktopPane();
 	private String[] args;
-	private static JFrame frmMenuLocador;
+	private JFrame frmMenuLocatario = new JFrame();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					TelaMenuPrincipalLocador window = new TelaMenuPrincipalLocador(args);
-					window.frmMenuLocador.setVisible(true);
+					window.frmMenuLocatario.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,22 +49,18 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		inicializaTela();
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public TelaMenuPrincipalLocador(String[] args) {
 		inicializaTela();
 	}
 
 	public void inicializaTela() {
-		frmMenuLocador = getInstancia();
-		frmMenuLocador.getContentPane().setBackground(Color.DARK_GRAY);
-		frmMenuLocador.setTitle("V� de Bike!");
-		frmMenuLocador.setResizable(false);
-		frmMenuLocador.setExtendedState(JFrame.MAXIMIZED_BOTH); // Open the frame maximized
-		frmMenuLocador.setBounds(100, 100, 1280, 720);
-		frmMenuLocador.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmMenuLocador.getContentPane().setLayout(new BorderLayout());
+		frmMenuLocatario.getContentPane().setBackground(Color.DARK_GRAY);
+		frmMenuLocatario.setTitle("V� de Bike!");
+		frmMenuLocatario.setResizable(false);
+		frmMenuLocatario.setExtendedState(JFrame.MAXIMIZED_BOTH); // Open the frame maximized
+		frmMenuLocatario.setBounds(100, 100, 1280, 720);
+		frmMenuLocatario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMenuLocatario.getContentPane().setLayout(new BorderLayout());
 		
 		URL resource = this.getClass().getResource("/images/backgrounds/backgroundLocador.jpg");
 		ImageIcon icon = new ImageIcon(resource);
@@ -80,15 +69,16 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		desktopPane.setBounds(131, 57, 1, 1);
 		desktopPane.add(new BackgroundPanel(icon.getImage()));
 		
-		frmMenuLocador.getContentPane().add(desktopPane, BorderLayout.CENTER);
+		frmMenuLocatario.getContentPane().add(desktopPane, BorderLayout.CENTER);
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 128, 21);
-		frmMenuLocador.setJMenuBar(menuBar);
+		frmMenuLocatario.setJMenuBar(menuBar);
 
 		JMenu mnDados = new JMenu("Meu dados");
 		menuBar.add(mnDados);
 
 		JMenuItem mntmCadastrarBicicleta = new JMenuItem("Editar");
+		
 		mntmCadastrarBicicleta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -113,7 +103,7 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		mntmLogout.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				frmMenuLocador.setVisible(false);
+				frmMenuLocatario.setVisible(false);
 				inicializa(args);
 			}
 
@@ -158,14 +148,6 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		JMenuItem mntmT = new JMenuItem("Hist\u00F3rico");
 		mnAluguel.add(mntmT);
 
-		frmMenuLocador.setVisible(true);
-	}
-
-	// Singleton
-	public static JFrame getInstancia() {
-		if (frmMenuLocador == null) {
-			frmMenuLocador = new JFrame();
-		}
-		return frmMenuLocador;
+		frmMenuLocatario.setVisible(true);
 	}
 }

@@ -34,6 +34,7 @@ import model.Locador;
 
 public class TelaEdicaoLocador extends JInternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JFormattedTextField txtNome;
 	private JFormattedTextField txtCPF;
 	private JFormattedTextField txtCelular;
@@ -67,8 +68,6 @@ public class TelaEdicaoLocador extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		ImageIcon icon = new ImageIcon(TelaEdicaoLocador.class.getResource("/images/icons/locador.png"));
-		
-		
 		
 		BackgroundPanel backgroundPanel = new BackgroundPanel(icon.getImage());
 		backgroundPanel.setBounds(426, 0, 216, 168);
