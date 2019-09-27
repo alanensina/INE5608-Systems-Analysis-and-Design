@@ -59,7 +59,7 @@ public class TelaCadastroLocatario extends JFrame {
 	}
 
 	public TelaCadastroLocatario(String[] args) throws Exception {
-		setTitle("Cadastro de Locatário");
+		setTitle("Cadastro de LocatÃ¡rio");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1027, 602);
@@ -70,7 +70,7 @@ public class TelaCadastroLocatario extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon("/home/alan/eclipse-workspace/VaDeBike/icons/locatario.png"));
+		lblLogo.setIcon(new ImageIcon(TelaCadastroLocatario.class.getResource("/images/icons/locatario.png")));
 		lblLogo.setBounds(426, 0, 216, 168);
 		contentPane.add(lblLogo);
 		
@@ -81,7 +81,7 @@ public class TelaCadastroLocatario extends JFrame {
 		panel.setLayout(null);
 		
 		MaskFormatter mascaraTexto = new MaskFormatter("******************************");
-		mascaraTexto.setValidCharacters(" aáàäbcçdeéèëfghiíìïjklmnoóòöpqrstuúùüvwxyzAÁÀÄBCÇDEÉÈËFGHIÍÌÏJKLMNOÒÓÖPQRSTUÚÙÜVWXYZ");
+		mascaraTexto.setValidCharacters(" aÃ¡Ã Ã¤bcÃ§deÃ©Ã¨Ã«fghiÃ­Ã¬Ã¯jklmnoÃ³Ã²Ã¶pqrstuÃºÃ¹Ã¼vwxyzAÃ�Ã€Ã„BCÃ‡DEÃ‰ÃˆÃ‹FGHIÃ�ÃŒÃ�JKLMNOÃ’Ã“Ã–PQRSTUÃšÃ™ÃœVWXYZ");
 		
 		JLabel lblNome = new JLabel("Nome *");
 		lblNome.setBounds(12, 38, 66, 15);
@@ -151,7 +151,7 @@ public class TelaCadastroLocatario extends JFrame {
 		lblLogradouro.setBounds(12, 38, 117, 15);
 		panel_1.add(lblLogradouro);
 		
-		JLabel lblNmero = new JLabel("Número *");
+		JLabel lblNmero = new JLabel("NÃºmero *");
 		lblNmero.setBounds(12, 79, 66, 15);
 		panel_1.add(lblNmero);
 		
@@ -242,7 +242,7 @@ public class TelaCadastroLocatario extends JFrame {
 						dispose();
 						inicializa(args);
 					} else {
-						JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o locatário.");
+						JOptionPane.showMessageDialog(null, "NÃ£o foi possÃ­vel cadastrar o locatÃ¡rio.");
 					}
 				} catch (HeadlessException e) {
 					e.printStackTrace();
@@ -283,7 +283,7 @@ public class TelaCadastroLocatario extends JFrame {
 		btnCancelar.setBounds(633, 508, 114, 25);
 		contentPane.add(btnCancelar);
 		
-		JLabel lblCamposObrigatrios = new JLabel("* Campos obrigatórios");
+		JLabel lblCamposObrigatrios = new JLabel("* Campos obrigatÃ³rios");
 		lblCamposObrigatrios.setFont(new Font("Dialog", Font.ITALIC, 10));
 		lblCamposObrigatrios.setBounds(40, 514, 216, 15);
 		contentPane.add(lblCamposObrigatrios);

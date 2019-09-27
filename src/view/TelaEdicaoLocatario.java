@@ -3,6 +3,7 @@ package view;
 import static controller.AppController.inicializa;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,7 +32,7 @@ import model.Endereco;
 import model.Locador;
 import model.Locatario;
 
-public class TelaEdicaoLocatario extends JFrame {
+public class TelaEdicaoLocatario extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JFormattedTextField txtNome;
@@ -60,7 +62,7 @@ public class TelaEdicaoLocatario extends JFrame {
 	}
 
 	public TelaEdicaoLocatario(String[] args, Locatario locatario) throws Exception {
-		setTitle("Editar de Locatário");
+		setTitle("Editar de LocatÃ¡rio");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1027, 602);
@@ -82,7 +84,7 @@ public class TelaEdicaoLocatario extends JFrame {
 		panel.setLayout(null);
 		
 		MaskFormatter mascaraTexto = new MaskFormatter("******************************");
-		mascaraTexto.setValidCharacters(" aáàäbcçdeéèëfghiíìïjklmnoóòöpqrstuúùüvwxyzAÁÀÄBCÇDEÉÈËFGHIÍÌÏJKLMNOÒÓÖPQRSTUÚÙÜVWXYZ");		
+		mascaraTexto.setValidCharacters(" aÃ¡Ã Ã¤bcÃ§deÃ©Ã¨Ã«fghiÃ­Ã¬Ã¯jklmnoÃ³Ã²Ã¶pqrstuÃºÃ¹Ã¼vwxyzAÃ�Ã€Ã„BCÃ‡DEÃ‰ÃˆÃ‹FGHIÃ�ÃŒÃ�JKLMNOÃ’Ã“Ã–PQRSTUÃšÃ™ÃœVWXYZ");		
 		
 		JLabel lblNome = new JLabel("Nome *");
 		lblNome.setBounds(12, 38, 66, 15);
@@ -157,7 +159,7 @@ public class TelaEdicaoLocatario extends JFrame {
 		lblLogradouro.setBounds(12, 38, 117, 15);
 		panel_1.add(lblLogradouro);
 		
-		JLabel lblNmero = new JLabel("Número *");
+		JLabel lblNmero = new JLabel("NÃºmero *");
 		lblNmero.setBounds(12, 79, 66, 15);
 		panel_1.add(lblNmero);
 		
@@ -257,7 +259,7 @@ public class TelaEdicaoLocatario extends JFrame {
 						dispose();
 						inicializa(args);
 					} else {
-						JOptionPane.showMessageDialog(null, "Não foi possível atualizar o locatario.");
+						JOptionPane.showMessageDialog(null, "NÃ£o foi possÃ­vel atualizar o locatario.");
 					}
 				} catch (HeadlessException e) {
 					e.printStackTrace();
@@ -297,15 +299,15 @@ public class TelaEdicaoLocatario extends JFrame {
 		btnCancelar.setBounds(633, 508, 114, 25);
 		contentPane.add(btnCancelar);
 		
-		JLabel lblCamposObrigatrios = new JLabel("* Campos obrigatórios");
+		JLabel lblCamposObrigatrios = new JLabel("* Campos obrigatÃ³rios");
 		lblCamposObrigatrios.setFont(new Font("Dialog", Font.ITALIC, 10));
 		lblCamposObrigatrios.setBounds(40, 514, 216, 15);
 		contentPane.add(lblCamposObrigatrios);
 		
-		JButton btnDeletarLocatrio = new JButton("Deletar locatário");
+		JButton btnDeletarLocatrio = new JButton("Deletar locatÃ¡rio");
 		btnDeletarLocatrio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showConfirmDialog(null, "Atenção seu login será deletado do sistema. Caso confirme, não será possível reverter posteriormente.");
+				JOptionPane.showConfirmDialog(null, "AtenÃ§Ã£o seu login serÃ¡ deletado do sistema. Caso confirme, nÃ£o serÃ¡ possÃ­vel reverter posteriormente.");
 				Locatario loc = new Locatario();
 				Endereco end = new Endereco();
 				loc.setId(locatario.getId());
@@ -324,6 +326,11 @@ public class TelaEdicaoLocatario extends JFrame {
 		btnDeletarLocatrio.setBackground(new Color(255, 51, 51));
 		btnDeletarLocatrio.setBounds(179, 508, 159, 25);
 		contentPane.add(btnDeletarLocatrio);
+	}
+	
+	public void setPosition() {
+		Dimension d = this.getDesktopPane().getSize();
+		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
 	}
 
 }

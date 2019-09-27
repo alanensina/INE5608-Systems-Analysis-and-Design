@@ -1,12 +1,15 @@
 package app;
 
-import static controller.AppController.inicializa;
+import controller.AppController;
+import view.TelaCadastroBicicleta;
+import view.TelaMenuPrincipalLocador;
+import view.TelaMenuPrincipalLocatario;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		inicializa(args);
-		
+		AppController.inicializa(args);
+
 	}
 }
