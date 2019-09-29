@@ -40,13 +40,12 @@ public class TelaLogin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(
-				TelaLogin.class.getResource("/images/icons/logobike.png")));
+		lblLogo.setIcon(new ImageIcon(TelaLogin.class.getResource("/images/icons/logobike.png")));
 		lblLogo.setBounds(141, 23, 175, 92);
 		contentPane.add(lblLogo);
-		
+
 		JLabel lbLogin = new JLabel("Login");
 		lbLogin.setBounds(34, 139, 52, 14);
 		contentPane.add(lbLogin);
@@ -69,18 +68,17 @@ public class TelaLogin extends JFrame {
 		btnLogar.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				
+
 				LoginController controller = new LoginController();
-				
+
 				String login = txtLogin.getText();
 				String senha = txtSenha.getText();
-				
+
 				try {
-					if(controller.enviaParaService(login, senha)) {
+					if (controller.enviaParaService(login, senha)) {
 						dispose();
 						JOptionPane.showMessageDialog(null, "Login efetuado com sucesso.");
-						TelaMenu.main(args);
-					}else {
+					} else {
 						txtLogin.setText("");
 						txtSenha.setText("");
 						JOptionPane.showMessageDialog(null, "Usuário ou senha não conferem.");
@@ -89,7 +87,7 @@ public class TelaLogin extends JFrame {
 					e1.printStackTrace();
 				} catch (Exception e1) {
 					e1.printStackTrace();
-				}				
+				}
 			}
 		});
 		btnLogar.setBounds(163, 209, 129, 23);

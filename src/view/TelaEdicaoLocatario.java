@@ -293,7 +293,6 @@ public class TelaEdicaoLocatario extends JInternalFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				inicializa(args);
 			}
 		});
 		btnCancelar.setBounds(633, 508, 114, 25);
@@ -307,7 +306,7 @@ public class TelaEdicaoLocatario extends JInternalFrame {
 		JButton btnDeletarLocatrio = new JButton("Deletar locatÃ¡rio");
 		btnDeletarLocatrio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showConfirmDialog(null, "AtenÃ§Ã£o seu login serÃ¡ deletado do sistema. Caso confirme, nÃ£o serÃ¡ possÃ­vel reverter posteriormente.");
+				JOptionPane.showConfirmDialog(null, "Atenção, seu cadastro será deletado do sistema. Caso confirme, não será possível reverter posteriormente.");
 				Locatario loc = new Locatario();
 				Endereco end = new Endereco();
 				loc.setId(locatario.getId());
@@ -317,9 +316,6 @@ public class TelaEdicaoLocatario extends JInternalFrame {
 				controller.enviarParaServiceDeletar(loc,end);	
 				dispose();
 				inicializa(args);
-				
-				
-				
 			}
 		});
 		btnDeletarLocatrio.setForeground(Color.WHITE);
