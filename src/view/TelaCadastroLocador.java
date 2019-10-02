@@ -10,6 +10,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,10 +29,12 @@ import javax.swing.text.MaskFormatter;
 import controller.LocadorController;
 import model.Endereco;
 import model.Locador;
+import service.UtilsService;
 
 @SuppressWarnings("serial")
 public class TelaCadastroLocador extends JFrame {
 
+	private Properties prop = UtilsService.getProp();
 	private JPanel contentPane;
 	private JFormattedTextField txtNome;
 	private JFormattedTextField txtCPF;
@@ -60,7 +63,7 @@ public class TelaCadastroLocador extends JFrame {
 	}
 
 	public TelaCadastroLocador(String[] args) throws Exception {
-		setTitle("Cadastro de Locador");
+		setTitle(prop.getProperty("CadBikeView.Title"));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1027, 602);
@@ -76,7 +79,7 @@ public class TelaCadastroLocador extends JFrame {
 		contentPane.add(lblLogo);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Dados pessoais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, prop.getProperty("CadLocadorView.BorderTitle.DadosPessoais"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(40, 180, 468, 316);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -84,23 +87,23 @@ public class TelaCadastroLocador extends JFrame {
 		MaskFormatter mascaraTexto = new MaskFormatter("******************************");
 		mascaraTexto.setValidCharacters(" aÃ¡Ã Ã¤bcÃ§deÃ©Ã¨Ã«fghiÃ­Ã¬Ã¯jklmnoÃ³Ã²Ã¶pqrstuÃºÃ¹Ã¼vwxyzAÃ�Ã€Ã„BCÃ‡DEÃ‰ÃˆÃ‹FGHIÃ�ÃŒÃ�JKLMNOÃ’Ã“Ã–PQRSTUÃšÃ™ÃœVWXYZ");		
 		
-		JLabel lblNome = new JLabel("Nome *");
+		JLabel lblNome = new JLabel(prop.getProperty("CadLocadorView.Label.Nome"));
 		lblNome.setBounds(12, 38, 66, 15);
 		panel.add(lblNome);
 		
-		JLabel lblCpf = new JLabel("CPF *");
+		JLabel lblCpf = new JLabel(prop.getProperty("CadLocadorView.Label.CPF"));
 		lblCpf.setBounds(12, 79, 66, 15);
 		panel.add(lblCpf);
 		
-		JLabel lblCelular = new JLabel("Celular *");
+		JLabel lblCelular = new JLabel(prop.getProperty("CadLocadorView.Label.Celular"));
 		lblCelular.setBounds(12, 120, 66, 15);
 		panel.add(lblCelular);
 		
-		JLabel lblLogin = new JLabel("Login *");
+		JLabel lblLogin = new JLabel(prop.getProperty("CadLocadorView.Label.Login"));
 		lblLogin.setBounds(12, 161, 66, 15);
 		panel.add(lblLogin);
 		
-		JLabel lblSenha = new JLabel("Senha  *");
+		JLabel lblSenha = new JLabel(prop.getProperty("CadLocadorView.Label.Senha"));
 		lblSenha.setBounds(12, 202, 66, 15);
 		panel.add(lblSenha);
 		
@@ -144,27 +147,27 @@ public class TelaCadastroLocador extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
-		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Endere\u00E7o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), prop.getProperty("CadLocadorView.BorderTitle.Endereco"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		panel_1.setBounds(520, 180, 468, 316);
 		contentPane.add(panel_1);
 		
-		JLabel lblLogradouro = new JLabel("Logradouro *");
+		JLabel lblLogradouro = new JLabel(prop.getProperty("CadLocadorView.Label.Logradouro"));
 		lblLogradouro.setBounds(12, 38, 117, 15);
 		panel_1.add(lblLogradouro);
 		
-		JLabel lblNmero = new JLabel("NÃºmero *");
+		JLabel lblNmero = new JLabel(prop.getProperty("CadLocadorView.Label.Numero"));
 		lblNmero.setBounds(12, 79, 66, 15);
 		panel_1.add(lblNmero);
 		
-		JLabel lblBairro = new JLabel("Complemento");
+		JLabel lblBairro = new JLabel(prop.getProperty("CadLocadorView.Label.Complemento"));
 		lblBairro.setBounds(12, 120, 117, 15);
 		panel_1.add(lblBairro);
 		
-		JLabel lblBairro_1 = new JLabel("Bairro *");
+		JLabel lblBairro_1 = new JLabel(prop.getProperty("CadLocadorView.Label.Bairro"));
 		lblBairro_1.setBounds(12, 161, 66, 15);
 		panel_1.add(lblBairro_1);
 		
-		JLabel lblCidade = new JLabel("Cidade *");
+		JLabel lblCidade = new JLabel(prop.getProperty("CadLocadorView.Label.Cidade"));
 		lblCidade.setBounds(12, 202, 66, 15);
 		panel_1.add(lblCidade);
 		
@@ -192,7 +195,7 @@ public class TelaCadastroLocador extends JFrame {
 		txtCidade.setBounds(134, 200, 322, 19);
 		panel_1.add(txtCidade);
 		
-		JLabel lblEstado = new JLabel("Estado *");
+		JLabel lblEstado = new JLabel(prop.getProperty("CadLocadorView.Label.Estado"));
 		lblEstado.setBounds(12, 243, 66, 15);
 		panel_1.add(lblEstado);
 		
@@ -200,7 +203,7 @@ public class TelaCadastroLocador extends JFrame {
 		txtEstado.setBounds(134, 241, 322, 19);
 		panel_1.add(txtEstado);
 		
-		JLabel lblCep = new JLabel("CEP *");
+		JLabel lblCep = new JLabel(prop.getProperty("CadLocadorView.Label.CEP"));
 		lblCep.setBounds(12, 284, 66, 15);
 		panel_1.add(lblCep);
 		
@@ -215,7 +218,7 @@ public class TelaCadastroLocador extends JFrame {
 		txtCEP.setBounds(134, 284, 322, 19);
 		panel_1.add(txtCEP);
 		
-		JButton btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton(prop.getProperty("CadLocadorView.Button.Cadastrar"));
 		btnCadastrar.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
@@ -243,7 +246,7 @@ public class TelaCadastroLocador extends JFrame {
 						dispose();
 						inicializa(args);
 					} else {
-						JOptionPane.showMessageDialog(null, "NÃ£o foi possÃ­vel cadastrar o locador.");
+						JOptionPane.showMessageDialog(null, prop.getProperty("CadLocadorView.Message.CadastroFail"));
 					}
 				} catch (HeadlessException e) {
 					e.printStackTrace();
@@ -255,7 +258,7 @@ public class TelaCadastroLocador extends JFrame {
 		btnCadastrar.setBounds(874, 508, 114, 25);
 		contentPane.add(btnCadastrar);
 		
-		JButton btnLimpar = new JButton("Limpar");
+		JButton btnLimpar = new JButton(prop.getProperty("CadLocadorView.Button.Limpar"));
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txtNome.setText("");
@@ -274,7 +277,7 @@ public class TelaCadastroLocador extends JFrame {
 		btnLimpar.setBounds(752, 508, 114, 25);
 		contentPane.add(btnLimpar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton(prop.getProperty("CadLocadorView.Button.Cancelar"));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -284,7 +287,7 @@ public class TelaCadastroLocador extends JFrame {
 		btnCancelar.setBounds(633, 508, 114, 25);
 		contentPane.add(btnCancelar);
 		
-		JLabel lblCamposObrigatrios = new JLabel("* Campos obrigatÃ³rios");
+		JLabel lblCamposObrigatrios = new JLabel(prop.getProperty("CadLocadorView.Label.CamposObrigatorios"));
 		lblCamposObrigatrios.setFont(new Font("Dialog", Font.ITALIC, 10));
 		lblCamposObrigatrios.setBounds(40, 514, 216, 15);
 		contentPane.add(lblCamposObrigatrios);

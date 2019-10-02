@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,10 +16,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import service.UtilsService;
+
 public class TelaCadastroBicicleta extends JInternalFrame {
 	private JTextField txtModelo;
 	private JTextField txtValorAluguel;
 	private JTextField txtAno;
+	private Properties prop = UtilsService.getProp();
 
 	/**
 	 * Launch the application.
@@ -42,18 +46,18 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 	public TelaCadastroBicicleta() {
 		setClosable(true);
 		setResizable(false);
-		setTitle("Cadastro de bicicletas");
+		setTitle(prop.getProperty("CadBikeView.Title"));
 		setBounds(100, 100, 450, 496);
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(
-				new TitledBorder(null, "Dados da bicicleta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				new TitledBorder(null, prop.getProperty("CadBikeView.BorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 161, 414, 260);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JLabel lblModelo = new JLabel("Modelo");
+		JLabel lblModelo = new JLabel(prop.getProperty("CadBikeView.Label.Modelo"));
 		lblModelo.setBounds(10, 35, 46, 14);
 		panel.add(lblModelo);
 
@@ -62,11 +66,11 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		panel.add(txtModelo);
 		txtModelo.setColumns(10);
 
-		JLabel lblAno = new JLabel("Ano");
+		JLabel lblAno = new JLabel(prop.getProperty("CadBikeView.Label.Ano"));
 		lblAno.setBounds(10, 71, 46, 14);
 		panel.add(lblAno);
 
-		JLabel lblValorDeAluguel = new JLabel("Valor de aluguel");
+		JLabel lblValorDeAluguel = new JLabel(prop.getProperty("CadBikeView.Label.Valor"));
 		lblValorDeAluguel.setBounds(172, 71, 86, 14);
 		panel.add(lblValorDeAluguel);
 
@@ -75,7 +79,7 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		panel.add(txtValorAluguel);
 		txtValorAluguel.setColumns(10);
 
-		JLabel lblAcessrios = new JLabel("Acess\u00F3rios");
+		JLabel lblAcessrios = new JLabel(prop.getProperty("CadBikeView.Label.Acessorios"));
 		lblAcessrios.setBounds(10, 106, 75, 14);
 		panel.add(lblAcessrios);
 
@@ -83,7 +87,7 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		txtAcessorios.setBounds(10, 131, 394, 90);
 		panel.add(txtAcessorios);
 
-		JCheckBox checkboxDisponibilidade = new JCheckBox("Dispon\u00EDvel para loca\u00E7\u00E3o");
+		JCheckBox checkboxDisponibilidade = new JCheckBox(prop.getProperty("CadBikeView.Checkbox.DisponibilidadeLocacao"));
 		checkboxDisponibilidade.setSelected(true);
 		checkboxDisponibilidade.setBounds(6, 228, 231, 23);
 		panel.add(checkboxDisponibilidade);
@@ -93,11 +97,11 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		panel.add(txtAno);
 		txtAno.setColumns(10);
 
-		JButton btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton(prop.getProperty("CadBikeView.Button.Cadastrar"));
 		btnCadastrar.setBounds(309, 432, 115, 23);
 		getContentPane().add(btnCadastrar);
 
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton(prop.getProperty("CadBikeView.Button.Cancelar"));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
