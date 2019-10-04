@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -20,6 +21,7 @@ import javax.swing.SwingConstants;
 
 import model.Endereco;
 import model.Locador;
+import service.UtilsService;
 
 public class TelaMenuPrincipalLocador extends JFrame {
 
@@ -29,6 +31,7 @@ public class TelaMenuPrincipalLocador extends JFrame {
 	private JDesktopPane desktopPane = new JDesktopPane();
 	private String[] args;
 	private JFrame frmMenuLocatario = new JFrame();
+	private Properties prop = UtilsService.getProp();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -49,13 +52,16 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		inicializaTela();
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public TelaMenuPrincipalLocador(String[] args) {
 		inicializaTela();
 	}
 
 	public void inicializaTela() {
 		frmMenuLocatario.getContentPane().setBackground(Color.DARK_GRAY);
-		frmMenuLocatario.setTitle("V� de Bike!");
+		frmMenuLocatario.setTitle(prop.getProperty("MenuLocadorView.Title"));
 		frmMenuLocatario.setResizable(false);
 		frmMenuLocatario.setExtendedState(JFrame.MAXIMIZED_BOTH); // Open the frame maximized
 		frmMenuLocatario.setBounds(100, 100, 1280, 720);
@@ -74,12 +80,12 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		menuBar.setBounds(0, 0, 128, 21);
 		frmMenuLocatario.setJMenuBar(menuBar);
 
-		JMenu mnDados = new JMenu("Meu dados");
-		menuBar.add(mnDados);
+		JMenu menuMeusDados = new JMenu(prop.getProperty("MenuLocadorView.Menu.MeusDados"));
+		menuBar.add(menuMeusDados);
 
-		JMenuItem mntmCadastrarBicicleta = new JMenuItem("Editar");
+		JMenuItem menuItemMeusDadosEditar = new JMenuItem(prop.getProperty("MenuLocadorView.Menu.MenuItem.Editar"));
 		
-		mntmCadastrarBicicleta.addActionListener(new ActionListener() {
+		menuItemMeusDadosEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
@@ -96,11 +102,11 @@ public class TelaMenuPrincipalLocador extends JFrame {
 			}
 		});
 		
-		mntmCadastrarBicicleta.setHorizontalAlignment(SwingConstants.LEFT);
-		mnDados.add(mntmCadastrarBicicleta);
+		menuItemMeusDadosEditar.setHorizontalAlignment(SwingConstants.LEFT);
+		menuMeusDados.add(menuItemMeusDadosEditar);
 
-		JMenuItem mntmLogout = new JMenuItem("Sair");
-		mntmLogout.addActionListener(new ActionListener() {
+		JMenuItem menuItemMeusDadosSair = new JMenuItem(prop.getProperty("MenuLocadorView.Menu.MenuItem.Sair"));
+		menuItemMeusDadosSair.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				frmMenuLocatario.setVisible(false);
@@ -109,15 +115,15 @@ public class TelaMenuPrincipalLocador extends JFrame {
 
 		});
 		
-		JMenuItem mntmAvaliaes = new JMenuItem("Avalia\u00E7\u00F5es");
-		mnDados.add(mntmAvaliaes);
-		mnDados.add(mntmLogout);
+		JMenuItem menuItemMeusDadosAvaliacoes = new JMenuItem(prop.getProperty("MenuLocadorView.Menu.MenuItem.Avaliacoes"));
+		menuMeusDados.add(menuItemMeusDadosAvaliacoes);
+		menuMeusDados.add(menuItemMeusDadosSair);
 		
-		JMenu mnBicicleta = new JMenu("Bicicleta");
-		menuBar.add(mnBicicleta);
+		JMenu menuBike = new JMenu(prop.getProperty("MenuLocadorView.Menu.Bike"));
+		menuBar.add(menuBike);
 		
-		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
-		mntmCadastrar.addActionListener(new ActionListener() {
+		JMenuItem menuItemBikeCadastrar = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Cadastrar"));
+		menuItemBikeCadastrar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 
@@ -128,25 +134,25 @@ public class TelaMenuPrincipalLocador extends JFrame {
 			}
 		});
 		
-		mnBicicleta.add(mntmCadastrar);
+		menuBike.add(menuItemBikeCadastrar);
 		
-		JMenuItem mntmEditar = new JMenuItem("Editar");
-		mnBicicleta.add(mntmEditar);
+		JMenuItem menuItemBikeEditar = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Cadastrar"));
+		menuBike.add(menuItemBikeEditar);
 		
-		JMenuItem mntmExcluir = new JMenuItem("Excluir");
-		mnBicicleta.add(mntmExcluir);
+		JMenuItem menuItemBikeExcluir = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Excluir"));
+		menuBike.add(menuItemBikeExcluir);
 		
-		JMenuItem mntmListar = new JMenuItem("Listar");
-		mnBicicleta.add(mntmListar);
+		JMenuItem menuItemBikeListar = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Listar"));
+		menuBike.add(menuItemBikeListar);
 		
-		JMenu mnAluguel = new JMenu("Aluguel");
-		menuBar.add(mnAluguel);
+		JMenu menuItemAluguel = new JMenu(prop.getProperty("MenuLocadorView.Menu.Aluguel"));
+		menuBar.add(menuItemAluguel);
 		
-		JMenuItem mntmSolicitaes = new JMenuItem("Solicita\u00E7\u00F5es pendentes");
-		mnAluguel.add(mntmSolicitaes);
+		JMenuItem menuItemAluguelSolicitacoes = new JMenuItem(prop.getProperty("MenuLocadorView.Aluguel.MenuItem.Solicitacoes"));
+		menuItemAluguel.add(menuItemAluguelSolicitacoes);
 		
-		JMenuItem mntmT = new JMenuItem("Hist\u00F3rico");
-		mnAluguel.add(mntmT);
+		JMenuItem menuItemBikeHistorico = new JMenuItem(prop.getProperty("MenuLocadorView.Aluguel.MenuItem.Historico"));
+		menuItemAluguel.add(menuItemBikeHistorico);
 
 		frmMenuLocatario.setVisible(true);
 	}
