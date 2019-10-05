@@ -48,6 +48,8 @@ public class TelaCadastroLocador extends JFrame {
 	private JFormattedTextField txtCidade;
 	private JFormattedTextField txtEstado;
 	private JFormattedTextField txtCEP;
+	
+	private static final String VALIDCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzçÇ áÁàÀÉéÈèÍíÌìÓóÒòÚúÙù";
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -85,7 +87,7 @@ public class TelaCadastroLocador extends JFrame {
 		panelDadosPessoais.setLayout(null);
 		
 		MaskFormatter mascaraTexto = new MaskFormatter("******************************");
-		mascaraTexto.setValidCharacters(" aÃ¡Ã Ã¤bcÃ§deÃ©Ã¨Ã«fghiÃ­Ã¬Ã¯jklmnoÃ³Ã²Ã¶pqrstuÃºÃ¹Ã¼vwxyzAÃ�Ã€Ã„BCÃ‡DEÃ‰ÃˆÃ‹FGHIÃ�ÃŒÃ�JKLMNOÃ’Ã“Ã–PQRSTUÃšÃ™ÃœVWXYZ");		
+		mascaraTexto.setValidCharacters(VALIDCHARS);		
 		
 		JLabel lblNome = new JLabel(prop.getProperty("CadLocadorView.Label.Nome"));
 		lblNome.setBounds(12, 38, 66, 15);

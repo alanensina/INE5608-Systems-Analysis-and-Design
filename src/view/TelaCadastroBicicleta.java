@@ -24,9 +24,6 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 	private JTextField txtAno;
 	private Properties prop = UtilsService.getProp();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,9 +37,6 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaCadastroBicicleta() {
 		setClosable(true);
 		setResizable(false);
