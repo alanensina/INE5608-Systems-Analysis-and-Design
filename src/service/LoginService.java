@@ -35,6 +35,12 @@ public class LoginService {
 		
 		return false;
 	}
-
 	
+	public Locador retornaLocador(String login) {
+		return locadorDAO.buscarPorLogin(login);
+	}
+	
+	public Locatario retornaLocatario(String login) {
+		return locatarioDAO.buscarPorLogin(login);
+	}
 }

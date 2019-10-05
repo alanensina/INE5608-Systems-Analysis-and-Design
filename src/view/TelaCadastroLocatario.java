@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.Properties;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,11 +28,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 import controller.LocatarioController;
+import enumeration.UF;
 import model.Endereco;
 import model.Locatario;
 
 import static service.UtilsService.*;
-import static service.LocadorService.validaCamposLocador;
 import static service.LocatarioService.*;
 
 public class TelaCadastroLocatario extends JFrame {
@@ -47,7 +49,6 @@ public class TelaCadastroLocatario extends JFrame {
 	private JTextField txtComplemento;
 	private JFormattedTextField txtBairro;
 	private JFormattedTextField txtCidade;
-	private JFormattedTextField txtEstado;
 	private JFormattedTextField txtCEP;
 	private static Properties prop = getProp();
 	
@@ -207,9 +208,10 @@ public class TelaCadastroLocatario extends JFrame {
 		lblEstado.setBounds(12, 243, 66, 15);
 		panelEndereco.add(lblEstado);
 
-		txtEstado = new JFormattedTextField(mascaraTexto);
-		txtEstado.setBounds(134, 241, 322, 19);
-		panelEndereco.add(txtEstado);
+		JComboBox<UF> jcbEstado = new JComboBox<UF>();
+		jcbEstado.setBounds(134, 238, 322, 24);
+		jcbEstado.setModel(new DefaultComboBoxModel<UF>(UF.values()));
+		panelEndereco.add(jcbEstado);	
 
 		JLabel lblCep = new JLabel(prop.getProperty("CadLocatarioView.Label.CEP"));
 		lblCep.setBounds(12, 284, 66, 15);
@@ -241,7 +243,7 @@ public class TelaCadastroLocatario extends JFrame {
 				end.setCep(txtCEP.getText());
 				end.setComplemento(txtComplemento.getText());
 				end.setCidade(txtCidade.getText());
-				end.setEstado(txtEstado.getText());
+				end.setEstado(((UF) jcbEstado.getSelectedItem()).getDescricao());
 
 				loc.setNome(txtNome.getText());
 				loc.setCpf(txtCPF.getText());
@@ -284,7 +286,7 @@ public class TelaCadastroLocatario extends JFrame {
 				txtComplemento.setText("");
 				txtBairro.setText("");
 				txtCidade.setText("");
-				txtEstado.setText("");
+				jcbEstado.setSelectedIndex(0);
 			}
 		});
 		btnLimpar.setBounds(752, 508, 114, 25);

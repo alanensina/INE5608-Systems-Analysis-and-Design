@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginController;
+import model.Locador;
+import model.Locatario;
 import service.UtilsService;
 
 public class TelaLogin extends JFrame {
@@ -79,7 +81,20 @@ public class TelaLogin extends JFrame {
 
 				try {
 					if (controller.enviaParaService(login, senha)) {
-						dispose();
+
+						Locador locador = controller.getLocador(login);
+						Locatario locatario = controller.getLocatario(login);
+
+						if (locador.getId() > 0) {
+							TelaMenuPrincipalLocador tela = new TelaMenuPrincipalLocador(locador, args);
+							dispose();
+						}
+
+						else if (locatario.getId() > 0) {
+							TelaMenuPrincipalLocatario tela = new TelaMenuPrincipalLocatario(locatario, args);
+							dispose();
+						}
+
 					} else {
 						txtLogin.setText("");
 						txtSenha.setText("");

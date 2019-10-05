@@ -7,7 +7,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
+import model.Endereco;
+import model.Locador;
+import model.Locatario;
+
 public class UtilsService {
+	private static Properties prop = getProp();
 
 	public static String converterMD5(String texto) throws NoSuchAlgorithmException {
 		MessageDigest m = MessageDigest.getInstance("MD5");
@@ -35,9 +42,6 @@ public class UtilsService {
 		campo = campo.replace( ")" , "");
 		campo = campo.replace( " " , "");
 		
-		boolean retorno = campo.isEmpty();
-		
-		return retorno;
+		return campo.isEmpty();
 	}
-
 }

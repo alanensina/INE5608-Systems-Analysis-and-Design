@@ -136,11 +136,8 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		
 		menuBike.add(menuItemBikeCadastrar);
 		
-		JMenuItem menuItemBikeEditar = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Cadastrar"));
+		JMenuItem menuItemBikeEditar = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Editar"));
 		menuBike.add(menuItemBikeEditar);
-		
-		JMenuItem menuItemBikeExcluir = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Excluir"));
-		menuBike.add(menuItemBikeExcluir);
 		
 		JMenuItem menuItemBikeListar = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Listar"));
 		menuBike.add(menuItemBikeListar);

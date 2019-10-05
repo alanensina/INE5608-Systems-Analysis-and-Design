@@ -53,7 +53,7 @@ public class LocadorService {
 
 		return false;
 	}
-
+	
 	public static boolean validaCamposLocador(Locador loc, Endereco end) {
 
 		return (validaCampoObrigatorio(loc.getNome()) || validaCampoObrigatorio(loc.getCpf())
