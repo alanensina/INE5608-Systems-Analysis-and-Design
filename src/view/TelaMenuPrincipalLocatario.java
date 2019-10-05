@@ -26,13 +26,13 @@ import service.UtilsService;
 
 public class TelaMenuPrincipalLocatario extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6001933533567233314L;
 	private Endereco end = new Endereco(0, "logradouro", "numero", "complemento", "cep", "bairro", "cidade", "estado");
 	private Locatario loc = new Locatario(0, "nome", "cpf", this.end, "celular", "login", "senha", LocalDate.now());
 	private JDesktopPane desktopPane = new JDesktopPane();
 	private String[] args;
 	private JFrame frmMenuLocatario = new JFrame();
-	private Properties prop = UtilsService.getProp();
+	private static Properties prop = UtilsService.getProp();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

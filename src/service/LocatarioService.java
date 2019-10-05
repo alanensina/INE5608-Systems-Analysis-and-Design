@@ -1,5 +1,7 @@
 package service;
 
+import static service.UtilsService.validaCampoObrigatorio;
+
 import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JOptionPane;
@@ -51,7 +53,13 @@ public class LocatarioService {
 			return locatarioDAO.editarLocatario(loc, end);
 		}
 
-		public void deletar(Locatario loc, Endereco end) {
-			locatarioDAO.deletarLocatario(loc, end);
+		public static boolean validaCamposLocador(Locatario loc, Endereco end) {
+
+			return (validaCampoObrigatorio(loc.getNome()) || validaCampoObrigatorio(loc.getCpf())
+					|| validaCampoObrigatorio(loc.getCelular()) || validaCampoObrigatorio(loc.getLogin())
+					|| validaCampoObrigatorio(loc.getSenha()) || validaCampoObrigatorio(end.getLogradouro())
+					|| validaCampoObrigatorio(end.getBairro()) || validaCampoObrigatorio(end.getNumero())
+					|| validaCampoObrigatorio(end.getCep()) || validaCampoObrigatorio(end.getCidade())
+					|| validaCampoObrigatorio(end.getEstado()));
 		}
 }

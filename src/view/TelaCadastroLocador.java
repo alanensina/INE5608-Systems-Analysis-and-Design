@@ -29,12 +29,13 @@ import javax.swing.text.MaskFormatter;
 import controller.LocadorController;
 import model.Endereco;
 import model.Locador;
-import service.UtilsService;
+import static service.UtilsService.*;
+import static service.LocadorService.*;
 
-@SuppressWarnings("serial")
 public class TelaCadastroLocador extends JFrame {
 
-	private Properties prop = UtilsService.getProp();
+	private static final long serialVersionUID = -3173301847369787873L;
+	private static Properties prop = getProp();
 	private JPanel contentPane;
 	private JFormattedTextField txtNome;
 	private JFormattedTextField txtCPF;
@@ -49,7 +50,7 @@ public class TelaCadastroLocador extends JFrame {
 	private JFormattedTextField txtEstado;
 	private JFormattedTextField txtCEP;
 	
-	private static final String VALIDCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzçÇ áÁàÀÉéÈèÍíÌìÓóÒòÚúÙù";
+	private static final String VALIDCHARS = prop.getProperty("StringUtils.CaracteresValidos");
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -242,6 +243,11 @@ public class TelaCadastroLocador extends JFrame {
 				loc.setCelular(txtCelular.getText());
 				loc.setLogin(txtLogin.getText());
 				loc.setSenha(txtSenha.getText());
+				
+				if(validaCamposLocador(loc,end)) {
+					JOptionPane.showMessageDialog(null, prop.getProperty("CadLocadorView.Message.CamposVazios"));
+					return;
+				}
 				
 				try {
 					if(controller.enviaParaService(loc,end)) {

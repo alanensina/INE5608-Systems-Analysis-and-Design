@@ -9,9 +9,6 @@ import java.util.Properties;
 
 public class UtilsService {
 
-	public UtilsService() {
-	}
-
 	public static String converterMD5(String texto) throws NoSuchAlgorithmException {
 		MessageDigest m = MessageDigest.getInstance("MD5");
 		m.update(texto.getBytes(), 0, texto.length());
@@ -28,6 +25,19 @@ public class UtilsService {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
+	}
+	
+	public static boolean validaCampoObrigatorio(String campo) {
+		campo = campo.replace( "." , "");
+		campo = campo.replace( "/" , "");
+		campo = campo.replace( "-" , "");
+		campo = campo.replace( "(" , "");
+		campo = campo.replace( ")" , "");
+		campo = campo.replace( " " , "");
+		
+		boolean retorno = campo.isEmpty();
+		
+		return retorno;
 	}
 
 }

@@ -28,11 +28,14 @@ import javax.swing.text.MaskFormatter;
 import controller.LocatarioController;
 import model.Endereco;
 import model.Locatario;
-import service.UtilsService;
 
-@SuppressWarnings("serial")
+import static service.UtilsService.*;
+import static service.LocadorService.validaCamposLocador;
+import static service.LocatarioService.*;
+
 public class TelaCadastroLocatario extends JFrame {
 
+	private static final long serialVersionUID = -3011299670673432964L;
 	private JPanel contentPane;
 	private JFormattedTextField txtNome;
 	private JFormattedTextField txtCPF;
@@ -46,9 +49,9 @@ public class TelaCadastroLocatario extends JFrame {
 	private JFormattedTextField txtCidade;
 	private JFormattedTextField txtEstado;
 	private JFormattedTextField txtCEP;
-	private Properties prop = UtilsService.getProp();
+	private static Properties prop = getProp();
 	
-	private static final String VALIDCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzçÇ áÁàÀÉéÈèÍíÌìÓóÒòÚúÙù";
+	private static final String VALIDCHARS = prop.getProperty("StringUtils.CaracteresValidos");
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -245,6 +248,11 @@ public class TelaCadastroLocatario extends JFrame {
 				loc.setCelular(txtCelular.getText());
 				loc.setLogin(txtLogin.getText());
 				loc.setSenha(txtSenha.getText());
+				
+				if(validaCamposLocador(loc,end)) {
+					JOptionPane.showMessageDialog(null, prop.getProperty("CadLocatarioView.Message.CamposVazios"));
+					return;
+				}
 
 				try {
 					if (controller.enviaParaService(loc, end)) {

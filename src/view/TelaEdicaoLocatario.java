@@ -50,9 +50,9 @@ public class TelaEdicaoLocatario extends JInternalFrame {
 	private JFormattedTextField txtCidade;
 	private JFormattedTextField txtEstado;
 	private JFormattedTextField txtCEP;
-	private Properties prop = UtilsService.getProp();
+	private static Properties prop = UtilsService.getProp();
 	
-	private static final String VALIDCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzçÇ áÁàÀÉéÈèÍíÌìÓóÒòÚúÙù";
+	private static final String VALIDCHARS = prop.getProperty("StringUtils.CaracteresValidos");
 
 	public static void main(String[] args, Locatario locatario) {
 		EventQueue.invokeLater(new Runnable() {
@@ -319,7 +319,9 @@ public class TelaEdicaoLocatario extends JInternalFrame {
 				end.setId(locatario.getEndereco().getId());
 				
 				LocatarioController controller = new LocatarioController();
-				controller.enviarParaServiceDeletar(loc,end);	
+
+				// TODO logica do delete
+				
 				dispose();
 				inicializa(args);
 			}

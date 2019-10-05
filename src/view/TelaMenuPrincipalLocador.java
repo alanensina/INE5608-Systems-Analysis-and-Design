@@ -31,7 +31,7 @@ public class TelaMenuPrincipalLocador extends JFrame {
 	private JDesktopPane desktopPane = new JDesktopPane();
 	private String[] args;
 	private JFrame frmMenuLocatario = new JFrame();
-	private Properties prop = UtilsService.getProp();
+	private static Properties prop = UtilsService.getProp();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

@@ -20,13 +20,13 @@ import javax.swing.border.EmptyBorder;
 import controller.LoginController;
 import service.UtilsService;
 
-@SuppressWarnings("serial")
 public class TelaLogin extends JFrame {
 
+	private static final long serialVersionUID = 4361812508384393976L;
 	private JPanel contentPane;
 	private JTextField txtLogin;
 	private JPasswordField txtSenha;
-	private Properties prop = UtilsService.getProp();
+	private static Properties prop = UtilsService.getProp();
 
 	public TelaLogin(String[] args) {
 		setResizable(false);
