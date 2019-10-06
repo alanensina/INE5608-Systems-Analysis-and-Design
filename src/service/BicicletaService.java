@@ -29,4 +29,16 @@ public class BicicletaService {
 		dao.salvar(loc, bic);
 	}
 
+	public boolean deletar(Bicicleta bic) {
+		return dao.deletar(bic);
+	}
+
+	public boolean validarBikeParaAtualizar(Bicicleta bic) {
+		if (validaDados(bic)) {
+			dao.atualizar(bic);
+			return true;
+		}
+
+		return false;
+	}
 }

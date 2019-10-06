@@ -134,10 +134,17 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		menuBike.add(menuItemBikeCadastrar);
 		
 		JMenuItem menuItemBikeEditar = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Editar"));
+		menuItemBikeEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				TelaEdicaoBicicleta tela = new TelaEdicaoBicicleta(loc, args);
+				desktopPane.add(tela);
+				tela.setPosition();
+				tela.setVisible(true);
+				
+			}
+		});
 		menuBike.add(menuItemBikeEditar);
-		
-		JMenuItem menuItemBikeListar = new JMenuItem(prop.getProperty("MenuLocadorView.Bike.MenuItem.Listar"));
-		menuBike.add(menuItemBikeListar);
 		
 		JMenu menuItemAluguel = new JMenu(prop.getProperty("MenuLocadorView.Menu.Aluguel"));
 		menuBar.add(menuItemAluguel);

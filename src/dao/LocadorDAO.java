@@ -223,7 +223,7 @@ public class LocadorDAO {
 
 			while (rs.next()) {
 
-				loc.setId(rs.getInt(1));
+				loc.setId(rs.getInt("id"));
 				loc.setNome(rs.getString("nome"));
 				loc.setCpf(rs.getString("cpf"));
 				loc.setEndereco(edao.buscarPorId(rs.getInt("idEndereco")));
