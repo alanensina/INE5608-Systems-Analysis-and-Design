@@ -75,7 +75,7 @@ CREATE TABLE `bicicleta` (
   `ano` varchar(255) DEFAULT NULL,
   `valorDeAluguel` double DEFAULT NULL,
   `acessorios` varchar(255) DEFAULT NULL,
-  `disponivel` varchar(255) DEFAULT NULL,
+  `disponivel` boolean DEFAULT false,
   PRIMARY KEY (`id`),
   KEY `idLocador` (`idLocador`),
   CONSTRAINT `bicicleta_ibfk_1` FOREIGN KEY (`idLocador`) REFERENCES `locador` (`id`)

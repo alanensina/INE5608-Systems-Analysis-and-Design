@@ -52,9 +52,6 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		inicializaTela();
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public TelaMenuPrincipalLocador(String[] args) {
 		inicializaTela();
 	}
@@ -127,7 +124,7 @@ public class TelaMenuPrincipalLocador extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 
-				TelaCadastroBicicleta tela = new TelaCadastroBicicleta();
+				TelaCadastroBicicleta tela = new TelaCadastroBicicleta(loc,args);
 				desktopPane.add(tela);
 				tela.setPosition();
 				tela.setVisible(true);			
