@@ -34,6 +34,18 @@ public class UtilsService {
 		}
 	}
 	
+	public static Properties getSqls() {
+		try {
+			Properties sqls = new Properties();
+			FileInputStream file = new FileInputStream("./resources/utils/sql.properties");
+			sqls.load(file);
+			return sqls;
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
+	
 	public static boolean validaCampoObrigatorio(String campo) {
 		campo = campo.replace( "." , "");
 		campo = campo.replace( "/" , "");
