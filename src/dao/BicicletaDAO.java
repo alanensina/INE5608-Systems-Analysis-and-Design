@@ -1,5 +1,8 @@
 package dao;
 
+import static service.UtilsService.getProp;
+import static service.UtilsService.getSqls;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,15 +10,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
 import connection.ConnectionFactory;
 import model.Bicicleta;
-import model.Endereco;
 import model.Locador;
 
 public class BicicletaDAO {
+
+	// Nomes das colunas no BD
+	private static final String MODELO = "modelo";
+	private static final String ANO = "ano";
+	private static final String VALOR_DE_ALUGUEL = "valorDeAluguel";
+	private static final String ACESSORIOS = "acessorios";
+	private static final String DISPONIVEL = "disponivel";
+
+	private Properties prop = getProp();
+	private Properties sqls = getSqls();
 
 	public BicicletaDAO() {
 	}
@@ -23,7 +36,7 @@ public class BicicletaDAO {
 	public boolean salvar(Locador loc, Bicicleta bic) {
 		Connection con = ConnectionFactory.getConnection();
 
-		String sql = "insert into bicicleta (idLocador, modelo, ano, valorDeAluguel, acessorios, disponivel) values (?, ?, ?, ?, ?, ?)";
+		String sql = sqls.getProperty("BicicletaDAO.salvar");
 
 		PreparedStatement stmt = null;
 
@@ -37,9 +50,9 @@ public class BicicletaDAO {
 			stmt.setBoolean(6, bic.isDisponivel());
 
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null, "Bicicleta cadastrada com sucesso!");
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.salvar.Sucesso"));
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao salvar a bicicleta no banco de dados." + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.salvar.Fail") + " " + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
@@ -52,7 +65,7 @@ public class BicicletaDAO {
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from bicicleta where idLocador = ?";
+		String sql = sqls.getProperty("BicicletaDAO.listar");
 
 		List<Bicicleta> bikes = new LinkedList<>();
 
@@ -65,63 +78,56 @@ public class BicicletaDAO {
 				Bicicleta bic = new Bicicleta();
 				bic.setLocador(loc);
 				bic.setId(rs.getInt(1));
-				bic.setModelo(rs.getString("modelo"));
-				bic.setAno(rs.getString("ano"));
-				bic.setValorDeAluguel(rs.getDouble("valorDeAluguel"));
-				bic.setAcessorios(rs.getString("acessorios"));
-				bic.setDisponivel(rs.getBoolean("disponivel"));
+				bic.setModelo(rs.getString(MODELO));
+				bic.setAno(rs.getString(ANO));
+				bic.setValorDeAluguel(rs.getDouble(VALOR_DE_ALUGUEL));
+				bic.setAcessorios(rs.getString(ACESSORIOS));
+				bic.setDisponivel(rs.getBoolean(DISPONIVEL));
 				bikes.add(bic);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao listar as bicicletas do banco de dados." + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.listar.Fail") + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
 
+		System.out.println(prop.getProperty("BicicletaDAO.listar.Sucesso"));
+
 		return bikes;
 	}
-	
+
+	// TODO
 	public Bicicleta retornarBikePorId(Bicicleta bic) {
-		
-		Connection con = ConnectionFactory.getConnection();
-
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		String sql = "select * from bicicleta where id = ?";
-
-		//Bicicleta bic = new Endereco();
-		
-		
-		
+		String sql = sqls.getProperty("BicicletaDAO.listarPorId");
 		return null;
 	}
-	
+
 	public boolean deletar(Bicicleta bic) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "delete from bicicleta where id = ? ";
+		String sql = sqls.getProperty("BicicletaDAO.deletar");
 
 		PreparedStatement stmt = null;
-		
+
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, bic.getId());
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null, "Bicicleta deletada com sucesso.");
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.delete.Sucesso"));
 
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao deletar a bicicleta no banco de dados." + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.delete.Fail") + " " + ex);
 			return false;
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
-		
+
 		return true;
 	}
-	
+
 	public boolean atualizar(Bicicleta bic) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "update bicicleta set modelo = ?," + " ano = ?, valorDeAluguel = ?, acessorios = ?, disponivel = ? where id = ?";
+		String sql = sqls.getProperty("BicicletaDAO.atualizar");
 
 		PreparedStatement stmt = null;
 
@@ -134,15 +140,14 @@ public class BicicletaDAO {
 			stmt.setBoolean(5, bic.isDisponivel());
 			stmt.setInt(6, bic.getId());
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null, "Bicicleta atualizada com sucesso!");
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.update.Sucesso"));
 
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao atualizar a bicicleta no banco de dados. " + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.update.Fail") + " " + ex);
 			return false;
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
 		return true;
 	}
-
 }

@@ -18,6 +18,7 @@ import model.Endereco;
 
 public class EnderecoDAO {
 
+	// Nomes das colunas no BD
 	private static final String LOGRADOURO = "logradouro";
 	private static final String NUMERO = "numero";
 	private static final String BAIRRO = "bairro";
