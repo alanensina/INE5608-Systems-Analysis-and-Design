@@ -7,14 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
-import javax.swing.JOptionPane;
-
-import model.Endereco;
-import model.Locador;
-import model.Locatario;
-
 public class UtilsService {
-	private static Properties prop = getProp();
 
 	public static String converterMD5(String texto) throws NoSuchAlgorithmException {
 		MessageDigest m = MessageDigest.getInstance("MD5");
@@ -40,6 +33,18 @@ public class UtilsService {
 			FileInputStream file = new FileInputStream("./resources/utils/sql.properties");
 			sqls.load(file);
 			return sqls;
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
+	
+	public static Properties getConnectionProperties() {
+		try {
+			Properties con = new Properties();
+			FileInputStream file = new FileInputStream("./resources/utils/connection.properties");
+			con.load(file);
+			return con;
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException();

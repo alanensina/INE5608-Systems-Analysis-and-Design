@@ -1,8 +1,10 @@
 package service;
 
+import static service.UtilsService.getProp;
 import static service.UtilsService.validaCampoObrigatorio;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -17,6 +19,7 @@ public class LocadorService {
 	private LocadorDAO locadorDAO = new LocadorDAO();
 	private LocatarioDAO locatarioDAO = new LocatarioDAO();
 	UtilsService utils = new UtilsService();
+	private Properties prop = getProp();
 
 	public LocadorService() {
 	}
@@ -47,7 +50,7 @@ public class LocadorService {
 		Locatario locatario = locatarioDAO.buscarPorLogin(login);
 
 		if (locador.getId() != 0 || locatario.getId() != 0) {
-			JOptionPane.showMessageDialog(null, "Login já utilizado!");
+			JOptionPane.showMessageDialog(null, prop.getProperty("Utils.Message.LoginJaUtilizado"));
 			return true;
 		}
 
