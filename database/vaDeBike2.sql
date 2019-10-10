@@ -86,3 +86,23 @@ notaDoLocatarioParaLocador double,
  CONSTRAINT pk_avaliacao PRIMARY KEY (id),
  CONSTRAINT fk_avaliacao_aluguel FOREIGN KEY(idAluguel) REFERENCES aluguel (id)
 );
+
+create table carteiraLocador(
+
+id int not null auto_increment,
+idLocador int not null,
+saldo double default 0
+
+CONSTRAINT pk_carteiraLocador PRIMARY KEY (id),
+CONSTRAINT fk_carteiraLocador_locador FOREIGN KEY(idLocador) REFERENCES locador (id)
+);
+
+create table carteiraLocatario(
+
+id int not null auto_increment,
+idLocatario int not null,
+multaAcumulada double default 0
+
+CONSTRAINT pk_carteiraLocatario PRIMARY KEY (id),
+CONSTRAINT fk_carteiraLocatario_locatario FOREIGN KEY(idLocatario) REFERENCES locatario (id)
+);

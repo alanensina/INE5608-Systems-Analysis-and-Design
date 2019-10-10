@@ -8,35 +8,45 @@ public class Aluguel {
 	private Locador locador;
 	private Locatario locatario;
 	private Bicicleta bicicleta;
-	private Ponto ponto;
-	private LocalDate inicioPrevisto;
-	private LocalDate fimPrevisto;
-	private double valorTotal;
+	private LocalDate dtInicio;
+	private LocalDate dtFimPrevisto;
+	private LocalDate dtFimRealizado;
+	private double valorPrevisto;
+	private double valorMulta;
+	private double valorFinal;
+	private boolean cancelado;
 	
 	public Aluguel() {}
-
-	public Aluguel(Locador locador, Locatario locatario, Bicicleta bicicleta, Ponto ponto, LocalDate inicioPrevisto,
-			LocalDate fimPrevisto, double valorTotal) {
-		this.locador = locador;
-		this.locatario = locatario;
-		this.bicicleta = bicicleta;
-		this.ponto = ponto;
-		this.inicioPrevisto = inicioPrevisto;
-		this.fimPrevisto = fimPrevisto;
-		this.valorTotal = valorTotal;
-	}
-
-	public Aluguel(int id, Locador locador, Locatario locatario, Bicicleta bicicleta, Ponto ponto,
-			LocalDate inicioPrevisto, LocalDate fimPrevisto, double valorTotal) {
-		super();
+	
+	public Aluguel(int id, Locador locador, Locatario locatario, Bicicleta bicicleta, LocalDate dtInicio,
+			LocalDate dtFimPrevisto, LocalDate dtFimRealizado, double valorPrevisto, double valorMulta,
+			double valorFinal, boolean cancelado) {
 		this.id = id;
 		this.locador = locador;
 		this.locatario = locatario;
 		this.bicicleta = bicicleta;
-		this.ponto = ponto;
-		this.inicioPrevisto = inicioPrevisto;
-		this.fimPrevisto = fimPrevisto;
-		this.valorTotal = valorTotal;
+		this.dtInicio = dtInicio;
+		this.dtFimPrevisto = dtFimPrevisto;
+		this.dtFimRealizado = dtFimRealizado;
+		this.valorPrevisto = valorPrevisto;
+		this.valorMulta = valorMulta;
+		this.valorFinal = valorFinal;
+		this.cancelado = cancelado;
+	}
+	
+	public Aluguel(Locador locador, Locatario locatario, Bicicleta bicicleta, LocalDate dtInicio,
+			LocalDate dtFimPrevisto, LocalDate dtFimRealizado, double valorPrevisto, double valorMulta,
+			double valorFinal, boolean cancelado) {
+		this.locador = locador;
+		this.locatario = locatario;
+		this.bicicleta = bicicleta;
+		this.dtInicio = dtInicio;
+		this.dtFimPrevisto = dtFimPrevisto;
+		this.dtFimRealizado = dtFimRealizado;
+		this.valorPrevisto = valorPrevisto;
+		this.valorMulta = valorMulta;
+		this.valorFinal = valorFinal;
+		this.cancelado = cancelado;
 	}
 
 	public int getId() {
@@ -71,40 +81,59 @@ public class Aluguel {
 		this.bicicleta = bicicleta;
 	}
 
-	public Ponto getPonto() {
-		return ponto;
+	public LocalDate getDtInicio() {
+		return dtInicio;
 	}
 
-	public void setPonto(Ponto ponto) {
-		this.ponto = ponto;
+	public void setDtInicio(LocalDate dtInicio) {
+		this.dtInicio = dtInicio;
 	}
 
-	public LocalDate getInicioPrevisto() {
-		return inicioPrevisto;
+	public LocalDate getDtFimPrevisto() {
+		return dtFimPrevisto;
 	}
 
-	public void setInicioPrevisto(LocalDate inicioPrevisto) {
-		this.inicioPrevisto = inicioPrevisto;
+	public void setDtFimPrevisto(LocalDate dtFimPrevisto) {
+		this.dtFimPrevisto = dtFimPrevisto;
 	}
 
-	public LocalDate getFimPrevisto() {
-		return fimPrevisto;
+	public LocalDate getDtFimRealizado() {
+		return dtFimRealizado;
 	}
 
-	public void setFimPrevisto(LocalDate fimPrevisto) {
-		this.fimPrevisto = fimPrevisto;
+	public void setDtFimRealizado(LocalDate dtFimRealizado) {
+		this.dtFimRealizado = dtFimRealizado;
 	}
 
-	public double getValorTotal() {
-		return valorTotal;
+	public double getValorPrevisto() {
+		return valorPrevisto;
 	}
 
-	public void setValorTotal(double valorTotal) {
-		this.valorTotal = valorTotal;
+	public void setValorPrevisto(double valorPrevisto) {
+		this.valorPrevisto = valorPrevisto;
 	}
 
-	@Override
-	public String toString() {
-		return this.getLocador().getNome() + " - " + this.getLocatario().getNome();
-	}	
+	public double getValorMulta() {
+		return valorMulta;
+	}
+
+	public void setValorMulta(double valorMulta) {
+		this.valorMulta = valorMulta;
+	}
+
+	public double getValorFinal() {
+		return valorFinal;
+	}
+
+	public void setValorFinal(double valorFinal) {
+		this.valorFinal = valorFinal;
+	}
+
+	public boolean isCancelado() {
+		return cancelado;
+	}
+
+	public void setCancelado(boolean cancelado) {
+		this.cancelado = cancelado;
+	}
 }
