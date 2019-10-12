@@ -157,7 +157,7 @@ public class EnderecoDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String sql = sqls.getProperty("EnderecoDAO.recuperarIdEndereco");
-
+		
 		Endereco endereco = new Endereco();
 
 		try {
@@ -168,7 +168,7 @@ public class EnderecoDAO {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				endereco.setId(rs.getInt(1));
+				endereco.setId(rs.getInt("id"));
 			}
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(null, prop.getProperty("EnderecoDAO.recuperarIdEndereco.Fail") + " " + ex);

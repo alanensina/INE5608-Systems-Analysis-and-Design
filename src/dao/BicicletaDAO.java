@@ -150,4 +150,26 @@ public class BicicletaDAO {
 		}
 		return true;
 	}
+
+	public boolean deletarTodasAsBicicletas(Locador locador) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = sqls.getProperty("BicicletaDAO.deletarTodas");
+
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, locador.getId());
+			stmt.executeUpdate();
+			System.out.println(prop.getProperty("BicicletaDAO.deletarTodas.Sucesso"));
+			
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.deletarTodas.Fail") + " " + ex);
+			return false;
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+
+		return true;
+	}
 }

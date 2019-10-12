@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import dao.BicicletaDAO;
+import dao.EnderecoDAO;
 import dao.LocadorDAO;
 import dao.LocatarioDAO;
 import model.Endereco;
@@ -17,6 +19,7 @@ import model.Locatario;
 public class LocadorService {
 
 	private LocadorDAO locadorDAO = new LocadorDAO();
+	private BicicletaDAO bikeDAO = new BicicletaDAO();
 	private LocatarioDAO locatarioDAO = new LocatarioDAO();
 	UtilsService utils = new UtilsService();
 	private Properties prop = getProp();
@@ -65,6 +68,14 @@ public class LocadorService {
 				|| validaCampoObrigatorio(end.getBairro()) || validaCampoObrigatorio(end.getNumero())
 				|| validaCampoObrigatorio(end.getCep()) || validaCampoObrigatorio(end.getCidade())
 				|| validaCampoObrigatorio(end.getEstado()));
+	}
+
+	public boolean deletarBicicletas(Locador locador) {
+		return bikeDAO.deletarTodasAsBicicletas(locador);
+	}
+
+	public boolean deletarLocador(Locador locador) {
+		return locadorDAO.deletarLocador(locador, locador.getEndereco());
 	}
 
 }

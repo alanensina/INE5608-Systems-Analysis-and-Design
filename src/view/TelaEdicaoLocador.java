@@ -1,6 +1,6 @@
 package view;
 
-import static controller.AppController.inicializa;
+import static service.LocadorService.validaCamposLocador;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,22 +9,18 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import java.text.ParseException;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
@@ -73,10 +69,6 @@ public class TelaEdicaoLocador extends JInternalFrame {
 		getContentPane().setLayout(null);
 
 		ImageIcon icon = new ImageIcon(TelaEdicaoLocador.class.getResource("/images/icons/locador.png"));
-
-		BackgroundPanel backgroundPanel = new BackgroundPanel(icon.getImage());
-		backgroundPanel.setBounds(426, 0, 216, 168);
-		getContentPane().add(backgroundPanel);
 
 		JPanel panelDadosPessoais = new JPanel();
 		panelDadosPessoais
@@ -234,8 +226,8 @@ public class TelaEdicaoLocador extends JInternalFrame {
 		txtCEP.setText(locador.getEndereco().getCep());
 		panelEndereco.add(txtCEP);
 
-		JButton btnCadastrar = new JButton(prop.getProperty("EditLocadorView.Button.Atualizar"));
-		btnCadastrar.addActionListener(new ActionListener() {
+		JButton btnAtualizar = new JButton(prop.getProperty("EditLocadorView.Button.Atualizar"));
+		btnAtualizar.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -258,11 +250,15 @@ public class TelaEdicaoLocador extends JInternalFrame {
 				loc.setCelular(txtCelular.getText());
 				loc.setLogin(txtLogin.getText());
 				loc.setSenha(txtSenha.getText());
+				
+				if (validaCamposLocador(loc, end)) {
+					JOptionPane.showMessageDialog(null, prop.getProperty("CadLocadorView.Message.CamposVazios"));
+					return;
+				}
 
 				try {
 					if (controller.enviaParaServiceAtualizar(loc, end)) {
 						dispose();
-						inicializa(args);
 					} else {
 						JOptionPane.showMessageDialog(null,
 								prop.getProperty("EditLocadorView.Message.AtualizacaoFalha"));
@@ -274,8 +270,8 @@ public class TelaEdicaoLocador extends JInternalFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(874, 508, 114, 25);
-		getContentPane().add(btnCadastrar);
+		btnAtualizar.setBounds(874, 508, 114, 25);
+		getContentPane().add(btnAtualizar);
 
 		JButton btnLimpar = new JButton(prop.getProperty("EditLocadorView.Button.Limpar"));
 		btnLimpar.addActionListener(new ActionListener() {
@@ -312,31 +308,41 @@ public class TelaEdicaoLocador extends JInternalFrame {
 		JButton btnDeletarUsurio = new JButton(prop.getProperty("EditLocadorView.Button.Deletar"));
 		btnDeletarUsurio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showConfirmDialog(null, prop.getProperty("EditLocadorView.Message.ConfirmarDelete"));
-				Locador loc = new Locador();
-				Endereco end = new Endereco();
-				loc.setId(locador.getId());
-				end.setId(locador.getEndereco().getId());
+				
+				Object[] options = { "Confirmar", "Cancelar" };
+				int resp = JOptionPane.showOptionDialog(null,
+						prop.getProperty("EditLocadorView.Message.ConfirmarDelete"),
+						"ATENÇÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-				// Desenvolver logica do delete
-				
-				
-				
-				
-				
-				dispose();
-				inicializa(args);
+				if(resp == 0) {
+
+					LocadorController controller = new LocadorController();
+					// Verificar se há aluguel ativado
+					
+					// Deletar as bicicletas
+					if(controller.deletaBicicletas(locador)) {
+						// Deletar locador
+						if(controller.deletarLocador(locador)) {
+						dispose();
+						System.exit(0);
+						}
+					}
+				}
 			}
 		});
 		btnDeletarUsurio.setBackground(new Color(255, 51, 51));
 		btnDeletarUsurio.setForeground(Color.WHITE);
 		btnDeletarUsurio.setBounds(167, 508, 159, 25);
 		getContentPane().add(btnDeletarUsurio);
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon(TelaEdicaoLocador.class.getResource("/images/icons/logoEditProfile.png")));
+		lblLogo.setBounds(467, 12, 146, 156);
+		getContentPane().add(lblLogo);
 	}
 
 	public void setPosition() {
 		Dimension d = this.getDesktopPane().getSize();
 		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
 	}
-
 }

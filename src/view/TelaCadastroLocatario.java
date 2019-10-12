@@ -251,7 +251,7 @@ public class TelaCadastroLocatario extends JFrame {
 				loc.setLogin(txtLogin.getText());
 				loc.setSenha(txtSenha.getText());
 				
-				if(validaCamposLocador(loc,end)) {
+				if(validaCamposLocatario(loc,end)) {
 					JOptionPane.showMessageDialog(null, prop.getProperty("CadLocatarioView.Message.CamposVazios"));
 					return;
 				}

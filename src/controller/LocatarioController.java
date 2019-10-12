@@ -17,4 +17,8 @@ private LocatarioService service = new LocatarioService();
 	public boolean enviaParaServiceAtualizar(Locatario loc, Endereco end) throws Exception {
 		return service.validaAtualizacaoLocatario(loc,end);
 	}
+
+	public boolean enviarParaDeletar(Locatario locatario) {
+		return service.enviarParaDeletar(locatario);
+	}
 }

@@ -57,7 +57,7 @@ public class LocatarioService {
 			return locatarioDAO.editarLocatario(loc, end);
 		}
 
-		public static boolean validaCamposLocador(Locatario loc, Endereco end) {
+		public static boolean validaCamposLocatario(Locatario loc, Endereco end) {
 
 			return (validaCampoObrigatorio(loc.getNome()) || validaCampoObrigatorio(loc.getCpf())
 					|| validaCampoObrigatorio(loc.getCelular()) || validaCampoObrigatorio(loc.getLogin())
@@ -65,5 +65,9 @@ public class LocatarioService {
 					|| validaCampoObrigatorio(end.getBairro()) || validaCampoObrigatorio(end.getNumero())
 					|| validaCampoObrigatorio(end.getCep()) || validaCampoObrigatorio(end.getCidade())
 					|| validaCampoObrigatorio(end.getEstado()));
+		}
+
+		public boolean enviarParaDeletar(Locatario locatario) {
+			return locatarioDAO.deletarLocatario(locatario, locatario.getEndereco());
 		}
 }
