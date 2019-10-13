@@ -14,13 +14,15 @@ public class Aluguel {
 	private double valorPrevisto;
 	private double valorMulta;
 	private double valorFinal;
+	private boolean iniciado;
+	private boolean pendente;
 	private boolean cancelado;
 	
 	public Aluguel() {}
 	
 	public Aluguel(int id, Locador locador, Locatario locatario, Bicicleta bicicleta, LocalDate dtInicio,
 			LocalDate dtFimPrevisto, LocalDate dtFimRealizado, double valorPrevisto, double valorMulta,
-			double valorFinal, boolean cancelado) {
+			double valorFinal, boolean iniciado, boolean pendente, boolean cancelado) {
 		this.id = id;
 		this.locador = locador;
 		this.locatario = locatario;
@@ -31,12 +33,14 @@ public class Aluguel {
 		this.valorPrevisto = valorPrevisto;
 		this.valorMulta = valorMulta;
 		this.valorFinal = valorFinal;
+		this.iniciado = iniciado;
+		this.pendente = pendente;
 		this.cancelado = cancelado;
 	}
 	
 	public Aluguel(Locador locador, Locatario locatario, Bicicleta bicicleta, LocalDate dtInicio,
 			LocalDate dtFimPrevisto, LocalDate dtFimRealizado, double valorPrevisto, double valorMulta,
-			double valorFinal, boolean cancelado) {
+			double valorFinal, boolean iniciado, boolean pendente, boolean cancelado) {
 		this.locador = locador;
 		this.locatario = locatario;
 		this.bicicleta = bicicleta;
@@ -46,6 +50,8 @@ public class Aluguel {
 		this.valorPrevisto = valorPrevisto;
 		this.valorMulta = valorMulta;
 		this.valorFinal = valorFinal;
+		this.iniciado = iniciado;
+		this.pendente = pendente;
 		this.cancelado = cancelado;
 	}
 
@@ -128,6 +134,14 @@ public class Aluguel {
 	public void setValorFinal(double valorFinal) {
 		this.valorFinal = valorFinal;
 	}
+	
+	public boolean isPendente() {
+		return pendente;
+	}
+
+	public void setPendente(boolean pendente) {
+		this.pendente = pendente;
+	}
 
 	public boolean isCancelado() {
 		return cancelado;
@@ -135,5 +149,13 @@ public class Aluguel {
 
 	public void setCancelado(boolean cancelado) {
 		this.cancelado = cancelado;
+	}
+
+	public boolean isIniciado() {
+		return iniciado;
+	}
+
+	public void setIniciado(boolean iniciado) {
+		this.iniciado = iniciado;
 	}
 }

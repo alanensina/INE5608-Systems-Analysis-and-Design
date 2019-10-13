@@ -4,9 +4,7 @@ import controller.AppController;
 
 public class Main {
 
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {		
 		AppController.inicializa(args);
-		
 	}
 }

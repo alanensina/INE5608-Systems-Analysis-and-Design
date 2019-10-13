@@ -125,8 +125,7 @@ public class TelaEdicaoBicicleta extends JInternalFrame {
 			}
 		});
 		
-		//TODO: Listar as bicicletas apenas que estão disponíveis
-		List<Bicicleta> bikes = bicDAO.listarBicicletasPeloIdLocador(loc);
+		List<Bicicleta> bikes = bicDAO.listarBikesDisponiveisParaEdicao(loc);
 		cbBikes.setModel(new DefaultComboBoxModel(bikes.toArray()));
 		cbBikes.setBounds(114, 169, 314, 24);
 		getContentPane().add(cbBikes);
@@ -177,9 +176,7 @@ public class TelaEdicaoBicicleta extends JInternalFrame {
 
 				if(resp == 0) {
 					Bicicleta bic = (Bicicleta) cbBikes.getSelectedItem();
-					
-					//TODO: validar se a bicicleta não está ativa em algum aluguel antes de deletá-la.
-					
+
 					if(controller.deletar(bic)) {
 						return ;
 					}

@@ -38,7 +38,7 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCadastroBicicleta frame = new TelaCadastroBicicleta(loc,args);
+					TelaCadastroBicicleta frame = new TelaCadastroBicicleta(loc, args);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,8 +56,8 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(
-				new TitledBorder(null, prop.getProperty("CadBikeView.BorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, prop.getProperty("CadBikeView.BorderTitle"), TitledBorder.LEADING,
+				TitledBorder.TOP, null, null));
 		panel.setBounds(10, 161, 414, 260);
 		getContentPane().add(panel);
 		panel.setLayout(null);
@@ -92,39 +92,43 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		txtAcessorios.setBounds(10, 131, 394, 90);
 		panel.add(txtAcessorios);
 
-		JCheckBox checkboxDisponibilidade = new JCheckBox(prop.getProperty("CadBikeView.Checkbox.DisponibilidadeLocacao"));
+		JCheckBox checkboxDisponibilidade = new JCheckBox(
+				prop.getProperty("CadBikeView.Checkbox.DisponibilidadeLocacao"));
 		checkboxDisponibilidade.setSelected(true);
 		checkboxDisponibilidade.setBounds(6, 228, 231, 23);
 		panel.add(checkboxDisponibilidade);
-		
+
 		JYearChooser jcAno = new JYearChooser();
 		jcAno.setBounds(88, 77, 53, 20);
 		panel.add(jcAno);
-		
+
 		JLabel lblValoresObrigatrios = new JLabel(prop.getProperty("CadBikeView.Label.CamposObrigatorios"));
 		lblValoresObrigatrios.setFont(new Font("Dialog", Font.ITALIC, 10));
 		lblValoresObrigatrios.setBounds(239, 233, 144, 15);
 		panel.add(lblValoresObrigatrios);
-		
+
 		JButton btnCadastrar = new JButton(prop.getProperty("CadBikeView.Button.Cadastrar"));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				Bicicleta bic = new Bicicleta();
 				bic.setModelo(txtModelo.getText());
 				bic.setAno(String.valueOf(jcAno.getYear()));
 				bic.setAcessorios(txtAcessorios.getText());
-				
-				if(txtValorAluguel.getText().isEmpty()) {
+
+				if (txtValorAluguel.getText().isEmpty()) {
 					txtValorAluguel.setText("0");
 				}
-				
+
 				bic.setValorDeAluguel(Double.parseDouble(txtValorAluguel.getText()));
 				bic.setDisponivel(checkboxDisponibilidade.isSelected());
-				
-				if(controller.enviaParaValidacoesObrigatorias(bic)) {
+
+				if (controller.enviaParaValidacoesObrigatorias(bic)) {
 					controller.salvar(bic, loc);
-					dispose();
+					txtModelo.setText("");
+					txtAcessorios.setText("");
+					txtValorAluguel.setText("");
+					jcAno.setYear(2019);
 				} else {
 					return;
 				}
