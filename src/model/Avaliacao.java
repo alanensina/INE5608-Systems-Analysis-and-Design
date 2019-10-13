@@ -4,23 +4,22 @@ public class Avaliacao {
 	
 	private int id;
 	private Aluguel aluguel;
-	private double notaLocadorParaLocatario;
-	private double notaLocatarioParaLocador;
+	private double notaDoLocadorParaLocatario;
+	private double notaDoLocatarioParaLocador;
 
 	public Avaliacao() {}
 
-	// Construtor sem id
-	public Avaliacao(Aluguel aluguel, double notaLocadorParaLocatario, double notaLocatarioParaLocador) {
-		this.aluguel = aluguel;
-		this.notaLocadorParaLocatario = notaLocadorParaLocatario;
-		this.notaLocatarioParaLocador = notaLocatarioParaLocador;
-	}
-
-	public Avaliacao(int id, Aluguel aluguel, double notaLocadorParaLocatario, double notaLocatarioParaLocador) {
+	public Avaliacao(int id, Aluguel aluguel, double notaDoLocadorParaLocatario, double notaDoLocatarioParaLocador) {
 		this.id = id;
 		this.aluguel = aluguel;
-		this.notaLocadorParaLocatario = notaLocadorParaLocatario;
-		this.notaLocatarioParaLocador = notaLocatarioParaLocador;
+		this.notaDoLocadorParaLocatario = notaDoLocadorParaLocatario;
+		this.notaDoLocatarioParaLocador = notaDoLocatarioParaLocador;
+	}
+	
+	public Avaliacao(Aluguel aluguel, double notaDoLocadorParaLocatario, double notaDoLocatarioParaLocador) {
+		this.aluguel = aluguel;
+		this.notaDoLocadorParaLocatario = notaDoLocadorParaLocatario;
+		this.notaDoLocatarioParaLocador = notaDoLocatarioParaLocador;
 	}
 
 	public int getId() {
@@ -39,19 +38,19 @@ public class Avaliacao {
 		this.aluguel = aluguel;
 	}
 
-	public double getNotaLocadorParaLocatario() {
-		return notaLocadorParaLocatario;
+	public double getNotaDoLocadorParaLocatario() {
+		return notaDoLocadorParaLocatario;
 	}
 
-	public void setNotaLocadorParaLocatario(double notaLocadorParaLocatario) {
-		this.notaLocadorParaLocatario = notaLocadorParaLocatario;
+	public void setNotaDoLocadorParaLocatario(double notaDoLocadorParaLocatario) {
+		this.notaDoLocadorParaLocatario = notaDoLocadorParaLocatario;
 	}
 
-	public double getNotaLocatarioParaLocador() {
-		return notaLocatarioParaLocador;
+	public double getNotaDoLocatarioParaLocador() {
+		return notaDoLocatarioParaLocador;
 	}
 
-	public void setNotaLocatarioParaLocador(double notaLocatarioParaLocador) {
-		this.notaLocatarioParaLocador = notaLocatarioParaLocador;
+	public void setNotaDoLocatarioParaLocador(double notaDoLocatarioParaLocador) {
+		this.notaDoLocatarioParaLocador = notaDoLocatarioParaLocador;
 	}
 }

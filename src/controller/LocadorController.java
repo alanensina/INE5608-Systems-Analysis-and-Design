@@ -18,8 +18,11 @@ public class LocadorController {
 		return service.validaAtualizacaoLocador(loc,end);
 	}
 
-	public void enviarParaServiceDeletar(Locador loc, Endereco end) {
-		service.deletar(loc,end);
+	public boolean deletaBicicletas(Locador locador) {
+		return service.deletarBicicletas(locador);
 	}
 
+	public boolean deletarLocador(Locador locador) {
+		return service.deletarLocador(locador);
+	}
 }

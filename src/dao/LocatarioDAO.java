@@ -1,5 +1,8 @@
 package dao;
 
+import static service.UtilsService.getProp;
+import static service.UtilsService.getSqls;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,6 +12,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -18,46 +22,59 @@ import model.Locatario;
 
 public class LocatarioDAO {
 
+	private static final String ID = "id";
+	private static final String NOME = "nome";
+	private static final String CPF = "cpf";
+	private static final String ID_ENDERECO = "idEndereco";
+	private static final String CELULAR = "celular";
+	private static final String LOGIN = "login";
+	private static final String SENHA = "senha";
+	private static final String DATA_CADASTRO = "dataCadastro";
+
+	private Properties prop = getProp();
+	private Properties sqls = getSqls();
+
 	private EnderecoDAO edao = new EnderecoDAO();
 	private Connection con = null;
 
-	public LocatarioDAO() {}
-	
+	public LocatarioDAO() {
+	}
+
 	public boolean salvar(Locatario loc, Endereco end) {
-		
+
 		edao.salvar(end);
 		int idEndereco = edao.retornaIdEndereco(end);
 		loc.setDataCadastro(LocalDate.now());
-		
+
 		con = ConnectionFactory.getConnection();
-		String sql = "insert into locatario (nome, cpf, idEndereco, celular, login, senha, dataCadastro) values (?, ?, ?, ?, ?, ?, ?)";
+		String sql = sqls.getProperty("LocatarioDAO.salvar");
 
 		PreparedStatement stmt = null;
 
 		try {
 			stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, loc.getNome()); 
+			stmt.setString(1, loc.getNome());
 			stmt.setString(2, loc.getCpf());
-			stmt.setInt(3, idEndereco); 
+			stmt.setInt(3, idEndereco);
 			stmt.setString(4, loc.getCelular());
 			stmt.setString(5, loc.getLogin());
 			stmt.setString(6, loc.getSenha());
 			stmt.setDate(7, Date.valueOf(loc.getDataCadastro()));
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null, "Locatário registrado com sucesso!");
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao salvar o locatário no banco de dados (LocatarioDAO.salvar)" + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.salvar.Fail") + " " + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
+		JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.salvar.Sucesso"));
 		return true;
 	}
-	
+
 	public boolean editarLocatario(Locatario loc, Endereco end) {
 
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "update locatario set nome = ?, cpf = ?, celular = ?, " + "senha = ? where id = ?";
+		String sql = sqls.getProperty("LocatarioDAO.update");
 
 		PreparedStatement stmt = null;
 
@@ -69,46 +86,44 @@ public class LocatarioDAO {
 			stmt.setString(4, loc.getSenha());
 			stmt.setInt(5, loc.getId());
 			stmt.executeUpdate();
-			
 
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null,
-					"Houve um erro ao atualizar o locatário no banco de dados. (LocatarioDAO.editarLocatario)" + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.update.Fail") + " " + ex);
 			return false;
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
-		
+
 		edao.atualizar(end);
-		JOptionPane.showMessageDialog(null,"Locatário atualizado com sucesso!");
-		
+		JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.update.Sucesso"));
+
 		return true;
 
 	}
 
 	public boolean deletarLocatario(Locatario loc, Endereco end) {
-		
+
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "delete from locatario where id = ? ";
+		String sql = sqls.getProperty("LocatarioDAO.delete");
 
 		PreparedStatement stmt = null;
-		
+
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, loc.getId());
 			stmt.executeUpdate();
-			
+
 			edao.deletar(end);
-			JOptionPane.showMessageDialog(null,"Locatário deletado com sucesso!");
 
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao deletar o locatário no banco de dados. (LocatarioDAO.deletarLocatario)" + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.delete.Fail") + " " + ex);
 			return false;
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
-		
-		return true;	
+
+		JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.delete.Sucesso"));
+		return true;
 	}
 
 	public List<Locatario> listarLocatarios() {
@@ -116,7 +131,7 @@ public class LocatarioDAO {
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from locatario";
+		String sql = sqls.getProperty("LocatarioDAO.list");
 
 		List<Locatario> locatarios = new LinkedList<>();
 
@@ -128,22 +143,23 @@ public class LocatarioDAO {
 
 				Locatario loc = new Locatario();
 				loc.setId(rs.getInt(1));
-				loc.setNome(rs.getString("nome"));
-				loc.setCpf(rs.getString("cpf"));
-				loc.setEndereco(edao.buscarPorId(rs.getInt("idEndereco")));
-				loc.setCelular(rs.getString("celular"));
-				loc.setLogin(rs.getString("login"));
-				loc.setSenha(rs.getString("senha"));
-				loc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());				
-				
+				loc.setNome(rs.getString(NOME));
+				loc.setCpf(rs.getString(CPF));
+				loc.setEndereco(edao.buscarPorId(rs.getInt(ID_ENDERECO)));
+				loc.setCelular(rs.getString(CELULAR));
+				loc.setLogin(rs.getString(LOGIN));
+				loc.setSenha(rs.getString(SENHA));
+				loc.setDataCadastro(rs.getDate(DATA_CADASTRO).toLocalDate());
+
 				locatarios.add(loc);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao listar os locatarios do banco de dados. (LocatarioDAO.listarLocatarios)" + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.list.Fail") + " " + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
+		System.out.println(prop.getProperty("LocatarioDAO.list.Sucesso"));
 		return locatarios;
 	}
 
@@ -152,7 +168,7 @@ public class LocatarioDAO {
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select id from locatario where cpf = ?";
+		String sql = sqls.getProperty("LocatarioDAO.retornarId");
 
 		Locatario locatario = new Locatario();
 
@@ -165,21 +181,22 @@ public class LocatarioDAO {
 				locatario.setId(rs.getInt(1));
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao recuperar o id do locatário. (LocatarioDAO.retornaIdLocatario)" + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.retornarId.Fail") + " " + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
+		System.out.println(prop.getProperty("LocatarioDAO.retornarId.Sucesso"));
 		return locatario.getId();
 	}
-	
+
 	public Locatario buscarPorId(int id) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "select * from locatario where id = ?";
+		String sql = sqls.getProperty("LocatarioDAO.retornarPorId");
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Locatario loc = new Locatario();
-		
+
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -187,32 +204,33 @@ public class LocatarioDAO {
 
 			while (rs.next()) {
 
-				loc.setId(rs.getInt(1));
-				loc.setNome(rs.getString("nome"));
-				loc.setCpf(rs.getString("cpf"));
-				loc.setEndereco(edao.buscarPorId(rs.getInt("idEndereco")));
-				loc.setCelular(rs.getString("celular"));
-				loc.setLogin(rs.getString("login"));
-				loc.setSenha(rs.getString("senha"));
-				loc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());
+				loc.setId(rs.getInt(ID));
+				loc.setNome(rs.getString(NOME));
+				loc.setCpf(rs.getString(CPF));
+				loc.setEndereco(edao.buscarPorId(rs.getInt(ID_ENDERECO)));
+				loc.setCelular(rs.getString(CELULAR));
+				loc.setLogin(rs.getString(LOGIN));
+				loc.setSenha(rs.getString(SENHA));
+				loc.setDataCadastro(rs.getDate(DATA_CADASTRO).toLocalDate());
 
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao buscar o locatário pelo ID no banco de dados. (LocatarioDAO.buscarPorId)" + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.retornarPorId.Fail") + " " + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
+		System.out.println(prop.getProperty("LocatarioDAO.retornarPorId.Sucesso"));
 		return loc;
 	}
-	
+
 	public Locatario buscarPorLogin(String login) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "select * from locatario where login = ?";
+		String sql = sqls.getProperty("LocatarioDAO.buscarPorLogin");
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Locatario loc = new Locatario();
-		
+
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, login);
@@ -220,22 +238,23 @@ public class LocatarioDAO {
 
 			while (rs.next()) {
 
-				loc.setId(rs.getInt(1));
-				loc.setNome(rs.getString("nome"));
-				loc.setCpf(rs.getString("cpf"));
-				loc.setEndereco(edao.buscarPorId(rs.getInt("idEndereco")));
-				loc.setCelular(rs.getString("celular"));
-				loc.setLogin(rs.getString("login"));
-				loc.setSenha(rs.getString("senha"));
-				loc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());	
+				loc.setId(rs.getInt(ID));
+				loc.setNome(rs.getString(NOME));
+				loc.setCpf(rs.getString(CPF));
+				loc.setEndereco(edao.buscarPorId(rs.getInt(ID_ENDERECO)));
+				loc.setCelular(rs.getString(CELULAR));
+				loc.setLogin(rs.getString(LOGIN));
+				loc.setSenha(rs.getString(SENHA));
+				loc.setDataCadastro(rs.getDate(DATA_CADASTRO).toLocalDate());
 
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null, "Houve um erro ao buscar o locatário pelo login no banco de dados. (LocatarioDAO.buscarPorLogin)" + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("LocatarioDAO.retornarPorLogin.Fail") + " " + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
+		System.out.println(prop.getProperty("LocatarioDAO.retornarPorLogin.Sucesso"));
 		return loc;
 	}
 }

@@ -1,6 +1,10 @@
 package service;
 
+import static service.UtilsService.getProp;
+import static service.UtilsService.validaCampoObrigatorio;
+
 import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -15,6 +19,8 @@ public class LocatarioService {
 	private LocadorDAO locadorDAO = new LocadorDAO();
 	private LocatarioDAO locatarioDAO = new LocatarioDAO();
 	UtilsService utils = new UtilsService();
+	private Properties prop = getProp();
+
 	
 	public LocatarioService() {}
 
@@ -38,7 +44,7 @@ public class LocatarioService {
 			Locatario locatario = locatarioDAO.buscarPorLogin(login);
 			
 			if(locador.getId() != 0 || locatario.getId() != 0) {
-				JOptionPane.showMessageDialog(null, "Login já utilizado!");
+				JOptionPane.showMessageDialog(null, prop.getProperty("Utils.Message.LoginJaUtilizado"));
 				return true;
 			}		
 			
@@ -51,7 +57,17 @@ public class LocatarioService {
 			return locatarioDAO.editarLocatario(loc, end);
 		}
 
-		public void deletar(Locatario loc, Endereco end) {
-			locatarioDAO.deletarLocatario(loc, end);
+		public static boolean validaCamposLocatario(Locatario loc, Endereco end) {
+
+			return (validaCampoObrigatorio(loc.getNome()) || validaCampoObrigatorio(loc.getCpf())
+					|| validaCampoObrigatorio(loc.getCelular()) || validaCampoObrigatorio(loc.getLogin())
+					|| validaCampoObrigatorio(loc.getSenha()) || validaCampoObrigatorio(end.getLogradouro())
+					|| validaCampoObrigatorio(end.getBairro()) || validaCampoObrigatorio(end.getNumero())
+					|| validaCampoObrigatorio(end.getCep()) || validaCampoObrigatorio(end.getCidade())
+					|| validaCampoObrigatorio(end.getEstado()));
+		}
+
+		public boolean enviarParaDeletar(Locatario locatario) {
+			return locatarioDAO.deletarLocatario(locatario, locatario.getEndereco());
 		}
 }

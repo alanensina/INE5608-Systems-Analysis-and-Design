@@ -5,6 +5,7 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,17 +18,21 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginController;
+import model.Locador;
+import model.Locatario;
+import service.UtilsService;
 
-@SuppressWarnings("serial")
 public class TelaLogin extends JFrame {
 
+	private static final long serialVersionUID = 4361812508384393976L;
 	private JPanel contentPane;
 	private JTextField txtLogin;
 	private JPasswordField txtSenha;
+	private static Properties prop = UtilsService.getProp();
 
 	public TelaLogin(String[] args) {
 		setResizable(false);
-		setTitle("Vá de Bike!");
+		setTitle(prop.getProperty("LoginView.Title"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 444, 344);
 
@@ -40,18 +45,17 @@ public class TelaLogin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(
-				TelaLogin.class.getResource("/images/icons/logobike.png")));
+		lblLogo.setIcon(new ImageIcon(TelaLogin.class.getResource("/images/icons/logobike.png")));
 		lblLogo.setBounds(141, 23, 175, 92);
 		contentPane.add(lblLogo);
-		
-		JLabel lbLogin = new JLabel("Login");
+
+		JLabel lbLogin = new JLabel(prop.getProperty("LoginView.Label.Login"));
 		lbLogin.setBounds(34, 139, 52, 14);
 		contentPane.add(lbLogin);
 
-		JLabel lbSenha = new JLabel("Senha");
+		JLabel lbSenha = new JLabel(prop.getProperty("LoginView.Label.Senha"));
 		lbSenha.setBounds(34, 181, 52, 14);
 		contentPane.add(lbSenha);
 
@@ -65,37 +69,48 @@ public class TelaLogin extends JFrame {
 		txtSenha.setBounds(90, 178, 317, 20);
 		contentPane.add(txtSenha);
 
-		JButton btnLogar = new JButton("Logar");
+		JButton btnLogar = new JButton(prop.getProperty("LoginView.Button.Logar"));
 		btnLogar.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				
+
 				LoginController controller = new LoginController();
-				
+
 				String login = txtLogin.getText();
 				String senha = txtSenha.getText();
-				
+
 				try {
-					if(controller.enviaParaService(login, senha)) {
-						dispose();
-						JOptionPane.showMessageDialog(null, "Login efetuado com sucesso.");
-						TelaMenu.main(args);
-					}else {
+					if (controller.enviaParaService(login, senha)) {
+
+						Locador locador = controller.getLocador(login);
+						Locatario locatario = controller.getLocatario(login);
+
+						if (locador.getId() > 0) {
+							TelaMenuPrincipalLocador tela = new TelaMenuPrincipalLocador(locador, args);
+							dispose();
+						}
+
+						else if (locatario.getId() > 0) {
+							TelaMenuPrincipalLocatario tela = new TelaMenuPrincipalLocatario(locatario, args);
+							dispose();
+						}
+
+					} else {
 						txtLogin.setText("");
 						txtSenha.setText("");
-						JOptionPane.showMessageDialog(null, "Usuário ou senha não conferem.");
+						JOptionPane.showMessageDialog(null, prop.getProperty("LoginView.Message.LoginIncorreto"));
 					}
 				} catch (HeadlessException e1) {
 					e1.printStackTrace();
 				} catch (Exception e1) {
 					e1.printStackTrace();
-				}				
+				}
 			}
 		});
 		btnLogar.setBounds(163, 209, 129, 23);
 		contentPane.add(btnLogar);
 
-		JButton btnCadastrarLocador = new JButton("Novo locador?");
+		JButton btnCadastrarLocador = new JButton(prop.getProperty("LoginView.Button.NovoLocador"));
 		btnCadastrarLocador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCadastroLocador.main(args);
@@ -105,7 +120,7 @@ public class TelaLogin extends JFrame {
 		btnCadastrarLocador.setBounds(34, 251, 156, 23);
 		contentPane.add(btnCadastrarLocador);
 
-		JButton btnNovoLocatrio = new JButton("Novo locatário?");
+		JButton btnNovoLocatrio = new JButton(prop.getProperty("LoginView.Button.NovoLocatario"));
 		btnNovoLocatrio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCadastroLocatario.main(args);

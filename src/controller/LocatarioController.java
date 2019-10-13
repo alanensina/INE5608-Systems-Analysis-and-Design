@@ -18,7 +18,7 @@ private LocatarioService service = new LocatarioService();
 		return service.validaAtualizacaoLocatario(loc,end);
 	}
 
-	public void enviarParaServiceDeletar(Locatario loc, Endereco end) {
-		service.deletar(loc,end);		
+	public boolean enviarParaDeletar(Locatario locatario) {
+		return service.enviarParaDeletar(locatario);
 	}
 }

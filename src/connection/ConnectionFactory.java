@@ -1,29 +1,36 @@
 package connection;
 
+import static service.UtilsService.getProp;
+import static service.UtilsService.getConnectionProperties;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConnectionFactory {
 	
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://localhost:3306/vadebike?autoReconnect=true&useSSL=false";
-	private static final String USER = "alan";
-	private static final String PASS = "123456789";
+	private static Properties prop = getProp();
+	private static Properties conProps = getConnectionProperties();
+	
+	private static final String DRIVER = conProps.getProperty("Connection.DRIVER");
+	private static final String URL = conProps.getProperty("Connection.URL");
+	private static final String USER = conProps.getProperty("Connection.USER");
+	private static final String PASS = conProps.getProperty("Connection.PASS");
 
 	public static Connection getConnection() {
 
 		try {
 			Class.forName(DRIVER);
-			System.out.println("Connected to the database.");
+			System.out.println(prop.getProperty("Connection.Message.Conectando"));
 			return DriverManager.getConnection(URL, USER, PASS);
 
 		} catch (ClassNotFoundException | SQLException ex) {
-			throw new RuntimeException("Unable to connect to database: ", ex);
+			throw new RuntimeException(prop.getProperty("Connection.Message.Connection.Fail"), ex);
 		}
 	}
 
@@ -31,7 +38,7 @@ public class ConnectionFactory {
 		try {
 			if (con != null) {
 				con.close();
-				System.out.println("Disconnected to the database.");
+				System.out.println(prop.getProperty("Connection.Message.Desconectando"));
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
