@@ -158,4 +158,9 @@ public class Aluguel {
 	public void setIniciado(boolean iniciado) {
 		this.iniciado = iniciado;
 	}
+
+	@Override
+	public String toString() {
+		return this.locatario.getNome() + " - " + this.bicicleta.getModelo() + " - R$ " + this.valorPrevisto;
+	}
 }

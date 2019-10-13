@@ -9,6 +9,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
+import static service.UtilsService.getProp;
+
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -31,6 +34,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Properties;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -43,6 +47,7 @@ public class SolicitarAluguelView extends JInternalFrame {
 	private JTextField txtValorFinal;
 	private long diasTotaisSolicitacao = 1;
 	private AluguelController controller = new AluguelController();
+	private Properties prop = getProp();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -59,7 +64,7 @@ public class SolicitarAluguelView extends JInternalFrame {
 
 	public SolicitarAluguelView(Locatario locatario, String[] args) {
 		SolicitarAluguelView.locatario = locatario;
-		setTitle("Solicitar aluguel");
+		setTitle(prop.getProperty("SolicitarAluguelView.Title"));
 		setBounds(100, 100, 450, 525);
 		getContentPane().setLayout(null);
 
@@ -71,26 +76,26 @@ public class SolicitarAluguelView extends JInternalFrame {
 
 		JPanel panelPeriodo = new JPanel();
 		panelPeriodo.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-				"Selecione o per\u00EDodo que deseja alugar", TitledBorder.LEADING, TitledBorder.TOP, null,
+				prop.getProperty("SolicitarAluguelView.Panel.Periodo"), TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		panelPeriodo.setBounds(10, 212, 414, 109);
 		getContentPane().add(panelPeriodo);
 		panelPeriodo.setLayout(null);
 
-		JLabel lblIncio = new JLabel("In\u00EDcio");
-		lblIncio.setBounds(10, 35, 46, 14);
+		JLabel lblIncio = new JLabel(prop.getProperty("SolicitarAluguelView.Label.Inicio"));
+		lblIncio.setBounds(10, 35, 98, 14);
 		panelPeriodo.add(lblIncio);
 
 		JDateChooser jcDataInicio = new JDateChooser();
-		jcDataInicio.setBounds(66, 29, 205, 20);
+		jcDataInicio.setBounds(126, 29, 145, 20);
 		panelPeriodo.add(jcDataInicio);
 
-		JLabel lblFim = new JLabel("Fim");
-		lblFim.setBounds(10, 68, 46, 14);
+		JLabel lblFim = new JLabel(prop.getProperty("SolicitarAluguelView.Label.Fim"));
+		lblFim.setBounds(10, 68, 98, 14);
 		panelPeriodo.add(lblFim);
 
 		JPanel panelBikes = new JPanel();
-		panelBikes.setBorder(new TitledBorder(null, "Selecione uma bicicleta dispon\u00EDvel", TitledBorder.LEADING,
+		panelBikes.setBorder(new TitledBorder(null, prop.getProperty("SolicitarAluguelView.Panel.Bikes"), TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		panelBikes.setBounds(10, 332, 414, 103);
 		getContentPane().add(panelBikes);
@@ -110,10 +115,10 @@ public class SolicitarAluguelView extends JInternalFrame {
 		panelBikes.add(cbBicicletasDisponiveis);
 
 		JDateChooser jcDataFim = new JDateChooser();
-		jcDataFim.setBounds(66, 62, 205, 20);
+		jcDataFim.setBounds(126, 62, 145, 20);
 		panelPeriodo.add(jcDataFim);
 
-		JButton btnNewButton = new JButton("Consultar");
+		JButton btnNewButton = new JButton(prop.getProperty("SolicitarAluguelView.Button.Consultar"));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -126,7 +131,7 @@ public class SolicitarAluguelView extends JInternalFrame {
 				LocalDate dtFim = jcDataFim.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				
 				if(dtInicio.isAfter(dtFim)) {
-					JOptionPane.showMessageDialog(null, "A data do início do aluguel deve ser anterior a data final.");
+					JOptionPane.showMessageDialog(null, prop.getProperty("SolicitarAluguelView.Message.InicioAnteriorAoFim"));
 					return;
 				}
 
@@ -147,21 +152,21 @@ public class SolicitarAluguelView extends JInternalFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(303, 31, 89, 51);
+		btnNewButton.setBounds(283, 31, 119, 51);
 		panelPeriodo.add(btnNewButton);
 
-		JLabel lblValorDirio = new JLabel("Valor di\u00E1rio");
-		lblValorDirio.setBounds(10, 62, 63, 14);
+		JLabel lblValorDirio = new JLabel(prop.getProperty("SolicitarAluguelView.Label.ValorDiario"));
+		lblValorDirio.setBounds(10, 62, 91, 14);
 		panelBikes.add(lblValorDirio);
 
 		txtValorDiario = new JTextField();
 		txtValorDiario.setEnabled(false);
-		txtValorDiario.setBounds(83, 59, 86, 20);
+		txtValorDiario.setBounds(107, 60, 86, 20);
 		panelBikes.add(txtValorDiario);
 		txtValorDiario.setColumns(10);
 
-		JLabel lblValorTotal = new JLabel("Valor total");
-		lblValorTotal.setBounds(250, 62, 63, 14);
+		JLabel lblValorTotal = new JLabel(prop.getProperty("SolicitarAluguelView.Label.ValorTotal"));
+		lblValorTotal.setBounds(222, 62, 91, 14);
 		panelBikes.add(lblValorTotal);
 
 		txtValorFinal = new JTextField();
@@ -170,7 +175,7 @@ public class SolicitarAluguelView extends JInternalFrame {
 		txtValorFinal.setBounds(318, 59, 86, 20);
 		panelBikes.add(txtValorFinal);
 
-		JButton btnSolicitar = new JButton("Solicitar");
+		JButton btnSolicitar = new JButton(prop.getProperty("SolicitarAluguelView.Button.Solicitar"));
 		btnSolicitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
@@ -186,32 +191,39 @@ public class SolicitarAluguelView extends JInternalFrame {
 				}
 				
 				if(txtValorDiario.getText().equalsIgnoreCase("")) {
-					JOptionPane.showMessageDialog(null, "Selecione uma bicicleta antes de prosseguir!");
+					JOptionPane.showMessageDialog(null, prop.getProperty("SolicitarAluguelView.Message.SelecioneUmaBike"));
 					return;
+				}
+				
+				if(controller.verificaSeHaMultasPendentes(locatario)) {
+					return ;
 				}
 				
 				double valorPrevisto = Double.parseDouble(txtValorFinal.getText());
 				
-				// Verificar se o Locatario não possui multa
 				Bicicleta bic = (Bicicleta) cbBicicletasDisponiveis.getSelectedItem();
 				Locador locador = bic.getLocador();
+
 				if(controller.enviarSolicitacao(locatario, locador, bic, dtInicio, dtFim, valorPrevisto)) {
 					dispose();
+					return ;
 				}
+				
+				JOptionPane.showMessageDialog(null, prop.getProperty("SolicitarAluguelView.Message.ErroAoSolicitar"));
 				
 				dispose();
 			}
 		});
-		btnSolicitar.setBounds(335, 447, 89, 23);
+		btnSolicitar.setBounds(277, 447, 147, 23);
 		getContentPane().add(btnSolicitar);
 
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton(prop.getProperty("SolicitarAluguelView.Button.Cancelar"));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(10, 447, 89, 23);
+		btnCancelar.setBounds(10, 447, 147, 23);
 		getContentPane().add(btnCancelar);
 	}
 

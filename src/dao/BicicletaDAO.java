@@ -286,4 +286,25 @@ public class BicicletaDAO {
 
 		return bikes;
 	}
+
+	public boolean atualizaDisponibilidade(Bicicleta bicicleta) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("BicicletaDAO.atualizaDisponibilidadeAposSolicitacao");
+
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, bicicleta.getId());
+			stmt.executeUpdate();
+			System.out.println(prop.getProperty("BicicletaDAO.atualizaDisponibilidadeAposSolicitacao.Sucesso"));
+
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, prop.getProperty("BicicletaDAO.atualizaDisponibilidadeAposSolicitacao.Fail") + " " + ex);
+			return false;
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+		return true;
+	}
 }
