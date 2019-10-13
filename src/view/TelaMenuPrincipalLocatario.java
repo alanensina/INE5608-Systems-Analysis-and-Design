@@ -47,9 +47,6 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 		});
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public TelaMenuPrincipalLocatario(Locatario loc, String[] args) {
 		this.loc = loc;
 		this.args = args;
@@ -68,14 +65,14 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 		frmMenuLocatario.setBounds(100, 100, 1280, 720);
 		frmMenuLocatario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenuLocatario.getContentPane().setLayout(new BorderLayout());
-		
+
 		URL resource = this.getClass().getResource("/images/backgrounds/backgroundLocatario.jpg");
 		ImageIcon icon = new ImageIcon(resource);
-		
+
 		desktopPane = new JDesktopPane();
 		desktopPane.setBounds(131, 57, 1, 1);
 		desktopPane.add(new BackgroundPanel(icon.getImage()));
-		
+
 		frmMenuLocatario.getContentPane().add(desktopPane, BorderLayout.CENTER);
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 128, 21);
@@ -85,10 +82,10 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 		menuBar.add(menuMeusDados);
 
 		JMenuItem menuItemMeusDadosEditar = new JMenuItem(prop.getProperty("MenuLocatarioView.Menu.MenuItem.Editar"));
-		
+
 		menuItemMeusDadosEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				try {
 					TelaEdicaoLocatario tela = new TelaEdicaoLocatario(args, loc);
 					tela.setVisible(true);
@@ -96,13 +93,13 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 					tela.setPosition();
 					tela.moveToFront();
 					tela.setSelected(true);
-					
+
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
 			}
 		});
-		
+
 		menuItemMeusDadosEditar.setHorizontalAlignment(SwingConstants.LEFT);
 		menuMeusDados.add(menuItemMeusDadosEditar);
 
@@ -115,19 +112,36 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 			}
 
 		});
-		
-		JMenuItem menuItemMeusDadosAvaliacoes = new JMenuItem(prop.getProperty("MenuLocatarioView.Menu.MenuItem.Avaliacoes"));
+
+		JMenuItem menuItemMeusDadosAvaliacoes = new JMenuItem(
+				prop.getProperty("MenuLocatarioView.Menu.MenuItem.Avaliacoes"));
 		menuMeusDados.add(menuItemMeusDadosAvaliacoes);
 		menuMeusDados.add(menuItemMeusDadosSair);
-		
-		JMenu menuAluguel = new JMenu(prop.getProperty("MenuLocatarioView.Menu.MenuItem.Sair"));
-		menuBar.add(menuAluguel);
-		
-		JMenuItem menuItemAluguelSolicitacoes = new JMenuItem(prop.getProperty("MenuLocatarioView.Aluguel.MenuItem.Solicitacoes"));
-		menuAluguel.add(menuItemAluguelSolicitacoes);
-		
-		JMenuItem menuItemAluguelHistorico = new JMenuItem(prop.getProperty("MenuLocatarioView.Aluguel.MenuItem.Historico"));
-		menuAluguel.add(menuItemAluguelHistorico);
+
+		JMenu mnAluguel = new JMenu("Aluguel");
+		menuBar.add(mnAluguel);
+
+		JMenuItem mntmSolicitar = new JMenuItem("Solicitar");
+		mntmSolicitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+					SolicitarAluguelView tela = new SolicitarAluguelView(loc, args);
+					tela.setVisible(true);
+					tela.setVisible(true);
+					desktopPane.add(tela);
+					tela.setPosition();
+					tela.moveToFront();
+					tela.setSelected(true);
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
+		mnAluguel.add(mntmSolicitar);
+
+		JMenuItem mntmSolicitaesPendentes = new JMenuItem("Solicitações pendentes");
+		mnAluguel.add(mntmSolicitaesPendentes);
 
 		frmMenuLocatario.setVisible(true);
 	}
