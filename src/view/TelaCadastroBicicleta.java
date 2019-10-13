@@ -72,11 +72,11 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		txtModelo.setColumns(10);
 
 		JLabel lblAno = new JLabel(prop.getProperty("CadBikeView.Label.Ano"));
-		lblAno.setBounds(10, 71, 46, 14);
+		lblAno.setBounds(10, 71, 75, 14);
 		panel.add(lblAno);
 
 		JLabel lblValorDeAluguel = new JLabel(prop.getProperty("CadBikeView.Label.Valor"));
-		lblValorDeAluguel.setBounds(172, 71, 144, 14);
+		lblValorDeAluguel.setBounds(172, 71, 125, 14);
 		panel.add(lblValorDeAluguel);
 
 		txtValorAluguel = new JTextField();
@@ -99,7 +99,7 @@ public class TelaCadastroBicicleta extends JInternalFrame {
 		panel.add(checkboxDisponibilidade);
 
 		JYearChooser jcAno = new JYearChooser();
-		jcAno.setBounds(88, 77, 53, 20);
+		jcAno.setBounds(78, 68, 53, 20);
 		panel.add(jcAno);
 
 		JLabel lblValoresObrigatrios = new JLabel(prop.getProperty("CadBikeView.Label.CamposObrigatorios"));

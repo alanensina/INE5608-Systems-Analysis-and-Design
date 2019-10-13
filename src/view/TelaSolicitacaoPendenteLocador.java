@@ -85,7 +85,7 @@ public class TelaSolicitacaoPendenteLocador extends JInternalFrame {
 		lblLogo.setBounds(162, 12, 128, 138);
 		getContentPane().add(lblLogo);
 		
-		JLabel lblLocatrio = new JLabel(prop.getProperty("TelaSolicitacaoPendenteLocador.Lable.Locatario"));
+		JLabel lblLocatrio = new JLabel(prop.getProperty("TelaSolicitacaoPendenteLocador.Label.Locatario"));
 		lblLocatrio.setBounds(12, 216, 114, 15);
 		getContentPane().add(lblLocatrio);
 		
