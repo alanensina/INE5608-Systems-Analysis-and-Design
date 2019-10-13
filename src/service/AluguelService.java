@@ -1,7 +1,10 @@
 package service;
 
+import static service.UtilsService.getProp;
+
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -15,13 +18,14 @@ import model.Locador;
 import model.Locatario;
 
 public class AluguelService {
+	private Properties prop = getProp();
 	private AluguelDAO dao = new AluguelDAO();
 	private BicicletaDAO bicDAO = new BicicletaDAO();
 	private CarteiraLocatarioDAO cartDAO = new CarteiraLocatarioDAO();
 
 	public boolean validaDatas(Date dtInicio, Date dtFim) {
 		if (dtInicio == null || dtFim == null) {
-			JOptionPane.showMessageDialog(null, "Digite uma data válida!");
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelService.Message.dataInvalida"));
 			return false;
 		}
 		return true;
@@ -29,7 +33,7 @@ public class AluguelService {
 
 	public boolean isDataInicioDepoisDataFim(LocalDate dtInicio, LocalDate dtFim) {
 		if (dtInicio.isAfter(dtFim)) {
-			JOptionPane.showMessageDialog(null, "A data do início do aluguel deve ser anterior a data final.");
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelService.Message.dataInicioAntesDaDataFim"));
 			return true;
 		}
 		return false;
@@ -49,7 +53,7 @@ public class AluguelService {
 
 		else if (carteira.getMultaAcumulada() > 0) {
 			JOptionPane.showMessageDialog(null,
-					"Você não poderá solicitar aluguéis enquanto não acertar suas pendências. O valor atual da sua multa é de R$ "
+					prop.getProperty("AluguelService.Message.multaEncontrada")
 							+ carteira.getMultaAcumulada());
 			return true;
 		}
