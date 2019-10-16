@@ -118,8 +118,8 @@ public class SolicitarAluguelView extends JInternalFrame {
 		jcDataFim.setBounds(126, 62, 145, 20);
 		panelPeriodo.add(jcDataFim);
 
-		JButton btnNewButton = new JButton(prop.getProperty("SolicitarAluguelView.Button.Consultar"));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnConsultar = new JButton(prop.getProperty("SolicitarAluguelView.Button.Consultar"));
+		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(!controller.validaDatas(jcDataInicio.getDate(), jcDataInicio.getDate())) {
@@ -132,6 +132,13 @@ public class SolicitarAluguelView extends JInternalFrame {
 				
 				if(dtInicio.isAfter(dtFim)) {
 					JOptionPane.showMessageDialog(null, prop.getProperty("SolicitarAluguelView.Message.InicioAnteriorAoFim"));
+					return;
+				}
+				
+				if(dtInicio.equals(LocalDate.now()) && dtFim.equals(LocalDate.now())) {
+				}
+				else if(dtInicio.isBefore(LocalDate.now()) || dtFim.isBefore(LocalDate.now())) {
+					JOptionPane.showMessageDialog(null, prop.getProperty("SolicitarAluguelView.Message.InicioOuFimAnteriorADataAtual"));
 					return;
 				}
 
@@ -152,8 +159,8 @@ public class SolicitarAluguelView extends JInternalFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(283, 31, 119, 51);
-		panelPeriodo.add(btnNewButton);
+		btnConsultar.setBounds(283, 31, 119, 51);
+		panelPeriodo.add(btnConsultar);
 
 		JLabel lblValorDirio = new JLabel(prop.getProperty("SolicitarAluguelView.Label.ValorDiario"));
 		lblValorDirio.setBounds(10, 62, 91, 14);

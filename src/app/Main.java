@@ -5,6 +5,6 @@ import controller.AppController;
 public class Main {
 
 	public static void main(String[] args) {
-		AppController.inicializa(args);
+		 AppController.inicializa(args);
 	}
 }
