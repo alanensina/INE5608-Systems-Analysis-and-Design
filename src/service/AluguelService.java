@@ -43,7 +43,10 @@ public class AluguelService {
 			LocalDate dtFim, double valorPrevisto) {
 		
 		//TODO: Validar se o locatário está com algum aluguel ativo
-		//TODO: Validar se o locatário não possui multas
+
+		if(checarMultasPendentes(locatario)) {
+			return false;
+		}
 		
 		return dao.adicionarSolicitacao(locador, locatario, bic, dtInicio, dtFim, valorPrevisto);
 	}
