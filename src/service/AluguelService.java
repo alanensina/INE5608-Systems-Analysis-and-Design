@@ -41,6 +41,10 @@ public class AluguelService {
 
 	public boolean enviarSolicitacaoDeAluguel(Locatario locatario, Locador locador, Bicicleta bic, LocalDate dtInicio,
 			LocalDate dtFim, double valorPrevisto) {
+		
+		//TODO: Validar se o locatário está com algum aluguel ativo
+		//TODO: Validar se o locatário não possui multas
+		
 		return dao.adicionarSolicitacao(locador, locatario, bic, dtInicio, dtFim, valorPrevisto);
 	}
 

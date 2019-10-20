@@ -169,12 +169,12 @@ public class TelaEdicaoBicicleta extends JInternalFrame {
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				Object[] options = { "Confirmar", "Cancelar" };
+				Object[] options = { "Cancelar", "Confirmar" };
 				int resp = JOptionPane.showOptionDialog(null,
 						prop.getProperty("EditBikeView.Message.ConfirmarDelete"),
 						"ATENÇÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-				if(resp == 0) {
+				if(resp == 1) {
 					Bicicleta bic = (Bicicleta) cbBikes.getSelectedItem();
 
 					if(controller.deletar(bic)) {

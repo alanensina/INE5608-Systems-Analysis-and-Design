@@ -321,12 +321,12 @@ public class TelaEdicaoLocatario extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				LocatarioController controller = new LocatarioController();
 
-				Object[] options = { "Confirmar", "Cancelar" };
+				Object[] options = { "Cancelar", "Confirmar" };
 				int resp = JOptionPane.showOptionDialog(null,
 						prop.getProperty("EditLocatarioView.Message.ConfirmarDelete"), "ATENÇÃO",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-				if (resp == 0) {
+				if (resp == 1) {
 
 					// Verifica multas
 					// verifica alugueis em andamento

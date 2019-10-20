@@ -33,6 +33,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.awt.event.ActionEvent;
@@ -122,7 +123,7 @@ public class SolicitarAluguelView extends JInternalFrame {
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(!controller.validaDatas(jcDataInicio.getDate(), jcDataInicio.getDate())) {
+				if(!controller.validaDatas(jcDataInicio.getDate(), jcDataFim.getDate())) {
 					return;
 				} 
 				
@@ -136,6 +137,7 @@ public class SolicitarAluguelView extends JInternalFrame {
 				}
 				
 				if(dtInicio.equals(LocalDate.now()) && dtFim.equals(LocalDate.now())) {
+					
 				}
 				else if(dtInicio.isBefore(LocalDate.now()) || dtFim.isBefore(LocalDate.now())) {
 					JOptionPane.showMessageDialog(null, prop.getProperty("SolicitarAluguelView.Message.InicioOuFimAnteriorADataAtual"));
@@ -186,7 +188,7 @@ public class SolicitarAluguelView extends JInternalFrame {
 		btnSolicitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
-				if(!controller.validaDatas(jcDataInicio.getDate(), jcDataInicio.getDate())) {
+				if(!controller.validaDatas(jcDataInicio.getDate(), jcDataFim.getDate())) {
 					return;
 				} 
 				

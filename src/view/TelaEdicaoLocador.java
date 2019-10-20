@@ -309,12 +309,12 @@ public class TelaEdicaoLocador extends JInternalFrame {
 		btnDeletarUsurio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Object[] options = { "Confirmar", "Cancelar" };
+				Object[] options = { "Cancelar", "Confirmar" };
 				int resp = JOptionPane.showOptionDialog(null,
 						prop.getProperty("EditLocadorView.Message.ConfirmarDelete"),
 						"ATENÇÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-				if(resp == 0) {
+				if(resp == 1) {
 
 					LocadorController controller = new LocadorController();
 					// Verificar se há aluguel ativado
