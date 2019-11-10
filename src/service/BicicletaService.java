@@ -17,9 +17,21 @@ public class BicicletaService {
 	public BicicletaService() {
 	}
 
+//	public boolean validaDados(Bicicleta bic) {
+//		if (bic.getModelo() == null || bic.getModelo().isEmpty() || bic.getValorDeAluguel() <= 0) {
+//			JOptionPane.showMessageDialog(null, prop.getProperty("Service.Bicicleta.CamposInvalidos"));
+//			return false;
+//		}
+//		return true;
+//	}
+	
 	public boolean validaDados(Bicicleta bic) {
-		if (bic.getModelo() == null || bic.getModelo().isEmpty() || bic.getValorDeAluguel() <= 0) {
+		if (bic.getModelo() == null || bic.getModelo().isEmpty()) {
 			JOptionPane.showMessageDialog(null, prop.getProperty("Service.Bicicleta.CamposInvalidos"));
+			return false;
+		}
+		else if (bic.getValorDeAluguel() <= 0) {
+			JOptionPane.showMessageDialog(null, prop.getProperty("Service.Bicicleta.ValorAluguelIgualOuMenorQueZero"));
 			return false;
 		}
 		return true;
