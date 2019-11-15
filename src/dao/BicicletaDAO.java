@@ -17,6 +17,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import connection.ConnectionFactory;
+import enumeration.Status;
 import model.Aluguel;
 import model.Bicicleta;
 import model.Locador;
@@ -220,7 +221,7 @@ public class BicicletaDAO {
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setBoolean(1, true);
-			stmt.setBoolean(2, true);
+			stmt.setString(2, Status.ALUGUEL_INICIADO.getDescricao());
 			stmt.setDate(3, Date.valueOf(dtInicio));
 			stmt.setDate(4, Date.valueOf(dtFim));
 			rs = stmt.executeQuery();
@@ -260,7 +261,7 @@ public class BicicletaDAO {
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, locador.getId());
-			stmt.setBoolean(2, true);
+			stmt.setString(2, Status.ALUGUEL_INICIADO.getDescricao());
 			stmt.setInt(3, locador.getId());
 			rs = stmt.executeQuery();
 

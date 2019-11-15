@@ -67,9 +67,7 @@ dtFimRealizado date,
 valorPrevisto double, -- valor dado na solicitação do aluguel
 valorMulta double default 0,
 valorFinal double, -- valorPrevisto +  valorMulta
-pendente boolean default true, -- será false quando o locador cancelar ou aceitar a solicitação de aluguel
-cancelado boolean default false, -- será true se o locador cancelar a solicitação de aluguel
-iniciado boolean default false, -- será true quando o locatario retirar a bicicleta
+status varchar(255),
 
  CONSTRAINT pk_aluguel PRIMARY KEY (id),
  CONSTRAINT fk_aluguel_locador FOREIGN KEY(idLocador) REFERENCES locador (id),

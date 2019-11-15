@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import dao.AluguelDAO;
 import dao.BicicletaDAO;
 import dao.CarteiraLocatarioDAO;
+import enumeration.Status;
 import model.Aluguel;
 import model.Bicicleta;
 import model.CarteiraLocatario;
@@ -48,7 +49,7 @@ public class AluguelService {
 			return false;
 		}
 		
-		return dao.adicionarSolicitacao(locador, locatario, bic, dtInicio, dtFim, valorPrevisto);
+		return dao.adicionarSolicitacao(locador, locatario, bic, dtInicio, dtFim, valorPrevisto, Status.SOLICITACAO_ENVIADA_LOCATARIO.getDescricao());
 	}
 
 	public boolean checarMultasPendentes(Locatario locatario) {

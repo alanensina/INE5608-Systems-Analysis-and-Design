@@ -2,6 +2,8 @@ package model;
 
 import java.time.LocalDate;
 
+import enumeration.Status;
+
 public class Aluguel {
 
 	private int id;
@@ -14,15 +16,13 @@ public class Aluguel {
 	private double valorPrevisto;
 	private double valorMulta;
 	private double valorFinal;
-	private boolean iniciado;
-	private boolean pendente;
-	private boolean cancelado;
+	private Status status;
 	
 	public Aluguel() {}
 	
 	public Aluguel(int id, Locador locador, Locatario locatario, Bicicleta bicicleta, LocalDate dtInicio,
 			LocalDate dtFimPrevisto, LocalDate dtFimRealizado, double valorPrevisto, double valorMulta,
-			double valorFinal, boolean iniciado, boolean pendente, boolean cancelado) {
+			double valorFinal, Status status) {
 		this.id = id;
 		this.locador = locador;
 		this.locatario = locatario;
@@ -33,14 +33,12 @@ public class Aluguel {
 		this.valorPrevisto = valorPrevisto;
 		this.valorMulta = valorMulta;
 		this.valorFinal = valorFinal;
-		this.iniciado = iniciado;
-		this.pendente = pendente;
-		this.cancelado = cancelado;
+		this.status = status;
 	}
 	
 	public Aluguel(Locador locador, Locatario locatario, Bicicleta bicicleta, LocalDate dtInicio,
 			LocalDate dtFimPrevisto, LocalDate dtFimRealizado, double valorPrevisto, double valorMulta,
-			double valorFinal, boolean iniciado, boolean pendente, boolean cancelado) {
+			double valorFinal, Status status) {
 		this.locador = locador;
 		this.locatario = locatario;
 		this.bicicleta = bicicleta;
@@ -50,9 +48,7 @@ public class Aluguel {
 		this.valorPrevisto = valorPrevisto;
 		this.valorMulta = valorMulta;
 		this.valorFinal = valorFinal;
-		this.iniciado = iniciado;
-		this.pendente = pendente;
-		this.cancelado = cancelado;
+		this.status = status;
 	}
 
 	public int getId() {
@@ -134,29 +130,13 @@ public class Aluguel {
 	public void setValorFinal(double valorFinal) {
 		this.valorFinal = valorFinal;
 	}
-	
-	public boolean isPendente() {
-		return pendente;
+
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setPendente(boolean pendente) {
-		this.pendente = pendente;
-	}
-
-	public boolean isCancelado() {
-		return cancelado;
-	}
-
-	public void setCancelado(boolean cancelado) {
-		this.cancelado = cancelado;
-	}
-
-	public boolean isIniciado() {
-		return iniciado;
-	}
-
-	public void setIniciado(boolean iniciado) {
-		this.iniciado = iniciado;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	@Override

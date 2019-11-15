@@ -17,6 +17,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import connection.ConnectionFactory;
+import enumeration.Status;
 import model.Aluguel;
 import model.Bicicleta;
 import model.Locador;
@@ -35,9 +36,7 @@ public class AluguelDAO {
 	private static final String VALOR_PREVISTO = "valorPrevisto";
 	private static final String VALOR_MULTA = "valorMulta";
 	private static final String VALOR_FINAL = "valorFinal";
-	private static final String PENDENTE = "pendente";
-	private static final String CANCELADO = "cancelado";
-	private static final String INICIADO = "iniciado";
+	private static final String STATUS = "status";
 	
 	private Properties prop = getProp();
 	private Properties stringSQL = getSqls();
@@ -47,7 +46,7 @@ public class AluguelDAO {
 	
 	public AluguelDAO() {}
 	
-	public boolean adicionarSolicitacao(Locador locador, Locatario locatario, Bicicleta bike, LocalDate dtInicio, LocalDate dtFim, double valorPrevisto) {
+	public boolean adicionarSolicitacao(Locador locador, Locatario locatario, Bicicleta bike, LocalDate dtInicio, LocalDate dtFim, double valorPrevisto, String status) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = stringSQL.getProperty("AluguelDAO.adicionarSolicitacao");
 		PreparedStatement stmt = null;
@@ -60,6 +59,7 @@ public class AluguelDAO {
 			stmt.setDate(4, Date.valueOf(dtInicio));
 			stmt.setDate(5, Date.valueOf(dtFim));
 			stmt.setDouble(6, valorPrevisto);
+			stmt.setString(7, status);
 			stmt.executeUpdate();
 			
 		} catch (SQLException ex) {
@@ -86,7 +86,7 @@ public class AluguelDAO {
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, loc.getId());
-			stmt.setBoolean(2, true);
+			stmt.setString(2, Status.SOLICITACAO_ENVIADA_LOCATARIO.getDescricao());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -122,7 +122,8 @@ public class AluguelDAO {
 
 		try {
 			stmt = con.prepareStatement(sql);
-			stmt.setInt(1, solicitacao.getId());
+			stmt.setString(1, Status.CANCELADO_PELO_LOCADOR.getDescricao());
+			stmt.setInt(2, solicitacao.getId());
 			stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.cancelarSolicitacao.Sucesso"));
 
@@ -145,7 +146,8 @@ public class AluguelDAO {
 
 		try {
 			stmt = con.prepareStatement(sql);
-			stmt.setInt(1, solicitacao.getId());
+			stmt.setString(1,Status.AGUARDANDO_INICIO.getDescricao());
+			stmt.setInt(2, solicitacao.getId());
 			stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.aceitarSolicitacao.Sucesso"));
 
@@ -172,6 +174,7 @@ public class AluguelDAO {
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, loc.getId());
+			stmt.setString(2, Status.AGUARDANDO_INICIO.getDescricao());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
