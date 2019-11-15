@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import dao.CarteiraLocadorDAO;
+import dao.CarteiraLocatarioDAO;
 import dao.LocadorDAO;
 import dao.LocatarioDAO;
 import model.Endereco;
@@ -20,6 +22,7 @@ public class LocatarioService {
 	private LocatarioDAO locatarioDAO = new LocatarioDAO();
 	UtilsService utils = new UtilsService();
 	private Properties prop = getProp();
+	private CarteiraLocatarioDAO carteiraDAO = new CarteiraLocatarioDAO();
 
 	
 	public LocatarioService() {}
@@ -31,7 +34,17 @@ public class LocatarioService {
 			return false;
 		}
 		
-		return locatarioDAO.salvar(loc, end);
+		boolean status = locatarioDAO.salvar(loc, end);
+		
+		try {
+			Locatario locatario = locatarioDAO.buscarPorLogin(loc.getLogin());
+			carteiraDAO.inicializaCarteira(locatario);			
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return status;
 	}
 	
 	public void converterSenha(Locatario loc) throws NoSuchAlgorithmException {

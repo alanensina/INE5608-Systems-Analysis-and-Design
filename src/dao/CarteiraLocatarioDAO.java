@@ -79,4 +79,24 @@ public class CarteiraLocatarioDAO {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
 	}
+	
+	public void inicializaCarteira(Locatario loc) {
+		
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("CarteiraLocatarioDAO.inicializaCarteira");
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, loc.getId());
+			stmt.setDouble(2, 0);
+			
+			stmt.executeUpdate();
+			
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
 }

@@ -9,9 +9,11 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import dao.BicicletaDAO;
+import dao.CarteiraLocadorDAO;
 import dao.EnderecoDAO;
 import dao.LocadorDAO;
 import dao.LocatarioDAO;
+import model.CarteiraLocador;
 import model.Endereco;
 import model.Locador;
 import model.Locatario;
@@ -23,6 +25,7 @@ public class LocadorService {
 	private LocatarioDAO locatarioDAO = new LocatarioDAO();
 	UtilsService utils = new UtilsService();
 	private Properties prop = getProp();
+	private CarteiraLocadorDAO carteiraDAO = new CarteiraLocadorDAO();
 
 	public LocadorService() {
 	}
@@ -34,7 +37,16 @@ public class LocadorService {
 			return false;
 		}
 
-		return locadorDAO.salvar(loc, end);
+		boolean status = locadorDAO.salvar(loc, end);
+		
+		try {
+			Locador locador = locadorDAO.buscarPorLogin(loc.getLogin());
+			carteiraDAO.inicializaCarteira(locador);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return status;
 	}
 
 	public boolean validaAtualizacaoLocador(Locador loc, Endereco end) throws Exception {

@@ -10,10 +10,12 @@ import javax.swing.JOptionPane;
 
 import dao.AluguelDAO;
 import dao.BicicletaDAO;
+import dao.CarteiraLocadorDAO;
 import dao.CarteiraLocatarioDAO;
 import enumeration.Status;
 import model.Aluguel;
 import model.Bicicleta;
+import model.CarteiraLocador;
 import model.CarteiraLocatario;
 import model.Locador;
 import model.Locatario;
@@ -23,6 +25,7 @@ public class AluguelService {
 	private AluguelDAO dao = new AluguelDAO();
 	private BicicletaDAO bicDAO = new BicicletaDAO();
 	private CarteiraLocatarioDAO carteiraLocatarioDAO = new CarteiraLocatarioDAO();
+	private CarteiraLocadorDAO carteiraLocadorDAO = new CarteiraLocadorDAO();
 
 	public boolean validaDatas(Date dtInicio, Date dtFim) {
 		if (dtInicio == null || dtFim == null) {
@@ -87,8 +90,11 @@ public class AluguelService {
 	public void enviarSolicitacaoDeCancelamentoDeAluguel(Aluguel aluguel) {
 		dao.enviarSolicitacaoDeCancelamentoDeAluguel(aluguel);
 		CarteiraLocatario carteira = carteiraLocatarioDAO.retornaPorId(aluguel.getLocatario());
+		CarteiraLocador carteiraLocador = carteiraLocadorDAO.retornaPorId(aluguel.getLocador());
 		double multa = carteira.getMultaAcumulada() + (aluguel.getValorPrevisto()/2);
+		double saldo = carteiraLocador.getSaldo() + (aluguel.getValorPrevisto()/2);
 		carteiraLocatarioDAO.adicionarMulta(aluguel, multa);
+		carteiraLocadorDAO.adicionaSaldo(aluguel, saldo);
 	}
 
 }
