@@ -43,6 +43,7 @@ public class AluguelDAO {
 	private Properties stringSQL = getSqls();
 	private BicicletaDAO bicDAO = new BicicletaDAO();
 	private LocatarioDAO locatarioDAO = new LocatarioDAO();
+	private LocadorDAO locadorDAO = new LocadorDAO();
 	
 	public AluguelDAO() {}
 	
@@ -156,6 +157,45 @@ public class AluguelDAO {
 		}
 
 		return true;
+	}
+	
+	public List<Aluguel> buscarAlugueisPendentesLocatario(Locatario loc) {
+		
+		Connection con = ConnectionFactory.getConnection();
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = stringSQL.getProperty("AluguelDAO.buscarAluguelPendenteLocatario");
+
+		List<Aluguel> solicitacoes = new LinkedList<>();
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, loc.getId());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Aluguel aluguel = new Aluguel();
+				aluguel.setId(rs.getInt(ID));
+				aluguel.setLocatario(loc);
+				aluguel.setLocador(locadorDAO.buscarPorId(rs.getInt(LOCADOR)));
+				aluguel.setBicicleta(bicDAO.retornarBikePorId(rs.getInt(BICICLETA)));
+				aluguel.setDtInicio(rs.getDate(DT_INICIO).toLocalDate());
+				aluguel.setDtFimPrevisto(rs.getDate(DT_FIM_PREVISTO).toLocalDate());
+				aluguel.setValorPrevisto(rs.getDouble(VALOR_PREVISTO));
+				
+				solicitacoes.add(aluguel);
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.buscarAluguelPendenteLocatario.Fail") + ex);
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+
+		System.out.println(prop.getProperty("AluguelDAO.buscarAluguelPendenteLocatario.Sucesso"));
+
+		return solicitacoes;
 	}
 	
 	

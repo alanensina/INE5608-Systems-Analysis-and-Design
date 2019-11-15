@@ -53,6 +53,9 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 		inicializaTela();
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public TelaMenuPrincipalLocatario(String[] args) {
 		inicializaTela();
 	}
@@ -128,7 +131,6 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 				try {
 					SolicitarAluguelView tela = new SolicitarAluguelView(loc, args);
 					tela.setVisible(true);
-					tela.setVisible(true);
 					desktopPane.add(tela);
 					tela.setPosition();
 					tela.moveToFront();
@@ -140,7 +142,22 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 		});
 		mnAluguel.add(mntmSolicitar);
 
-		JMenuItem mntmSolicitaesPendentes = new JMenuItem("Solicitações pendentes");
+		JMenuItem mntmSolicitaesPendentes = new JMenuItem("Alugueis agendados");
+		mntmSolicitaesPendentes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+				TelaAluguelPendenteLocatario tela = new TelaAluguelPendenteLocatario(loc, args);
+				tela.setVisible(true);
+				desktopPane.add(tela);
+				tela.setPosition();
+				tela.moveToFront();
+				tela.setSelected(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		mnAluguel.add(mntmSolicitaesPendentes);
 
 		frmMenuLocatario.setVisible(true);
