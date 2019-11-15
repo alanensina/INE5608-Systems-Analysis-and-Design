@@ -4,14 +4,18 @@ import static service.UtilsService.getProp;
 import static service.UtilsService.getSqls;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
 import connection.ConnectionFactory;
+import enumeration.Status;
+import model.Aluguel;
 import model.CarteiraLocatario;
 import model.Locador;
 import model.Locatario;
@@ -57,5 +61,22 @@ public class CarteiraLocatarioDAO {
 		
 		return carteira;
 	}
-	
+
+	public void adicionarMulta(Aluguel aluguel, double multa) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("CarteiraLocatarioDAO.adicionarMulta");
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setDouble(1, multa);
+			stmt.setInt(2, aluguel.getLocatario().getId());
+			stmt.executeUpdate();
+		} catch (SQLException ex) {
+			System.out.println(ex);
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
 }

@@ -200,7 +200,46 @@ public class AluguelDAO {
 
 		return solicitacoes;
 	}
-	
-	
-	
+
+	public void enviaSolicitacaoDeInicioDeAluguel(Aluguel aluguel) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("AluguelDAO.enviaSolicitacaoDeInicioDeAluguel");
+
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, Status.INICIADO_PELO_LOCATARIO.getDescricao());
+			stmt.setInt(2, aluguel.getId());
+			stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.enviaSolicitacaoDeInicioDeAluguel.Sucesso"));
+
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.enviaSolicitacaoDeInicioDeAluguel.Fail") + " " + ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
+
+	public void enviarSolicitacaoDeCancelamentoDeAluguel(Aluguel aluguel) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("AluguelDAO.enviarSolicitacaoDeCancelamentoDeAluguel");
+
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, Status.CANCELADO_PELO_LOCATARIO.getDescricao());
+			stmt.setDouble(2, (aluguel.getValorPrevisto()/2));
+			stmt.setDouble(3, (aluguel.getValorPrevisto()/2));
+			stmt.setInt(4, aluguel.getId());
+			stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.enviarSolicitacaoDeCancelamentoDeAluguel.Sucesso"));
+
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.enviarSolicitacaoDeCancelamentoDeAluguel.Fail") + " " + ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
 }

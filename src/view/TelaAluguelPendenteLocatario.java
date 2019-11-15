@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.AluguelController;
 import dao.AluguelDAO;
 import model.Aluguel;
 import model.Bicicleta;
@@ -34,6 +35,7 @@ public class TelaAluguelPendenteLocatario extends JInternalFrame {
 	private JTextField txtLocador;
 	private AluguelDAO aluguelDAO = new AluguelDAO();
 	private static Locatario loc;
+	private AluguelController controller = new AluguelController();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -142,7 +144,8 @@ public class TelaAluguelPendenteLocatario extends JInternalFrame {
 						"ATENÇÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				
 				if(resp > 0) {
-					
+					Aluguel aluguel = (Aluguel) cbAlugueisAgendados.getSelectedItem();
+					controller.enviaSolicitacaoDeInicioDeAluguel(aluguel);
 				}
 
 				dispose();
@@ -154,6 +157,27 @@ public class TelaAluguelPendenteLocatario extends JInternalFrame {
 		getContentPane().add(btnIniciar);
 
 		JButton btnCancelarAlugul = new JButton("Cancelar aluguel");
+		btnCancelarAlugul.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(txtBike.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Selecione um item antes de prosseguir.");
+					return;
+				}
+				
+				Object[] options = { "Cancelar", "Confirmar" };
+				int resp = JOptionPane.showOptionDialog(null,"Deseja cancelar o aluguel? Obs: 50% do valor previsto será cobrado.",
+						"ATENÇÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+				
+				if(resp > 0) {
+					Aluguel aluguel = (Aluguel) cbAlugueisAgendados.getSelectedItem();
+					controller.enviarSolicitacaoDeCancelamentoDeAluguel(aluguel);
+				}
+
+				dispose();
+				
+			}
+		});
 		btnCancelarAlugul.setBackground(new Color(220, 20, 60));
 		btnCancelarAlugul.setForeground(new Color(255, 255, 255));
 		btnCancelarAlugul.setBounds(138, 351, 165, 25);

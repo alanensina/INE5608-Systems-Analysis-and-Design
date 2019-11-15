@@ -22,7 +22,7 @@ public class AluguelService {
 	private Properties prop = getProp();
 	private AluguelDAO dao = new AluguelDAO();
 	private BicicletaDAO bicDAO = new BicicletaDAO();
-	private CarteiraLocatarioDAO cartDAO = new CarteiraLocatarioDAO();
+	private CarteiraLocatarioDAO carteiraLocatarioDAO = new CarteiraLocatarioDAO();
 
 	public boolean validaDatas(Date dtInicio, Date dtFim) {
 		if (dtInicio == null || dtFim == null) {
@@ -53,7 +53,7 @@ public class AluguelService {
 	}
 
 	public boolean checarMultasPendentes(Locatario locatario) {
-		CarteiraLocatario carteira = cartDAO.retornaPorId(locatario);
+		CarteiraLocatario carteira = carteiraLocatarioDAO.retornaPorId(locatario);
 
 		if (carteira == null) {
 			return false;
@@ -78,6 +78,17 @@ public class AluguelService {
 			return bicDAO.atualizaDisponibilidade(solicitacao.getBicicleta());
 		}
 		return false;
+	}
+
+	public void enviaSolicitacaoDeInicioDeAluguel(Aluguel aluguel) {
+		dao.enviaSolicitacaoDeInicioDeAluguel(aluguel);
+	}
+
+	public void enviarSolicitacaoDeCancelamentoDeAluguel(Aluguel aluguel) {
+		dao.enviarSolicitacaoDeCancelamentoDeAluguel(aluguel);
+		CarteiraLocatario carteira = carteiraLocatarioDAO.retornaPorId(aluguel.getLocatario());
+		double multa = carteira.getMultaAcumulada() + (aluguel.getValorPrevisto()/2);
+		carteiraLocatarioDAO.adicionarMulta(aluguel, multa);
 	}
 
 }

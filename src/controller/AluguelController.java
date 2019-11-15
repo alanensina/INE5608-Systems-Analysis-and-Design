@@ -38,5 +38,13 @@ public class AluguelController {
 		return service.aceitarSolicitacao(solicitacao);
 	}
 
+	public void enviaSolicitacaoDeInicioDeAluguel(Aluguel aluguel) {
+		service.enviaSolicitacaoDeInicioDeAluguel(aluguel);
+	}
+
+	public void enviarSolicitacaoDeCancelamentoDeAluguel(Aluguel aluguel) {
+		service.enviarSolicitacaoDeCancelamentoDeAluguel(aluguel);
+	}
+
 	
 }
