@@ -308,4 +308,24 @@ public class BicicletaDAO {
 		}
 		return true;
 	}
+	
+	public void liberaBicicleta(Bicicleta bicicleta) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("BicicletaDAO.liberaBicicleta");
+
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, bicicleta.getId());
+			stmt.executeUpdate();
+
+		} catch (SQLException ex) {
+			System.out.println(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
+	
+	
 }

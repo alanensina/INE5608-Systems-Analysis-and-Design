@@ -99,4 +99,24 @@ public class CarteiraLocatarioDAO {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
 	}
+
+	public void adicionarSaldo(Aluguel aluguel, double saldo) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("CarteiraLocatarioDAO.adicionaSaldo");
+
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setDouble(1, saldo);
+			stmt.setInt(2, aluguel.getLocatario().getId());
+			
+			stmt.executeUpdate();
+
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
 }

@@ -100,4 +100,22 @@ public class CarteiraLocadorDAO {
 		return carteira;
 	}
 
+	public void adicionaMulta(Aluguel aluguel, double multa) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("CarteiraLocadorDAO.adicionarMulta");
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setDouble(1, multa);
+			stmt.setInt(2, aluguel.getLocador().getId());
+			stmt.executeUpdate();
+		} catch (SQLException ex) {
+			System.out.println(ex);
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
+
 }

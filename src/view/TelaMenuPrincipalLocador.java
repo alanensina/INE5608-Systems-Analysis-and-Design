@@ -165,8 +165,16 @@ public class TelaMenuPrincipalLocador extends JFrame {
 		});
 		menuItemAluguel.add(menuItemAluguelSolicitacoes);
 		
-		JMenuItem menuItemBikeHistorico = new JMenuItem(prop.getProperty("MenuLocadorView.Aluguel.MenuItem.Historico"));
-		menuItemAluguel.add(menuItemBikeHistorico);
+		JMenuItem menuItemAlugueisAgendados = new JMenuItem(prop.getProperty("MenuLocadorView.Aluguel.MenuItem.Alugueis.Agendados"));
+		menuItemAlugueisAgendados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaAluguelPendenteLocador tela = new TelaAluguelPendenteLocador(loc, args);
+				desktopPane.add(tela);
+				tela.setPosition();
+				tela.setVisible(true);	
+			}
+		});
+		menuItemAluguel.add(menuItemAlugueisAgendados);
 
 		frmMenuLocatario.setVisible(true);
 	}
