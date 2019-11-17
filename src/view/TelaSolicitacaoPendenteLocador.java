@@ -183,12 +183,12 @@ public class TelaSolicitacaoPendenteLocador extends JInternalFrame {
 				}
 				
 				Aluguel solicitacao = (Aluguel) cbSolicitacoes.getSelectedItem();
-				Object[] options = { "Confirmar", "Cancelar" };
+				Object[] options = { "Cancelar", "Confirmar" };
 				int resp = JOptionPane.showOptionDialog(null,
 						prop.getProperty("TelaSolicitacaoPendenteLocador.Message.AceitaSolicitacao"),
 						"ATENÇÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-				if(resp == 0) {
+				if(resp == 1) {
 					if(controller.aceitarSolicitacao(solicitacao)) {
 						dispose();
 						return ;

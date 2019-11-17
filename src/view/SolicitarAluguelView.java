@@ -145,7 +145,8 @@ public class SolicitarAluguelView extends JInternalFrame {
 				}
 
 				List<Bicicleta> bikesDisponiveis = bicDAO.listarBikesDisponiveisParaLocacao(dtInicio, dtFim);
-				if (dtInicio.isBefore(dtFim)) {
+				
+				if (dtInicio.isBefore(dtFim) || dtInicio.isEqual(dtFim)) {
 					cbBicicletasDisponiveis.setModel(new DefaultComboBoxModel(bikesDisponiveis.toArray()));
 				} else {
 					cbBicicletasDisponiveis.setModel(new DefaultComboBoxModel());

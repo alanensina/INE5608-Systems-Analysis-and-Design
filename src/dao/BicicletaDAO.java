@@ -217,13 +217,16 @@ public class BicicletaDAO {
 		String sql = stringSQL.getProperty("BicicletaDAO.listarBikesDisponiveisParaAluguel");
 
 		List<Bicicleta> bikes = new LinkedList<>();
-
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setBoolean(1, true);
-			stmt.setString(2, Status.ALUGUEL_INICIADO.getDescricao());
-			stmt.setDate(3, Date.valueOf(dtInicio));
-			stmt.setDate(4, Date.valueOf(dtFim));
+			stmt.setString(2, Status.AGUARDANDO_INICIO.getDescricao());
+			stmt.setString(3, Status.INICIADO_PELO_LOCATARIO.getDescricao());
+			stmt.setString(4, Status.ALUGUEL_INICIADO.getDescricao());
+			stmt.setString(5, Status.AGUARDANDO_DEVOLUCAO.getDescricao());
+			stmt.setString(6, Status.DEVOLUCAO_INICIADA.getDescricao());
+			stmt.setDate(7, Date.valueOf(dtInicio));
+			stmt.setDate(8, Date.valueOf(dtFim));
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -261,8 +264,12 @@ public class BicicletaDAO {
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, locador.getId());
-			stmt.setString(2, Status.ALUGUEL_INICIADO.getDescricao());
-			stmt.setInt(3, locador.getId());
+			stmt.setString(2, Status.AGUARDANDO_INICIO.getDescricao());
+			stmt.setString(3, Status.INICIADO_PELO_LOCATARIO.getDescricao());
+			stmt.setString(4, Status.ALUGUEL_INICIADO.getDescricao());
+			stmt.setString(5, Status.AGUARDANDO_DEVOLUCAO.getDescricao());
+			stmt.setString(6, Status.DEVOLUCAO_INICIADA.getDescricao());
+			stmt.setInt(7, locador.getId());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

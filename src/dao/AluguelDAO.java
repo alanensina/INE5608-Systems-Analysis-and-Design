@@ -360,8 +360,6 @@ public class AluguelDAO {
 				alugueisEmAndamento.add(aluguel);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelDAO.buscarAluguelPendenteLocatario.Fail") + ex);
 			throw new RuntimeException(ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
@@ -374,5 +372,145 @@ public class AluguelDAO {
 		JOptionPane.showMessageDialog(null,
 				prop.getProperty("AluguelDAO.alugueisAtivosEncontrados"));
 		return true;
+	}
+
+	public List<Aluguel> buscarAluguelAtivo(Locatario loc) {
+		Connection con = ConnectionFactory.getConnection();
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = stringSQL.getProperty("AluguelDAO.buscarAlugueisAtivos");
+
+		List<Aluguel> alugueisAtivos = new LinkedList<>();
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, loc.getId());
+			stmt.setString(2, Status.ALUGUEL_INICIADO.getDescricao());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Aluguel aluguel = new Aluguel();
+				aluguel.setId(rs.getInt(ID));
+				aluguel.setLocador(locadorDAO.buscarPorId(rs.getInt(LOCADOR)));
+				aluguel.setLocatario(loc);
+				aluguel.setBicicleta(bicDAO.retornarBikePorId(rs.getInt(BICICLETA)));
+				aluguel.setDtInicio(rs.getDate(DT_INICIO).toLocalDate());
+				aluguel.setDtFimPrevisto(rs.getDate(DT_FIM_PREVISTO).toLocalDate());
+				aluguel.setValorPrevisto(rs.getDouble(VALOR_PREVISTO));
+
+				alugueisAtivos.add(aluguel);
+			}
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+		return alugueisAtivos;
+	}
+
+	public void finalizarAluguel(Aluguel aluguel, double multa, double valorFinal) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("AluguelDAO.finalizarAluguel");
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, Status.DEVOLUCAO_INICIADA.getDescricao());
+			stmt.setDate(2, Date.valueOf(LocalDate.now()));
+			stmt.setDouble(3, multa);
+			stmt.setDouble(4, valorFinal);
+			stmt.setInt(5, aluguel.getId());
+			stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null,
+					prop.getProperty("AluguelDAO.finalizarAluguel.Sucesso"));
+
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null,
+					prop.getProperty("AluguelDAO.finalizarAluguel.Fail") + " " + ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
+	
+	public List<Aluguel> buscarAlugueisFinalizados(Locador loc) {
+		Connection con = ConnectionFactory.getConnection();
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = stringSQL.getProperty("AluguelDAO.buscarAlugueisFinalizados");
+
+		List<Aluguel> alugueisAtivos = new LinkedList<>();
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, loc.getId());
+			stmt.setString(2, Status.DEVOLUCAO_INICIADA.getDescricao());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Aluguel aluguel = new Aluguel();
+				aluguel.setId(rs.getInt(ID));
+				aluguel.setLocador(loc);
+				aluguel.setLocatario(locatarioDAO.buscarPorId(rs.getInt(LOCATARIO)));
+				aluguel.setBicicleta(bicDAO.retornarBikePorId(rs.getInt(BICICLETA)));
+				aluguel.setDtInicio(rs.getDate(DT_INICIO).toLocalDate());
+				aluguel.setDtFimPrevisto(rs.getDate(DT_FIM_PREVISTO).toLocalDate());
+				aluguel.setValorPrevisto(rs.getDouble(VALOR_PREVISTO));
+				aluguel.setValorMulta(rs.getDouble(VALOR_MULTA));
+				aluguel.setValorFinal(rs.getDouble(VALOR_FINAL));
+				aluguel.setDtFimRealizado(rs.getDate(DT_FIM_REALIZADO).toLocalDate());
+
+				alugueisAtivos.add(aluguel);
+			}
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+		return alugueisAtivos;
+	}
+
+	public void encerrarAluguel(Aluguel aluguel) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("AluguelDAO.encerrarAluguel");
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, Status.ALUGUEL_FINALIZADO.getDescricao());
+			stmt.setInt(2, aluguel.getId());
+			stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null,
+					prop.getProperty("AluguelDAO.encerrarAluguel.Sucesso"));
+
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null,
+					prop.getProperty("AluguelDAO.encerrarAluguel.Fail") + " " + ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
+
+	public void finalizarAluguelSemDevolucao(Aluguel aluguel) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = stringSQL.getProperty("AluguelDAO.finalizarAluguelSemDevolucao");
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, Status.AGUARDANDO_DEVOLUCAO.getDescricao());
+			stmt.setDouble(2, aluguel.getValorMulta());
+			stmt.setDouble(3, aluguel.getValorFinal());
+			stmt.setInt(4, aluguel.getId());
+			stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null,
+					prop.getProperty("AluguelDAO.AguardandoDevolucao.Sucesso"));
+
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null,
+					prop.getProperty("AluguelDAO.AguardandoDevolucao.Fail") + " " + ex);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
 	}
 }

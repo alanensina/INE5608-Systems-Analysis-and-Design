@@ -3,6 +3,7 @@ package service;
 import static service.UtilsService.getProp;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Properties;
 
@@ -45,16 +46,17 @@ public class AluguelService {
 
 	public boolean enviarSolicitacaoDeAluguel(Locatario locatario, Locador locador, Bicicleta bic, LocalDate dtInicio,
 			LocalDate dtFim, double valorPrevisto) {
-		
-		if(checarAluguelAtivo(locatario)) {
+
+		if (checarAluguelAtivo(locatario)) {
 			return false;
 		}
 
-		if(checarMultasPendentes(locatario)) {
+		if (checarMultasPendentes(locatario)) {
 			return false;
 		}
-		
-		return dao.adicionarSolicitacao(locador, locatario, bic, dtInicio, dtFim, valorPrevisto, Status.SOLICITACAO_ENVIADA_LOCATARIO.getDescricao());
+
+		return dao.adicionarSolicitacao(locador, locatario, bic, dtInicio, dtFim, valorPrevisto,
+				Status.SOLICITACAO_ENVIADA_LOCATARIO.getDescricao());
 	}
 
 	private boolean checarAluguelAtivo(Locatario locatario) {
@@ -70,8 +72,7 @@ public class AluguelService {
 
 		else if (carteira.getMultaAcumulada() > 0) {
 			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelService.Message.multaEncontrada")
-							+ carteira.getMultaAcumulada());
+					prop.getProperty("AluguelService.Message.multaEncontrada") + carteira.getMultaAcumulada());
 			return true;
 		}
 
@@ -110,28 +111,66 @@ public class AluguelService {
 		adicionaMultaLocador(aluguel);
 		bicDAO.liberaBicicleta(aluguel.getBicicleta());
 	}
-	
+
 	public void aplicaMultaLocatario(Aluguel aluguel) {
 		CarteiraLocatario carteira = carteiraLocatarioDAO.retornaPorId(aluguel.getLocatario());
-		double multa = carteira.getMultaAcumulada() + (aluguel.getValorPrevisto()/2);
+		double multa = carteira.getMultaAcumulada() + (aluguel.getValorPrevisto() / 2);
 		carteiraLocatarioDAO.adicionarMulta(aluguel, multa);
 	}
-	
+
 	public void adicionaSaldoLocador(Aluguel aluguel) {
 		CarteiraLocador carteiraLocador = carteiraLocadorDAO.retornaPorId(aluguel.getLocador());
-		double saldo = carteiraLocador.getSaldo() + (aluguel.getValorPrevisto()/2);
+		double saldo = carteiraLocador.getSaldo() + (aluguel.getValorPrevisto() / 2);
 		carteiraLocadorDAO.adicionaSaldo(aluguel, saldo);
 	}
-	
+
 	public void adicionaSaldoLocatario(Aluguel aluguel) {
 		CarteiraLocatario carteira = carteiraLocatarioDAO.retornaPorId(aluguel.getLocatario());
-		double saldo = carteira.getMultaAcumulada() - (aluguel.getValorPrevisto()/2);
+		double saldo = carteira.getMultaAcumulada() - (aluguel.getValorPrevisto() / 2);
 		carteiraLocatarioDAO.adicionarSaldo(aluguel, saldo);
 	}
-	
+
 	public void adicionaMultaLocador(Aluguel aluguel) {
 		CarteiraLocador carteiraLocador = carteiraLocadorDAO.retornaPorId(aluguel.getLocador());
-		double multa = carteiraLocador.getSaldo() - (aluguel.getValorPrevisto()/2);
+		double multa = carteiraLocador.getSaldo() - (aluguel.getValorPrevisto() / 2);
 		carteiraLocadorDAO.adicionaMulta(aluguel, multa);
 	}
+
+	public void finalizarAluguel(Aluguel aluguel, double valorFinal) {
+		double multa = valorFinal - aluguel.getValorPrevisto();
+
+		if (multa > 0) {
+			carteiraLocatarioDAO.adicionarMulta(aluguel, multa);
+			carteiraLocadorDAO.adicionaSaldo(aluguel, multa);
+		}
+
+		dao.finalizarAluguel(aluguel, multa, valorFinal);
+	}
+
+	public void encerrarAluguel(Aluguel aluguel) {
+		bicDAO.liberaBicicleta(aluguel.getBicicleta());
+		dao.encerrarAluguel(aluguel);
+	}
+
+	public void finalizarAluguelSemDevolucao(Aluguel aluguel) {
+		double valorFinal = calculaValorFinal(aluguel);
+		aluguel.setValorFinal(valorFinal);
+		aluguel.setValorMulta(aluguel.getValorFinal() - aluguel.getValorPrevisto());
+
+		carteiraLocatarioDAO.adicionarMulta(aluguel, 3000 + aluguel.getValorFinal());
+		carteiraLocadorDAO.adicionaSaldo(aluguel, 3000 + aluguel.getValorFinal());
+		dao.finalizarAluguelSemDevolucao(aluguel);
+	}
+
+	public double calculaValorFinal(Aluguel aluguel) {
+		long diasExcedidos = ChronoUnit.DAYS.between(aluguel.getDtFimPrevisto(), LocalDate.now());
+		double valorFinal = aluguel.getValorPrevisto();
+
+		if (diasExcedidos > 0) {
+			valorFinal = aluguel.getValorPrevisto() + (3 * aluguel.getBicicleta().getValorDeAluguel());
+		}
+
+		return valorFinal;
+	}
+
 }

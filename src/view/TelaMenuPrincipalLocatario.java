@@ -159,6 +159,24 @@ public class TelaMenuPrincipalLocatario extends JFrame {
 			}
 		});
 		mnAluguel.add(mntmSolicitaesPendentes);
+		
+		JMenuItem mntmAluguelEmAndamento = new JMenuItem("Aluguel em andamento");
+		mntmAluguelEmAndamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+					TelaGerenciamentoAluguel tela = new TelaGerenciamentoAluguel(args, loc);
+					tela.setVisible(true);
+					desktopPane.add(tela);
+					tela.setPosition();
+					tela.moveToFront();
+					tela.setSelected(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+			}
+		});
+		mnAluguel.add(mntmAluguelEmAndamento);
 
 		frmMenuLocatario.setVisible(true);
 	}

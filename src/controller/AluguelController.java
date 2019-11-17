@@ -54,5 +54,16 @@ public class AluguelController {
 		service.enviarSolicitacaoDeCancelamentoDeAluguelPeloLocador(aluguel);		
 	}
 
-	
+	public void enviarSolicitacaoDeFinalizacao(Aluguel alug, double valorFinal) {
+		service.finalizarAluguel(alug, valorFinal);
+	}
+
+	public void finalizarAluguel(Aluguel aluguel) {
+		service.encerrarAluguel(aluguel);
+	}
+
+	public void finalizarAluguelSemDevolucao(Aluguel aluguel) {
+		service.finalizarAluguelSemDevolucao(aluguel);
+		
+	}
 }

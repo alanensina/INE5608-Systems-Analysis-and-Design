@@ -114,9 +114,6 @@ public class TelaMenuPrincipalLocador extends JFrame {
 			}
 
 		});
-		
-		JMenuItem menuItemMeusDadosAvaliacoes = new JMenuItem(prop.getProperty("MenuLocadorView.Menu.MenuItem.Avaliacoes"));
-		menuMeusDados.add(menuItemMeusDadosAvaliacoes);
 		menuMeusDados.add(menuItemMeusDadosSair);
 		
 		JMenu menuBike = new JMenu(prop.getProperty("MenuLocadorView.Menu.Bike"));
@@ -175,6 +172,17 @@ public class TelaMenuPrincipalLocador extends JFrame {
 			}
 		});
 		menuItemAluguel.add(menuItemAlugueisAgendados);
+		
+		JMenuItem mntmAluguisFinalizados = new JMenuItem("Aluguéis finalizados");
+		mntmAluguisFinalizados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaFinalizarAluguel tela = new TelaFinalizarAluguel(loc, args);
+				desktopPane.add(tela);
+				tela.setPosition();
+				tela.setVisible(true);	
+			}
+		});
+		menuItemAluguel.add(mntmAluguisFinalizados);
 
 		frmMenuLocatario.setVisible(true);
 	}
