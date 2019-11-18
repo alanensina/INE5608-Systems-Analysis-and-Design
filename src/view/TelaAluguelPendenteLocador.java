@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -23,6 +24,9 @@ import model.Locatario;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import static service.UtilsService.getProp;
+
 import java.awt.Color;
 
 public class TelaAluguelPendenteLocador extends JInternalFrame {
@@ -36,6 +40,7 @@ public class TelaAluguelPendenteLocador extends JInternalFrame {
 	private static Locador loc;
 	private AluguelDAO aluguelDAO = new AluguelDAO();
 	private AluguelController controller = new AluguelController();
+	private Properties prop = getProp();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -52,7 +57,7 @@ public class TelaAluguelPendenteLocador extends JInternalFrame {
 
 	public TelaAluguelPendenteLocador(Locador loc, String[] args) {
 		TelaAluguelPendenteLocador.loc = loc;
-		setTitle("Alugueis agendados");
+		setTitle(prop.getProperty("TelaAluguelPendenteLocador.Title"));
 		setBounds(100, 100, 450, 452);
 		getContentPane().setLayout(null);
 		
@@ -76,28 +81,28 @@ public class TelaAluguelPendenteLocador extends JInternalFrame {
 		getContentPane().add(cbAlugueisAgendados);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Dados do aluguel", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, prop.getProperty("TelaAluguelPendenteLocador.DadosDoAluguel"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(12, 203, 416, 175);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblBicicleta = new JLabel("Bicicleta");
+		JLabel lblBicicleta = new JLabel(prop.getProperty("TelaAluguelPendenteLocador.Bicicleta"));
 		lblBicicleta.setBounds(12, 37, 66, 15);
 		panel.add(lblBicicleta);
 		
-		JLabel lblDataIncio = new JLabel("Data início");
+		JLabel lblDataIncio = new JLabel(prop.getProperty("TelaAluguelPendenteLocador.DataInicio"));
 		lblDataIncio.setBounds(12, 64, 88, 15);
 		panel.add(lblDataIncio);
 		
-		JLabel lblDataFim = new JLabel("Data fim");
+		JLabel lblDataFim = new JLabel(prop.getProperty("TelaAluguelPendenteLocador.DataFim"));
 		lblDataFim.setBounds(12, 94, 66, 15);
 		panel.add(lblDataFim);
 		
-		JLabel lblValorPrevisto = new JLabel("Valor previsto");
+		JLabel lblValorPrevisto = new JLabel(prop.getProperty("TelaAluguelPendenteLocador.ValorPrevisto"));
 		lblValorPrevisto.setBounds(12, 121, 118, 15);
 		panel.add(lblValorPrevisto);
 		
-		JLabel lblLocatrio = new JLabel("Locatário");
+		JLabel lblLocatrio = new JLabel(prop.getProperty("TelaAluguelPendenteLocador.Locatario"));
 		lblLocatrio.setBounds(12, 148, 66, 15);
 		panel.add(lblLocatrio);
 		
@@ -131,17 +136,17 @@ public class TelaAluguelPendenteLocador extends JInternalFrame {
 		panel.add(txtLocatario);
 		txtLocatario.setColumns(10);
 		
-		JButton btnInicio = new JButton("Iniciar");
+		JButton btnInicio = new JButton(prop.getProperty("TelaAluguelPendenteLocador.Iniciar"));
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(txtBike.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Selecione um item antes de prosseguir.");
+					JOptionPane.showMessageDialog(null, prop.getProperty("TelaAluguelPendenteLocador.SelecioneUmItem"));
 					return;
 				}
 				
 				Object[] options = { "Cancelar", "Confirmar" };
-				int resp = JOptionPane.showOptionDialog(null,"Deseja confirmar o início do aluguel?",
+				int resp = JOptionPane.showOptionDialog(null,prop.getProperty("TelaAluguelPendenteLocador.ConfirmarInicio"),
 						"ATENÇÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				
 				if(resp > 0) {
@@ -157,17 +162,17 @@ public class TelaAluguelPendenteLocador extends JInternalFrame {
 		btnInicio.setBounds(320, 385, 108, 25);
 		getContentPane().add(btnInicio);
 		
-		JButton btnCancelarAluguel = new JButton("Cancelar aluguel");
+		JButton btnCancelarAluguel = new JButton(prop.getProperty("TelaAluguelPendenteLocador.CancelarAluguel"));
 		btnCancelarAluguel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(txtBike.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Selecione um item antes de prosseguir.");
+					JOptionPane.showMessageDialog(null, prop.getProperty("TelaAluguelPendenteLocador.SelecioneUmItem"));
 					return;
 				}
 				
 				Object[] options = { "Cancelar", "Confirmar" };
-				int resp = JOptionPane.showOptionDialog(null,"Deseja cancelar o aluguel? Obs: 50% do valor previsto será cobrado e enviado para o locatário.",
+				int resp = JOptionPane.showOptionDialog(null,prop.getProperty("TelaAluguelPendenteLocador.ConfirmarCancelamento"),
 						"ATENÇÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				
 				if(resp > 0) {
@@ -183,7 +188,7 @@ public class TelaAluguelPendenteLocador extends JInternalFrame {
 		btnCancelarAluguel.setBounds(132, 385, 176, 25);
 		getContentPane().add(btnCancelarAluguel);
 		
-		JButton btnNewButton = new JButton("Cancelar");
+		JButton btnNewButton = new JButton(prop.getProperty("TelaAluguelPendenteLocador.Cancelar"));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
