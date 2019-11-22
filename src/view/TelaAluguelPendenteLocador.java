@@ -66,7 +66,7 @@ public class TelaAluguelPendenteLocador extends JInternalFrame {
 		lblLogo.setBounds(155, 12, 135, 158);
 		getContentPane().add(lblLogo);
 		
-		JLabel lblSelecioneOAluguel = new JLabel("Selecione o aluguel");
+		JLabel lblSelecioneOAluguel = new JLabel(prop.getProperty("TelaAluguelPendenteLocador.SelecioneOAluguel"));
 		lblSelecioneOAluguel.setBounds(12, 177, 135, 15);
 		getContentPane().add(lblSelecioneOAluguel);
 		
