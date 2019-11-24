@@ -297,8 +297,7 @@ public class AluguelDAO {
 			stmt.setString(1, Status.ALUGUEL_INICIADO.getDescricao());
 			stmt.setInt(2, aluguel.getId());
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelDAO.confirmarInicioDeAluguel.Sucesso"));
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.confirmarInicioDeAluguel.Sucesso"));
 
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(null,
@@ -364,13 +363,12 @@ public class AluguelDAO {
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
-		
-		if(alugueisEmAndamento.isEmpty()) {
+
+		if (alugueisEmAndamento.isEmpty()) {
 			return false;
 		}
-		
-		JOptionPane.showMessageDialog(null,
-				prop.getProperty("AluguelDAO.alugueisAtivosEncontrados"));
+
+		JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.alugueisAtivosEncontrados"));
 		return true;
 	}
 
@@ -422,17 +420,15 @@ public class AluguelDAO {
 			stmt.setDouble(4, valorFinal);
 			stmt.setInt(5, aluguel.getId());
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelDAO.finalizarAluguel.Sucesso"));
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.finalizarAluguel.Sucesso"));
 
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelDAO.finalizarAluguel.Fail") + " " + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.finalizarAluguel.Fail") + " " + ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
 	}
-	
+
 	public List<Aluguel> buscarAlugueisFinalizados(Locador loc) {
 		Connection con = ConnectionFactory.getConnection();
 
@@ -481,12 +477,10 @@ public class AluguelDAO {
 			stmt.setString(1, Status.ALUGUEL_FINALIZADO.getDescricao());
 			stmt.setInt(2, aluguel.getId());
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelDAO.encerrarAluguel.Sucesso"));
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.encerrarAluguel.Sucesso"));
 
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelDAO.encerrarAluguel.Fail") + " " + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.encerrarAluguel.Fail") + " " + ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
@@ -499,16 +493,14 @@ public class AluguelDAO {
 		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, Status.AGUARDANDO_DEVOLUCAO.getDescricao());
-			stmt.setDouble(2, aluguel.getValorMulta());
-			stmt.setDouble(3, aluguel.getValorFinal());
+			stmt.setDouble(2, (aluguel.getValorMulta() + 3000));
+			stmt.setDouble(3, (aluguel.getValorFinal() + 3000));
 			stmt.setInt(4, aluguel.getId());
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelDAO.AguardandoDevolucao.Sucesso"));
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.AguardandoDevolucao.Sucesso"));
 
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(null,
-					prop.getProperty("AluguelDAO.AguardandoDevolucao.Fail") + " " + ex);
+			JOptionPane.showMessageDialog(null, prop.getProperty("AluguelDAO.AguardandoDevolucao.Fail") + " " + ex);
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
